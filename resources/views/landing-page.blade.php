@@ -90,7 +90,7 @@
                     <h2 class="section-heading text-uppercase text-black">Contact Us</h2>
                     <p><b>Email: </b>hospital.engineering.expo@gmail.com</p>
                     <p><b>Kontak 1: </b>+62 858 9377 7283 (Adrian)</p>
-                    <p><b>Kontak 2: </b>+62 877 7889 9087 (Jordy)</p>
+                    <p><b>Kontak 2: </b>+62 877 7889 9087 (Jordy1)</p>
                 </div>
             </div>
         </section>
