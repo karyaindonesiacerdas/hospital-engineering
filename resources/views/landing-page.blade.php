@@ -6,9 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>HOSPITAL ENGINEERING WEEK - 2021</title>
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <title>HEW 2021</title>
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
         <!-- Google fonts-->
@@ -24,7 +22,9 @@
         <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
             <div class="container">
                 <a class="navbar-brand" href="#page-top">
-                    <h5>HOSPITAL ENGINEERING</h5>
+                    <h5>
+                        HEW 2021
+                    </h5>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
@@ -38,8 +38,7 @@
                         <li class="nav-item"><a class="nav-link" href="#portfolio">Portfolio</a></li>
                         <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
                         <li class="nav-item"><a class="nav-link" href="#team">Team</a></li> --}}
-                        <li class="nav-item"><a class="nav-link"
-                                href="https://docs.google.com/forms/d/e/1FAIpQLSeawVl6UT0m2DwsYryRt1Yf-NSFhSnIR-gE6Baq58qJYSxc_Q/viewform">Register</a>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Register</a>
                         </li>
                     </ul>
                 </div>
@@ -50,8 +49,7 @@
             <div class="container">
                 <div class="masthead-subheading">HOSPITAL ENGINEERING WEEK 2021</div>
                 <div class="masthead-heading text-uppercase">National Forum And International Fair</div>
-                <a class="btn btn-primary btn-xl text-uppercase"
-                    href="https://docs.google.com/forms/d/e/1FAIpQLSeawVl6UT0m2DwsYryRt1Yf-NSFhSnIR-gE6Baq58qJYSxc_Q/viewform">Register
+                <a class="btn btn-primary btn-xl text-uppercase" href="{{ route('login') }}">Register
                     Now</a>
             </div>
         </header>
