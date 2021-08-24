@@ -78,8 +78,19 @@
         <section class="page-section" id="services">
             <div class="container">
                 <div class="row text-center">
-                    <div class="col-md-12">
-                        <img src="{{ asset('assets/img/BANNER.jpg') }}" alt="banner" class="img-fluid">
+                    <div class="col-md-6">
+                        <img src="{{ asset('assets/img/banner1.jpeg') }}" alt="banner" class="img-fluid">
+                    </div>
+                    <div class="col-md-6">
+                        <img src="{{ asset('assets/img/banner2.jpeg') }}" alt="banner" class="img-fluid">
+                    </div>
+                </div>
+                <div class="row text-center mt-3">
+                    <div class="col-md-6">
+                        <img src="{{ asset('assets/img/banner3.jpeg') }}" alt="banner" class="img-fluid">
+                    </div>
+                    <div class="col-md-6">
+                        <img src="{{ asset('assets/img/banner4.jpeg') }}" alt="banner" class="img-fluid">
                     </div>
                 </div>
             </div>
