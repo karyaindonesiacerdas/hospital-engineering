@@ -22,7 +22,10 @@ Route::get('register/exhibitor', [AuthController::class, 'registerExhibitor'])->
 Route::prefix('dashboard')->group(function () {
     Route::get('/', function () {
         return view('dashboard');
-    })->middleware(['auth'])->name('dashboard');
+    })->name('dashboard');
+    // Route::get('/', function () {
+    //     return view('dashboard');
+    // })->middleware(['auth'])->name('dashboard');
     Route::resource('/product', ProductController::class);
     Route::resource('/appointment', AppointmentController::class);
     Route::get('/company', [UserController::class, 'company'])->name('exhibitor.company');
