@@ -17,11 +17,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -40,5 +36,19 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'business_type' => 'array',
+        'business_sector' => 'array',
+        'web_ads_type' => 'array',
+        'mobile_ads_type' => 'array',
+        'opening_ads_type' => 'array',
+        'seminar_ads_type' => 'array',
+        'prouduct_exhibition_ads_type' => 'array',
+        'consultancy_ads_type' => 'array',
+        'closing_ads_type' => 'array',
     ];
+
+    public function products()
+    {
+        return $this->hasMany('App\Models\Product');
+    }
 }

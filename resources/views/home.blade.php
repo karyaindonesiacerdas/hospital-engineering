@@ -39,8 +39,7 @@
                         <li class="nav-item"><a class="nav-link" href="#portfolio">Portfolio</a></li>
                         <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
                         <li class="nav-item"><a class="nav-link" href="#team">Team</a></li> --}}
-                        <li class="nav-item"><a class="nav-link"
-                                href="https://docs.google.com/forms/d/e/1FAIpQLSeawVl6UT0m2DwsYryRt1Yf-NSFhSnIR-gE6Baq58qJYSxc_Q/viewform">Register</a>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Register</a>
                         </li>
                     </ul>
                 </div>
@@ -51,8 +50,7 @@
             <div class="container">
                 <div class="masthead-subheading">HOSPITAL ENGINEERING WEEK 2021</div>
                 <div class="masthead-heading text-uppercase">National Forum And International Fair</div>
-                <a class="btn btn-primary btn-xl text-uppercase"
-                    href="https://docs.google.com/forms/d/e/1FAIpQLSeawVl6UT0m2DwsYryRt1Yf-NSFhSnIR-gE6Baq58qJYSxc_Q/viewform">Register
+                <a class="btn btn-primary btn-xl text-uppercase" href="{{ route('login') }}">Register
                     Now</a>
             </div>
         </header>
@@ -122,6 +120,7 @@
                 </div>
             </div>
         </footer>
+        {{ \TawkTo::widgetCode() }}
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
