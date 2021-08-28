@@ -32,7 +32,7 @@ class Chats extends Component
 
     public function store()
     {
-        if (empty($this->message) && $this->photo) {
+        if (!empty($this->message) || !empty($this->photo)) {
             if ($this->photo) {
                 $name = md5($this->photo . microtime()) . '.' . $this->photo->extension();
                 $this->photo->storeAs('photos', $name);
