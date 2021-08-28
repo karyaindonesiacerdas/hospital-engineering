@@ -58,32 +58,34 @@
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form id="quickForm">
+                    <form action="{{ route('user.update', \Auth::id()) }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="company_name">Company Name</label>
-                                <input type="text" name="company_name" class="form-control" id="company_name"
-                                    placeholder="Company Name">
+                                <input type="text" name="company_name" value="{{ $user->company_name }}"
+                                    class="form-control" id="company_name" placeholder="Company Name">
                             </div>
                             <div class="form-group">
                                 <label for="company_logo">Company Logo</label>
-                                <input type="file" name="company_logo" class="form-control" id="company_logo"
-                                    placeholder="Company Logo">
+                                <input type="file" name="company_logo" value="{{ $user->company_logo }}"
+                                    class="form-control" id="company_logo" placeholder="Company Logo">
                             </div>
                             <div class="form-group">
                                 <label for="company_video_url">Company Video</label>
-                                <input type="text" name="company_video_url" class="form-control" id="company_video_url"
-                                    placeholder="Company Video">
+                                <input type="text" name="company_video_url" value="{{ $user->company_video_url }}"
+                                    class="form-control" id="company_video_url" placeholder="Company Video">
                             </div>
                             <div class="form-group">
                                 <label for="company_web">Company Web</label>
-                                <input type="text" name="company_web" class="form-control" id="company_web"
-                                    placeholder="Company Web">
+                                <input type="text" name="company_web" value="{{ $user->company_web }}"
+                                    class="form-control" id="company_web" placeholder="Company Web">
                             </div>
                             <div class="form-group">
                                 <label for="company_description">Company Description</label>
-                                <input type="text" name="company_description" class="form-control"
-                                    id="company_description" placeholder="Company Description">
+                                <input type="text" name="company_description" value="{{ $user->company_description }}"
+                                    class="form-control" id="company_description" placeholder="Company Description">
                             </div>
                         </div>
                         <!-- /.card-body -->

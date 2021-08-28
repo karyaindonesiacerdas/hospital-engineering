@@ -14,13 +14,17 @@
         <!-- Theme style -->
         <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <livewire:styles />
+        <livewire:scripts />
         {{-- DATATABLES --}}
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" />
+        <link rel="stylesheet" href="{{ asset('css/chat.css') }}">
     </head>
 
     {{-- add class => sidebar-collapse --}}
 
-    <body class="hold-transition sidebar-mini layout-fixed">
+    <body class="hold-transition sidebar-mini layout-fixed sidebar-collapse">
         <div class="wrapper">
 
             <!-- Preloader -->
@@ -75,7 +79,7 @@
         <script src="{{ asset('dist/js/adminlte.js') }}"></script>
         <!-- AdminLTE for demo purposes -->
         <script src="{{ asset('dist/js/demo.js') }}"></script>
-
+        <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script>
         @yield('script')
 
     </body>

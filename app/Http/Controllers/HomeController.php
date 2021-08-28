@@ -11,12 +11,17 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function about()
+    public function aboutHew()
     {
         # code...
     }
 
-    public function faq()
+    public function aboutIahe()
+    {
+        # code...
+    }
+
+    public function faqGeneral()
     {
         # code...
     }

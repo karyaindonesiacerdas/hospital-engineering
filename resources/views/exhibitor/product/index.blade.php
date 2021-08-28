@@ -13,7 +13,8 @@
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form id="quickForm">
+                    <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="email">Product Name</label>

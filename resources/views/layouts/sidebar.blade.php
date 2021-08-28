@@ -60,9 +60,17 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="/dashboard/chat" class="nav-link">
+                        <i class="nav-icon fas fa-compass"></i>
+                        <p>
+                            Chat
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <a href="route('logout')" class="nav-link" onclick="event.preventDefault();
+                        <a href="#" class="nav-link" onclick="event.preventDefault();
                                                                                 this.closest('form').submit();">
                             <i class="nav-icon fas fa-sign-out-alt"></i>
                             <p>
