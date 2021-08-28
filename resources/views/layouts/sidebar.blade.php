@@ -63,7 +63,7 @@
                     <a href="/dashboard/chat" class="nav-link">
                         <i class="nav-icon fas fa-compass"></i>
                         <p>
-                            Chat
+                            Chat11
                         </p>
                     </a>
                 </li>
