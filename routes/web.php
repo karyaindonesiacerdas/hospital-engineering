@@ -44,11 +44,14 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
     Route::resource('/product', ProductController::class);
     Route::resource('/user', UserController::class);
     Route::resource('/appointment', AppointmentController::class);
-    // Route::resource('/chat', ChatController::class);
     Route::get('chat', Chats::class);
     Route::get('/company', [UserController::class, 'company'])->name('exhibitor.company');
     Route::get('/guideline', [UserController::class, 'guideline'])->name('exhibitor.guideline');
     Route::get('/certificate', [UserController::class, 'certificate'])->name('exhibitor.certificate');
 });
+
+// Route::prefix('public')->group(function () {
+//     Route::get('chat', Chats::class);
+// });
 
 require __DIR__ . '/auth.php';
