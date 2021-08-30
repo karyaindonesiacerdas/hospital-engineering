@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\News;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class NewsController extends Controller
 {
@@ -14,7 +15,8 @@ class NewsController extends Controller
      */
     public function index()
     {
-        //
+        $news = News::all();
+        return view('admin.news.index', compact('news'));
     }
 
     /**
@@ -24,7 +26,7 @@ class NewsController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.news.create');
     }
 
     /**
@@ -35,7 +37,12 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request['slug'] = Str::slug($request->title);
+        $request['publish'] = $request->has('publish') || 0;
+        $news = News::create($request->all());
+        if ($news) {
+            return back();
+        }
     }
 
     /**

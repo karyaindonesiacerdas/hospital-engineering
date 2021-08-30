@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('phone_number');
+            $table->string('mobile')->nullable();
             $table->string('institution_name')->nullable();
             $table->string('job_function')->nullable();
             $table->string('institution_type')->nullable();
@@ -27,8 +27,9 @@ class CreateUsersTable extends Migration
             $table->string('member_sehat_ri')->nullable();
             $table->string('company_name')->nullable();
             $table->string('company_web')->nullable();
-            $table->json('business_type')->nullable();
-            $table->json('business_sector')->nullable();
+            // $table->json('business_type')->nullable();
+            // $table->json('business_sector')->nullable();
+            // TEMP
             // $table->json('web_ads_type')->nullable();
             // $table->json('mobile_ads_type')->nullable();
             // $table->json('opening_ads_type')->nullable();
@@ -36,7 +37,8 @@ class CreateUsersTable extends Migration
             // $table->json('prouduct_exhibition_ads_type')->nullable();
             // $table->json('consultancy_ads_type')->nullable();
             // $table->json('closing_ads_type')->nullable();
-            $table->text('additional_remaks')->nullable();
+            // TEMP
+            // $table->text('additional_remaks')->nullable();
             $table->string('company_logo')->nullable();
             $table->string('company_video_url')->nullable();
             $table->text('company_description')->nullable();

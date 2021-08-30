@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\URL;
+
 return [
 
     /*
@@ -54,7 +56,7 @@ return [
     |
     */
 
-    'asset_url' => url('/'),
+    'asset_url' => 'http://localhost:8000',
 
     /*
     |--------------------------------------------------------------------------

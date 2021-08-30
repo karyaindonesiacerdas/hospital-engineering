@@ -4,6 +4,7 @@ use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Livewire\Chats;
@@ -44,6 +45,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
     Route::resource('/product', ProductController::class);
     Route::resource('/user', UserController::class);
     Route::resource('/appointment', AppointmentController::class);
+    Route::resource('/news', NewsController::class);
     Route::get('chat', Chats::class);
     Route::get('/company', [UserController::class, 'company'])->name('exhibitor.company');
     Route::get('/guideline', [UserController::class, 'guideline'])->name('exhibitor.guideline');

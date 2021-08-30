@@ -14,6 +14,18 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
+                @if (\Auth::user()->role == 'admin')
+                <li class="nav-item">
+                    <a href="{{ route('news.index') }}" class="nav-link {{ Route::is('news.index') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-compass"></i>
+                        <p>
+                            News
+                        </p>
+                    </a>
+                </li>
+                @endif
+                @if (\Auth::user()->role == 'exhibitor')
+
                 <li class="nav-item">
                     <a href="{{ route('product.index') }}"
                         class="nav-link {{ Route::is('product.index') ? 'active' : '' }}">
@@ -41,6 +53,7 @@
                         </p>
                     </a>
                 </li>
+                @endif
                 <li class="nav-item">
                     <a href="{{ route('appointment.index') }}"
                         class="nav-link {{ Route::is('appointment.index') ? 'active' : '' }}">
@@ -51,19 +64,10 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('exhibitor.certificate') }}"
-                        class="nav-link {{ Route::is('exhibitor.certificate') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-compass"></i>
-                        <p>
-                            Certificate
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a href="/dashboard/chat" class="nav-link">
                         <i class="nav-icon fas fa-compass"></i>
                         <p>
-                            Chat11
+                            Chat
                         </p>
                     </a>
                 </li>
