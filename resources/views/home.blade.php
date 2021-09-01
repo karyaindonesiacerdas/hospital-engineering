@@ -175,18 +175,19 @@
                     <div class="py-6 px-5 space-y-6">
                         <div>
                             <div class="grid grid-cols-2 gap-2">
-                                <a href="#"
+                                <a href="https://docs.google.com/forms/u/0/d/e/1FAIpQLSeawVl6UT0m2DwsYryRt1Yf-NSFhSnIR-gE6Baq58qJYSxc_Q/formResponse"
                                     class="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white hover:bg-[#116368] bg-[#00B4BF]">
                                     Register as Exhibitor
                                 </a>
-                                <a href="#"
+                                <a href="https://docs.google.com/forms/u/0/d/e/1FAIpQLSeawVl6UT0m2DwsYryRt1Yf-NSFhSnIR-gE6Baq58qJYSxc_Q/formResponse"
                                     class="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white hover:bg-[#116368] bg-[#00B4BF]">
                                     Register as Visitor
                                 </a>
                             </div>
                             <p class="mt-6 text-center text-base font-medium text-gray-500">
                                 Already have an account?
-                                <a href="#" class="hover:text-[#116368] text-[#00B4BF]">
+                                <a href="https://docs.google.com/forms/u/0/d/e/1FAIpQLSeawVl6UT0m2DwsYryRt1Yf-NSFhSnIR-gE6Baq58qJYSxc_Q/formResponse"
+                                    class="hover:text-[#116368] text-[#00B4BF]">
                                     Login
                                 </a>
                             </p>
