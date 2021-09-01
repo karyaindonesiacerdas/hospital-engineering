@@ -550,12 +550,12 @@
                                 <div class="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
                                     <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
 
-                                        <a href="register-visitor.html"
+                                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeawVl6UT0m2DwsYryRt1Yf-NSFhSnIR-gE6Baq58qJYSxc_Q/viewform"
                                             class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
                                             Register as Visitor
                                         </a>
 
-                                        <a href="register-exhibitor.html"
+                                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeawVl6UT0m2DwsYryRt1Yf-NSFhSnIR-gE6Baq58qJYSxc_Q/viewform"
                                             class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
                                             Register as Exhibitor
                                         </a>
@@ -564,7 +564,7 @@
                                 </div>
                             </div>
                         </li>
-                        <li><a href="login.html"
+                        <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSeawVl6UT0m2DwsYryRt1Yf-NSFhSnIR-gE6Baq58qJYSxc_Q/viewform"
                                 class="text-gray-200 hover:text-white cursor-pointer tracking-widest px-3 py-1.5 text-sm md:text-md font-bold border border-gray-200 hover:border-white rounded-md uppercase"
                                 style="text-shadow: 1px 1px 4px rgba(0,0,0,0.2)">Login</a>
                         </li>
@@ -764,7 +764,7 @@
                             <div class="text-md md:text-4xl font-extrabold text-white uppercase tracking-widest mb-4 z-10"
                                 style="text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">Exhibitor
                             </div>
-                            <a href="register-exhibitor.html"
+                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeawVl6UT0m2DwsYryRt1Yf-NSFhSnIR-gE6Baq58qJYSxc_Q/viewform"
                                 class="bg-[#4A4A4A] text-white text-xs sm:text-md py-1 px-2 rounded-md md:rounded-lg uppercase tracking-wider font-medium shadow-2xl hover:shadow-none z-10">Register
                                 Here</a>
                         </div>
@@ -790,7 +790,7 @@
                             <div class="text-md md:text-4xl font-extrabold text-white uppercase tracking-widest mb-4 z-10"
                                 style="text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">Visitor
                             </div>
-                            <a href="register-visitor.html"
+                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeawVl6UT0m2DwsYryRt1Yf-NSFhSnIR-gE6Baq58qJYSxc_Q/viewform"
                                 class="bg-[#4A4A4A] text-white text-xs sm:text-md py-1 px-2 rounded-md md:rounded-lg uppercase tracking-wider font-medium shadow-2xl hover:shadow-none z-10">Register
                                 Here</a>
                         </div>
