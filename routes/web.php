@@ -13,7 +13,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/tes', function () {
-    return $users = User::where('role', '=', 'exhibitor')->get();
+    // return auth()->id();
+    return $users = Chat::where('receiver_id', auth()->id())->orWhere('sender_id', auth()->id())->latest()->first();
 })->middleware('auth');
 
 Route::get('/', [HomeController::class, 'index']);

@@ -25,7 +25,6 @@
                 </li>
                 @endif
                 @if (\Auth::user()->role == 'exhibitor')
-
                 <li class="nav-item">
                     <a href="{{ route('product.index') }}"
                         class="nav-link {{ Route::is('product.index') ? 'active' : '' }}">
@@ -63,6 +62,7 @@
                         </p>
                     </a>
                 </li>
+                @if (\Auth::user()->role != 'admin')
                 <li class="nav-item">
                     <a href="/dashboard/chat" class="nav-link">
                         <i class="nav-icon fas fa-compass"></i>
@@ -71,6 +71,7 @@
                         </p>
                     </a>
                 </li>
+                @endif
                 <li class="nav-item">
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf

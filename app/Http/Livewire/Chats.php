@@ -22,12 +22,13 @@ class Chats extends Component
             $chats = collect($chats1)->merge(collect($chats2))->sortBy('created_at')->values();
         }
         $users = Chat::where('receiver_id', auth()->id())->groupBy('sender_id')->get();
+        $latestChat = Chat::where('receiver_id', auth()->id())->orWhere('sender_id', auth()->id())->latest()->first();
         $this->isVisitor = false;
         if (auth()->user()->role == 'visitor') {
             $users = User::where('id', '!=', auth()->id())->where('role', 'exhibitor')->get();
             $this->isVisitor = true;
         }
-        return view('livewire.chats', ['chats' => $chats, 'users' => $users])->extends('layouts.app-dashboard')->section('content');
+        return view('livewire.chats', ['chats' => $chats, 'users' => $users, 'latestChat' => $latestChat])->extends('layouts.app-dashboard')->section('content');
     }
 
     public function store()
@@ -48,6 +49,11 @@ class Chats extends Component
     private function resetInputFields()
     {
         $this->message = '';
+        $this->photo = '';
+    }
+
+    public function deleteImage()
+    {
         $this->photo = '';
     }
 

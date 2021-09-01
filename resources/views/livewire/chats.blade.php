@@ -5,7 +5,7 @@
                 <!-- left column -->
                 <div class="col-md-12">
                     {{-- wire:poll.60s --}}
-                    <div class="messaging" wire:poll>
+                    <div class="messaging" wire:poll.5s>
                         <div class="inbox_msg">
                             <div class="inbox_people">
                                 <div class="headind_srch">
@@ -33,8 +33,10 @@
                                                         alt="sunil">
                                                 </div>
                                                 <div class="chat_ib">
-                                                    <h5>{{ $user->name }} <span class="chat_date">Dec 25</span>
+                                                    <h5>{{ $user->name }} <span
+                                                            class="chat_date">{{ $latestChat['created_at'] }}</span>
                                                     </h5>
+                                                    <p>{{ $latestChat['message'] }}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -49,9 +51,10 @@
                                                         alt="sunil">
                                                 </div>
                                                 <div class="chat_ib">
-                                                    <h5>{{ $user->sender->name }} <span class="chat_date">Dec 25</span>
+                                                    <h5>{{ $user->sender->name }} <span
+                                                            class="chat_date">{{ $latestChat['created_at'] }}</span>
                                                     </h5>
-                                                    <p>{{ $user->sender->chats[0]->message }}</p>
+                                                    <p>{{ $latestChat['message'] }}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -76,7 +79,7 @@
                                         @if ($chat->image)
                                         <a data-fancybox="gallery" href="{{ asset('storage/photos/' . $chat->image) }}">
                                             <img src="{{ asset('storage/photos/' . $chat->image) }}" width="180"
-                                                height="180" class="ml-4">
+                                                height="180" class="ml-4 mb-4">
                                         </a>
                                         @endif
                                         @endif
@@ -95,12 +98,25 @@
                                         @if ($chat->image)
                                         <a data-fancybox="gallery" href="{{ asset('storage/photos/' . $chat->image) }}">
                                             <img src="{{ asset('storage/photos/' . $chat->image) }}" width="180"
-                                                height="180" class="ml-4">
+                                                height="180" class="ml-4 mb-4">
                                         </a>
                                         @endif
                                         @endif
                                         @endforeach
+                                        @if ($photo)
+                                        <div class="sent_msg">
+                                            <div class="alert alert-dismissible fade show" role="alert">
+                                                <img src="{{ $photo->temporaryUrl() }}" width="90" height="90"
+                                                    class="ml-4">
+                                                <button type="button" class="close" data-dismiss="alert"
+                                                    aria-label="Close" wire:click="deleteImage">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        @endif
                                     </div>
+
                                     <div class="type_msg">
                                         <div class="input_msg_write">
                                             <form wire:submit.prevent="store()">

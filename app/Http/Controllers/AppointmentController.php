@@ -14,7 +14,8 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        return view('exhibitor.appointment.index');
+        $appointments = auth()->user()->appointments;
+        return view('exhibitor.appointment.index', compact('appointments'));
     }
 
     /**
@@ -24,7 +25,7 @@ class AppointmentController extends Controller
      */
     public function create()
     {
-        //
+        return view('exhibitor.appointment.create');
     }
 
     /**

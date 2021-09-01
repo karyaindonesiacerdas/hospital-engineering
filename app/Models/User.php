@@ -56,4 +56,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\Chat', 'sender_id');
     }
+
+    public function appointments()
+    {
+        return $this->hasMany('App\Models\Appointment');
+    }
 }

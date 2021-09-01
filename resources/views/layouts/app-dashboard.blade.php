@@ -63,22 +63,23 @@
         <!-- ./wrapper -->
 
         <!-- jQuery -->
-        <script src="{{ asset('js/app.js') }}"></script>
-        <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+        {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
+        {{-- <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script> --}}
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
         <!-- jQuery UI 1.11.4 -->
         {{-- IMPORTANT --}}
-        <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous">
-        </script>
+        {{-- <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script> --}}
+        <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+        {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"
+            integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous">
+        </script> --}}
 
         {{-- DATATABLES --}}
-        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
         <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
         <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
         <script src="{{ asset('dist/js/adminlte.js') }}"></script>
         <!-- AdminLTE for demo purposes -->
-        <script src="{{ asset('dist/js/demo.js') }}"></script>
+        {{-- <script src="{{ asset('dist/js/demo.js') }}"></script> --}}
         <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script>
 
         @yield('script')

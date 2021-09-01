@@ -27,6 +27,7 @@
                                     <th>Content</th>
                                     <th>Publish At</th>
                                     <th>Publish</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -38,6 +39,21 @@
                                     <td>{!! $new->body !!}</td>
                                     <td>{{ $new->publish_at }}</td>
                                     <td>{{ $new->publish ? 'publish' : 'pending' }}</td>
+                                    <td>
+                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                            <a href="{{ route('news.edit', $new->id) }}" class="btn btn-sm btn-warning">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <form action="{{ route('news.destroy', $new->id) }}" method="post"
+                                                onsubmit="return confirm('Do you really want to delete the news?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-danger">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>

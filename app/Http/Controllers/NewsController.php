@@ -64,7 +64,7 @@ class NewsController extends Controller
      */
     public function edit(News $news)
     {
-        //
+        return view('admin.news.edit', compact('news'));
     }
 
     /**
@@ -76,7 +76,14 @@ class NewsController extends Controller
      */
     public function update(Request $request, News $news)
     {
-        //
+        $news->title = $request->title;
+        $news->slug = Str::slug($request->title);
+        $news->body = $request->body;
+        $news->publish = $request->has('publish') || 0;
+        $news->publish_at = $request->publish_at;
+        if ($news->save()) {
+            return redirect(route('news.index'));
+        }
     }
 
     /**
@@ -87,6 +94,8 @@ class NewsController extends Controller
      */
     public function destroy(News $news)
     {
-        //
+        if ($news->delete()) {
+            return back();
+        }
     }
 }
