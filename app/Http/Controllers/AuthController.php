@@ -12,7 +12,9 @@ class AuthController extends Controller
 {
     public function registerVisitor()
     {
-        return view('auth.register-visitor');
+        $countries = Http::get('https://restcountries.eu/rest/v2/all')->json();
+        $province = Http::get('https://dev.farizdotid.com/api/daerahindonesia/provinsi')['provinsi'];
+        return view('auth.register-visitor', compact('countries', 'province'));
     }
 
     public function registerGuest(Request $request)

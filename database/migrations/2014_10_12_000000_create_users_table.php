@@ -18,27 +18,21 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('mobile')->nullable();
-            $table->string('institution_name')->nullable();
             $table->string('job_function')->nullable();
-            $table->string('institution_type')->nullable();
+            $table->string('company_name')->nullable();
+            $table->string('company_website')->nullable();
             $table->string('country')->nullable();
             $table->string('province')->nullable();
+            $table->string('business_nature')->nullable();
+            // ================
+            $table->string('institution_name')->nullable();
+            $table->string('institution_type')->nullable();
             $table->string('visitor_type')->nullable();
+            $table->json('product_interest')->nullable();
+            $table->json('visit_purpose')->nullable();
             $table->string('member_sehat_ri')->nullable();
-            $table->string('company_name')->nullable();
-            $table->string('company_web')->nullable();
-            // $table->json('business_type')->nullable();
-            // $table->json('business_sector')->nullable();
-            // TEMP
-            // $table->json('web_ads_type')->nullable();
-            // $table->json('mobile_ads_type')->nullable();
-            // $table->json('opening_ads_type')->nullable();
-            // $table->json('seminar_ads_type')->nullable();
-            // $table->json('prouduct_exhibition_ads_type')->nullable();
-            // $table->json('consultancy_ads_type')->nullable();
-            // $table->json('closing_ads_type')->nullable();
-            // TEMP
-            // $table->text('additional_remaks')->nullable();
+
+            // COMPANY
             $table->string('company_logo')->nullable();
             $table->string('company_video_url')->nullable();
             $table->text('company_description')->nullable();

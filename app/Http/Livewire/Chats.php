@@ -12,6 +12,7 @@ class Chats extends Component
     use WithFileUploads;
 
     public $message, $receiver_id, $photo, $isVisitor;
+    public $chatIds = [];
 
     public function render()
     {
@@ -60,5 +61,22 @@ class Chats extends Component
     public function setReceiver($receiver_id)
     {
         $this->receiver_id = $receiver_id;
+    }
+
+    public function selectIds($chatId)
+    {
+        array_push($this->chatIds, $chatId);
+    }
+
+    public function deleteSelectIds()
+    {
+        if (Chat::whereIn('id', $this->chatIds)->delete()) {
+            $this->chatIds = [];
+        }
+    }
+
+    public function cancelSelectIds()
+    {
+        $this->chatIds = [];
     }
 }

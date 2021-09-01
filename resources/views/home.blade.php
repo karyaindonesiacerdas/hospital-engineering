@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
         <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}">
         <script src="//unpkg.com/alpinejs" defer></script>
-        <title>HEW 2021</title>
+        <title>Virtual Exhibition</title>
         <style>
             .swiper-pagination-bullet {
                 border-radius: 0;
@@ -27,7 +27,68 @@
         </style>
     </head>
 
-    <body x-data="{openMobileMenu: false}">
+    <body x-data="{openMobileMenu: false, openGuestModal: false}">
+
+        <!-- Guest Modal -->
+        <div x-show="openGuestModal" @keydown.window.escape="openGuestModal = false"
+            class="fixed z-60 inset-0 overflow-y-auto" aria-labelledby="modal-title" x-ref="dialog" aria-modal="true">
+            <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+
+                <!-- Overlay -->
+                <div x-show="openGuestModal" x-transition:enter="ease-out duration-300"
+                    x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+                    x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    x-description="Background overlay, show/hide based on modal state."
+                    class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" @click="openGuestModal = false"
+                    aria-hidden="true"></div>
+
+
+                <!-- This element is to trick the browser into centering the modal contents. -->
+                <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">​</span>
+
+                <div x-show="openGuestModal"
+                    x-transition:enter="transform transition ease-in-out duration-300 sm:duration-400"
+                    x-transition:enter-start="translate-y-full opacity-0"
+                    x-transition:enter-end="translate-y-0 opacity-100"
+                    x-transition:leave="transform transition ease-in-out duration-300 sm:duration-400"
+                    x-transition:leave-start="translate-y-0 opacity-100"
+                    x-transition:leave-end="translate-y-full opacity-0"
+                    x-description="Modal panel, show/hide based on modal state."
+                    class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle w-full sm:max-w-sm sm:w-full sm:p-6">
+                    <h3 class="mb-8 text-xl text-center font-bold">Please Submit Your Email to Access Full Features!
+                    </h3>
+                    <img src="" alt="">
+                    <form action="#" class="space-y-4" method="POST">
+                        <!-- Email -->
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700">
+                                Email
+                            </label>
+                            <div class="mt-1">
+                                <input id="email" name="email" type="email"
+                                    class="appearance-none block w-full px-3 py-2 rounded-md placeholder-gray-400 focus:outline-none focus:ring-[#00B4BF] focus:ring-2 focus:ring-offset-1 focus:border-transparent border-gray-300 bg-white">
+                            </div>
+                        </div>
+
+                        <div class="mt-5 sm:mt-6">
+                            <button type="button"
+                                class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#00B4BF] text-base font-medium text-white hover:bg-[#00B4BF] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#00B4BF] sm:text-sm"
+                                @click="openGuestModal = false">
+                                Submit
+                            </button>
+                        </div>
+                    </form>
+                    <div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
         <!-- Header -->
         <header
             class="sticky z-40 md:z-auto top-0 sm:top-auto bg-white sm:bg-transparent flex sm:flex h-[50px] sm:h-[70px] max-w-7xl mx-auto px-4 md:px-2 items-center justify-between">
@@ -36,15 +97,11 @@
                 <div>
                     <div class="text-sm sm:text-lg xl:text-2xl uppercase font-bold text-gray-800 tracking-wider">
                         Hospital
-                        Engineering
-                        Week
-                        2021
+                        Engineering Forum 2021
                     </div>
                     <div class="hidden sm:block text-xs xl:text-md uppercase text-gray-600 tracking-wider">Plan your
                         hospital with
-                        the
-                        latest
-                        technologies!
+                        the latest technologies!
                     </div>
                 </div>
             </div>
@@ -81,7 +138,7 @@
                                         class="text-sm sm:text-lg xl:text-2xl uppercase font-bold text-gray-800 tracking-wider">
                                         Hospital
                                         Engineering
-                                        Week
+                                        Forum
                                         2021
                                     </div>
                                     <div
@@ -109,8 +166,10 @@
                             </div>
                         </div>
                         <div class="mt-6">
-                            <nav class="grid gap-y-8">
-                                <a href="#" class="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50">
+                            <nav class="grid gap-y-4">
+                                <!-- Home -->
+                                <a href="#"
+                                    class="bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900 group w-full flex items-center pl-2 pr-1 py-2 text-left text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-[#00B4BF]">
                                     <!-- Heroicon name: outline/chart-bar -->
                                     <svg class="flex-shrink-0 h-6 w-6 text-[#00B4BF]" xmlns="http://www.w3.org/2000/svg"
                                         class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -122,72 +181,226 @@
                                     </span>
                                 </a>
 
-                                <a href="#" class="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50">
-                                    <!-- Heroicon name: outline/cursor-click -->
-                                    <svg class="flex-shrink-0 h-6 w-6 text-[#00B4BF]" xmlns="http://www.w3.org/2000/svg"
-                                        class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-                                    </svg>
-                                    <span class="ml-3 text-base font-medium text-gray-900">
-                                        Overview
-                                    </span>
-                                </a>
+                                <!-- Overview -->
+                                <div x-data="{ open: false }" class="space-y-1">
+                                    <button type="button"
+                                        class="bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900 group w-full flex items-center pl-2 pr-1 py-2 text-left text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-[#00B4BF]"
+                                        x-state:on="Current" x-state:off="Default" aria-controls="sub-menu-1"
+                                        @click="open = !open" aria-expanded="false"
+                                        x-bind:aria-expanded="open.toString()"
+                                        x-state-description="Current: &quot;bg-gray-100 text-gray-900&quot;, Default: &quot;bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900&quot;">
+                                        <svg class="flex-shrink-0 h-6 w-6 text-[#00B4BF]"
+                                            xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                                        </svg>
+                                        <span class="flex-1 ml-3 text-base font-medium text-gray-900">
+                                            Overview
+                                        </span>
+                                        <svg class="text-gray-300 ml-3 flex-shrink-0 h-5 w-5 transform group-hover:text-gray-400 transition-colors ease-in-out duration-150"
+                                            viewBox="0 0 20 20" x-state:on="Expanded" x-state:off="Collapsed"
+                                            aria-hidden="true"
+                                            :class="{ 'text-gray-400 rotate-90': open, 'text-gray-300': !(open) }">
+                                            <path d="M6 6L14 10L6 14V6Z" fill="currentColor"></path>
+                                        </svg>
+                                    </button>
+                                    <div x-description="Expandable link section, show/hide based on state."
+                                        class="space-y-1" id="sub-menu-1" x-show="open">
 
-                                <a href="#" class="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50">
-                                    <!-- Heroicon name: outline/shield-check -->
-                                    <svg class="flex-shrink-0 h-6 w-6 text-[#00B4BF]" xmlns="http://www.w3.org/2000/svg"
-                                        class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                                    </svg>
-                                    <span class="ml-3 text-base font-medium text-gray-900">
-                                        Visitor
-                                    </span>
-                                </a>
+                                        <a href="#"
+                                            class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
+                                            About HEF
+                                        </a>
 
-                                <a href="#" class="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50">
-                                    <!-- Heroicon name: outline/view-grid -->
-                                    <svg class="flex-shrink-0 h-6 w-6 text-[#00B4BF]" xmlns="http://www.w3.org/2000/svg"
-                                        class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
-                                    </svg>
-                                    <span class="ml-3 text-base font-medium text-gray-900">
-                                        Exhibitor
-                                    </span>
-                                </a>
+                                        <a href="#"
+                                            class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
+                                            About IAHE
+                                        </a>
 
-                                <a href="#" class="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50">
-                                    <!-- Heroicon name: outline/refresh -->
-                                    <svg class="flex-shrink-0 h-6 w-6 text-[#00B4BF]" xmlns="http://www.w3.org/2000/svg"
-                                        class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                    <span class="ml-3 text-base font-medium text-gray-900">
-                                        FAQ
-                                    </span>
-                                </a>
+                                        <a href="#"
+                                            class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
+                                            Webinar Rundown
+                                        </a>
+
+                                        <a href="#"
+                                            class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
+                                            News
+                                        </a>
+
+                                        <a href="#"
+                                            class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
+                                            Important Dates
+                                        </a>
+
+                                    </div>
+                                </div>
+
+                                <!-- Visitor -->
+                                <div x-data="{ open: false }" class="space-y-1">
+                                    <button @click="openGuestModal = true" type="button"
+                                        class="bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900 group w-full flex items-center pl-2 pr-1 py-2 text-left text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-[#00B4BF]"
+                                        x-state:on="Current" x-state:off="Default" aria-controls="sub-menu-1"
+                                        @click="open = !open" aria-expanded="false"
+                                        x-bind:aria-expanded="open.toString()"
+                                        x-state-description="Current: &quot;bg-gray-100 text-gray-900&quot;, Default: &quot;bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900&quot;">
+                                        <svg class="flex-shrink-0 h-6 w-6 text-[#00B4BF]"
+                                            xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                        </svg>
+                                        <span class="flex-1 ml-3 text-base font-medium text-gray-900">
+                                            Visitor
+                                        </span>
+                                        <svg class="text-gray-300 ml-3 flex-shrink-0 h-5 w-5 transform group-hover:text-gray-400 transition-colors ease-in-out duration-150"
+                                            viewBox="0 0 20 20" x-state:on="Expanded" x-state:off="Collapsed"
+                                            aria-hidden="true"
+                                            :class="{ 'text-gray-400 rotate-90': open, 'text-gray-300': !(open) }">
+                                            <path d="M6 6L14 10L6 14V6Z" fill="currentColor"></path>
+                                        </svg>
+                                    </button>
+                                    <div x-description="Expandable link section, show/hide based on state."
+                                        class="space-y-1" id="sub-menu-1" x-show="open">
+
+                                        <a href="#"
+                                            class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
+                                            Visitor Guideline
+                                        </a>
+
+                                        <a href="#"
+                                            class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
+                                            Who Attends?
+                                        </a>
+
+                                        <a href="#"
+                                            class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
+                                            Why Attend?
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <!-- Exhibitor -->
+                                <div x-data="{ open: false }" class="space-y-1">
+                                    <button @click="openGuestModal = true" type="button"
+                                        class="bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900 group w-full flex items-center pl-2 pr-1 py-2 text-left text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-[#00B4BF]"
+                                        x-state:on="Current" x-state:off="Default" aria-controls="sub-menu-1"
+                                        @click="open = !open" aria-expanded="false"
+                                        x-bind:aria-expanded="open.toString()"
+                                        x-state-description="Current: &quot;bg-gray-100 text-gray-900&quot;, Default: &quot;bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900&quot;">
+                                        <svg class="flex-shrink-0 h-6 w-6 text-[#00B4BF]"
+                                            xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                                        </svg>
+                                        <span class="flex-1 ml-3 text-base font-medium text-gray-900">
+                                            Exhibitor
+                                        </span>
+                                        <svg class="text-gray-300 ml-3 flex-shrink-0 h-5 w-5 transform group-hover:text-gray-400 transition-colors ease-in-out duration-150"
+                                            viewBox="0 0 20 20" x-state:on="Expanded" x-state:off="Collapsed"
+                                            aria-hidden="true"
+                                            :class="{ 'text-gray-400 rotate-90': open, 'text-gray-300': !(open) }">
+                                            <path d="M6 6L14 10L6 14V6Z" fill="currentColor"></path>
+                                        </svg>
+                                    </button>
+                                    <div x-description="Expandable link section, show/hide based on state."
+                                        class="space-y-1" id="sub-menu-1" x-show="open">
+
+                                        <a href="#"
+                                            class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
+                                            Exhibitor Guideline
+                                        </a>
+
+                                        <a href="#"
+                                            class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
+                                            Who Exhibit?
+                                        </a>
+
+                                        <a href="#"
+                                            class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
+                                            Why Exhibit?
+                                        </a>
+
+                                        <a href="#"
+                                            class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
+                                            Packages
+                                        </a>
+
+                                        <a href="#"
+                                            class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
+                                            Exhibitor List
+                                        </a>
+
+                                        <a href="#"
+                                            class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
+                                            Sponsor & Partner
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <!-- FAQ -->
+                                <div x-data="{ open: false }" class="space-y-1">
+                                    <button type="button"
+                                        class="bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900 group w-full flex items-center pl-2 pr-1 py-2 text-left text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-[#00B4BF]"
+                                        x-state:on="Current" x-state:off="Default" aria-controls="sub-menu-1"
+                                        @click="open = !open" aria-expanded="false"
+                                        x-bind:aria-expanded="open.toString()"
+                                        x-state-description="Current: &quot;bg-gray-100 text-gray-900&quot;, Default: &quot;bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900&quot;">
+                                        <svg class="flex-shrink-0 h-6 w-6 text-[#00B4BF]"
+                                            xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        <span class="flex-1 ml-3 text-base font-medium text-gray-900">
+                                            FAQ
+                                        </span>
+                                        <svg class="text-gray-300 ml-3 flex-shrink-0 h-5 w-5 transform group-hover:text-gray-400 transition-colors ease-in-out duration-150"
+                                            viewBox="0 0 20 20" x-state:on="Expanded" x-state:off="Collapsed"
+                                            aria-hidden="true"
+                                            :class="{ 'text-gray-400 rotate-90': open, 'text-gray-300': !(open) }">
+                                            <path d="M6 6L14 10L6 14V6Z" fill="currentColor"></path>
+                                        </svg>
+                                    </button>
+                                    <div x-description="Expandable link section, show/hide based on state."
+                                        class="space-y-1" id="sub-menu-1" x-show="open">
+
+                                        <a href="#"
+                                            class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
+                                            FAQ General & Technical
+                                        </a>
+
+                                        <a href="#"
+                                            class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
+                                            FAQ Visitor
+                                        </a>
+
+                                        <a href="#"
+                                            class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
+                                            FAQ Exhibitor
+                                        </a>
+                                    </div>
+                                </div>
+
                             </nav>
                         </div>
                     </div>
                     <div class="py-6 px-5 space-y-6">
                         <div>
                             <div class="grid grid-cols-2 gap-2">
-                                <a href="https://docs.google.com/forms/u/0/d/e/1FAIpQLSeawVl6UT0m2DwsYryRt1Yf-NSFhSnIR-gE6Baq58qJYSxc_Q/formResponse"
+                                <a href="#"
                                     class="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white hover:bg-[#116368] bg-[#00B4BF]">
                                     Register as Exhibitor
                                 </a>
-                                <a href="https://docs.google.com/forms/u/0/d/e/1FAIpQLSeawVl6UT0m2DwsYryRt1Yf-NSFhSnIR-gE6Baq58qJYSxc_Q/formResponse"
+                                <a href="#"
                                     class="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white hover:bg-[#116368] bg-[#00B4BF]">
                                     Register as Visitor
                                 </a>
                             </div>
                             <p class="mt-6 text-center text-base font-medium text-gray-500">
                                 Already have an account?
-                                <a href="https://docs.google.com/forms/u/0/d/e/1FAIpQLSeawVl6UT0m2DwsYryRt1Yf-NSFhSnIR-gE6Baq58qJYSxc_Q/formResponse"
-                                    class="hover:text-[#116368] text-[#00B4BF]">
+                                <a href="https://docs.google.com/forms/d/e/1FAIpQLSeawVl6UT0m2DwsYryRt1Yf-NSFhSnIR-gE6Baq58qJYSxc_Q/viewform" class="hover:text-[#116368] text-[#00B4BF]">
                                     Login
                                 </a>
                             </p>
@@ -204,8 +417,6 @@
             <!-- Additional required wrapper -->
             <div class="swiper-wrapper ">
                 <!-- Slides -->
-
-
                 <div style="background: linear-gradient(180deg, rgba(4, 176, 187, 0.71) 0%, rgba(0, 180, 191, 0) 99.99%, rgba(17, 99, 104, 0) 100%);"
                     class="swiper-slide relative">
                     <img class="object-cover w-full h-full mix-blend-darken swiper-slide"
@@ -225,8 +436,7 @@
                 <div style="background: linear-gradient(180deg, rgba(4, 176, 187, 0.71) 0%, rgba(0, 180, 191, 0) 99.99%, rgba(17, 99, 104, 0) 100%);"
                     class="swiper-slide relative">
                     <img class="object-cover w-full h-full mix-blend-darken swiper-slide"
-                        src="https://images.unsplash.com/photo-1586773860418-d37222d8fce3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1052&q=80"
-                        alt="MRI machine">
+                        src="{{ asset('assets/img/hospital-mechanics.jpg') }}" alt="MRI machine">
                     <div class="mx-auto max-w-7xl w-full flex justify-center md:justify-end px-2">
                         <div class="absolute top-1/2 -translate-y-1/2 md:max-w-sm">
                             <div class="uppercase mb-1 text-xl font-bold drop-shadow-xl text-white text-center md:text-left"
@@ -241,8 +451,7 @@
                 <div style="background: linear-gradient(180deg, rgba(4, 176, 187, 0.71) 0%, rgba(0, 180, 191, 0) 99.99%, rgba(17, 99, 104, 0) 100%);"
                     class="swiper-slide relative">
                     <img class="object-cover w-full h-full mix-blend-darken swiper-slide"
-                        src="https://images.unsplash.com/photo-1544724569-5f546fd6f2b5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
-                        alt="MRI machine">
+                        src="{{ asset('assets/img/hospital-electrics.jpg') }}" alt="MRI machine">
                     <div class="mx-auto max-w-7xl w-full flex justify-center md:justify-end px-2">
                         <div class="absolute top-1/2 -translate-y-1/2 md:max-w-sm">
                             <div class="uppercase mb-1 text-xl font-bold drop-shadow-xl text-white text-center md:text-left"
@@ -273,8 +482,7 @@
                 <div style="background: linear-gradient(180deg, rgba(4, 176, 187, 0.71) 0%, rgba(0, 180, 191, 0) 99.99%, rgba(17, 99, 104, 0) 100%);"
                     class="swiper-slide relative">
                     <img class="object-cover w-full h-full mix-blend-darken swiper-slide"
-                        src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1952&q=80"
-                        alt="MRI machine">
+                        src="{{ asset('assets/img/hospital-informatics.jpg') }}" alt="MRI machine">
                     <div class="mx-auto max-w-7xl w-full flex justify-center md:justify-end px-2">
                         <div class="absolute top-1/2 -translate-y-1/2 md:max-w-sm">
                             <div class="uppercase mb-1 text-xl font-bold drop-shadow-xl text-white text-center md:text-left"
@@ -344,7 +552,7 @@
 
                                         <a href="#"
                                             class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
-                                            About HEW
+                                            About HEF
                                         </a>
 
                                         <a href="#"
@@ -373,7 +581,7 @@
                         </li>
 
                         <!-- Visitor -->
-                        <li class="relative" x-data="{open: false}"><button @click="open = true"
+                        <li class="relative" x-data="{open: false}"><button @click="open = true; openGuestModal = true"
                                 class="text-gray-200 hover:text-white cursor-pointer tracking-widest px-3 py-1.5 text-sm md:text-md font-bold uppercase pt-[9px] flex items-center group"
                                 style="text-shadow: 1px 1px 4px rgba(0,0,0,0.2);">
                                 <span>Visitor</span>
@@ -419,7 +627,7 @@
                         </li>
 
                         <!-- Exhibitor -->
-                        <li class="relative" x-data="{open: false}"><button @click="open = true"
+                        <li class="relative" x-data="{open: false}"><button @click="open = true; openGuestModal = true"
                                 class="text-gray-200 hover:text-white cursor-pointer tracking-widest px-3 py-1.5 text-sm md:text-md font-bold uppercase pt-[9px] flex items-center group"
                                 style="text-shadow: 1px 1px 4px rgba(0,0,0,0.2);">
                                 <span>Exhibitor</span>
@@ -575,8 +783,6 @@
         </div>
 
 
-
-
         <!-- Count Down, Event  -->
         <div class="relative bg-gradient-to-b from-[#1DBAC4] to-white pb-10 lg:pb-20 lg:min-h-screen z-0">
             <!-- Circle pattern -->
@@ -585,26 +791,25 @@
             </div>
             <!-- Count Down -->
             <div class="mb-6 2xl:mb-10 py-6 2xl:py-10 px-6">
-                <div class="text-center text-[#116368]  sm:text-lg md:text-xl uppercase font-medium tracking-wider">
-                    Registration
-                    will
-                    be closed
+                <div class="text-center text-[#116368]  sm:text-lg md:text-xl uppercase font-medium tracking-wider">Are
+                    you ready
+                    for HEF 2021?
                 </div>
                 <div class="mt-4 grid grid-cols-4 md:gap-4 max-w-lg mx-auto">
                     <div class="flex flex-col items-center text-[#116368] font-medium">
-                        <span class="text-3xl md:text-5xl">4</span>
+                        <span id="day" class="text-3xl md:text-5xl">4</span>
                         <span class="md:mt-1 text-sm sm:text-md">Days</span>
                     </div>
                     <div class="flex flex-col items-center text-[#116368] font-medium">
-                        <span class="text-3xl md:text-5xl">15</span>
+                        <span id="hour" class="text-3xl md:text-5xl">15</span>
                         <span class="md:mt-1 text-sm sm:text-md">Hours</span>
                     </div>
                     <div class="flex flex-col items-center text-[#116368] font-medium">
-                        <span class="text-3xl md:text-5xl">45</span>
+                        <span id="minute" class="text-3xl md:text-5xl">45</span>
                         <span class="md:mt-1 text-sm sm:text-md">Minutes</span>
                     </div>
                     <div class="flex flex-col items-center text-[#116368] font-medium">
-                        <span class="text-3xl md:text-5xl">12</span>
+                        <span id="second" class="text-3xl md:text-5xl">12</span>
                         <span class="md:mt-1 text-sm sm:text-md">Seconds</span>
                     </div>
                 </div>
@@ -620,22 +825,23 @@
                     <h2
                         class="mt-1 text-5xl 2xl:text-6xl text-[#063C40] font-extrabold md:max-w-md text-center md:text-left">
                         Hospital
-                        Engineering Week</h2>
-                    <div class="mt-4 text-xl uppercase tracking-widest font-medium text-center md:text-left">1 - 3
-                        October 2021
+                        Engineering Forum</h2>
+                    <div class="mt-4 text-xl uppercase tracking-widest font-medium text-center md:text-left">2, 16, and
+                        30 October
+                        2021
                     </div>
                 </div>
                 <div
                     class="mt-6 2xl:mt-0 flex-1 grid grid-cols-2 sm:grid-cols-4 gap-3 lg:gap-5 p-2 max-w-xl md:max-w-3xl mx-auto">
                     <a href="#"
                         class="bg-white flex flex-col items-center py-2 px-2 md:py-6 md:px-6 rounded-3xl shadow-2xl hover:shadow-none">
-                        <img class="w-12 md:w-20" src="{{ asset('assets/icons/about-hew.svg') }}" alt="About HEW 2021">
-                        <span class="mt-4 uppercase font-medium tracking-wider text-xs md:text-sm text-center">About HEW
+                        <img class="w-12 md:w-20" src="{{ asset('assets/icons/about-hew') }}.svg" alt="About HEF 2021">
+                        <span class="mt-4 uppercase font-medium tracking-wider text-xs md:text-sm text-center">About HEF
                             2021</span>
                     </a>
-                    <a href="#"
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeawVl6UT0m2DwsYryRt1Yf-NSFhSnIR-gE6Baq58qJYSxc_Q/viewform"
                         class="bg-white flex flex-col items-center py-2 px-2 md:py-6 md:px-6 rounded-3xl shadow-2xl hover:shadow-none">
-                        <img class="w-12 md:w-20" src="{{ asset('assets/icons/register-exhibitor.svg') }}"
+                        <img class="w-12 md:w-20" src="{{ asset('assets/icons/register-exhibitor') }}.svg"
                             alt="Register as Exhibitor">
                         <span class="mt-4 uppercase font-medium tracking-wider text-xs md:text-sm text-center">Register
                             as
@@ -662,7 +868,7 @@
                         <span class="mt-4 uppercase font-medium tracking-wider text-xs md:text-sm text-center">Seminar
                             Rundown</span>
                     </a>
-                    <a href="#"
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeawVl6UT0m2DwsYryRt1Yf-NSFhSnIR-gE6Baq58qJYSxc_Q/viewform"
                         class="bg-white flex flex-col items-center py-2 px-2 md:py-6 md:px-6 rounded-3xl shadow-2xl hover:shadow-none">
                         <img class="w-12 md:w-20" src="{{ asset('assets/icons/register-visitor.svg') }}"
                             alt="Register as Visitor">
@@ -678,7 +884,7 @@
                     </a>
                     <a href="#"
                         class="bg-white flex flex-col items-center py-2 px-2 md:py-6 md:px-6 rounded-3xl shadow-2xl hover:shadow-none">
-                        <img class="w-12 md:w-20" src="{{ asset('assets/icons/sponsor-partner.svg') }}"
+                        <img class="w-12 md:w-20" src="{{ asset('assets/icons/sponsor-partner') }}.svg"
                             alt="Sponsorship and Partner">
                         <span
                             class="mt-4 uppercase font-medium tracking-wider text-xs md:text-sm text-center">Sponsorship
@@ -765,7 +971,7 @@
                             <div class="text-md md:text-4xl font-extrabold text-white uppercase tracking-widest mb-4 z-10"
                                 style="text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">Exhibitor
                             </div>
-                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeawVl6UT0m2DwsYryRt1Yf-NSFhSnIR-gE6Baq58qJYSxc_Q/viewform"
+                            <a href="rhttps://docs.google.com/forms/d/e/1FAIpQLSeawVl6UT0m2DwsYryRt1Yf-NSFhSnIR-gE6Baq58qJYSxc_Q/viewform"
                                 class="bg-[#4A4A4A] text-white text-xs sm:text-md py-1 px-2 rounded-md md:rounded-lg uppercase tracking-wider font-medium shadow-2xl hover:shadow-none z-10">Register
                                 Here</a>
                         </div>
@@ -919,6 +1125,11 @@
       // Optional parameters
       direction: 'horizontal',
       loop: true,
+      autoplay:
+      {
+        delay: 4000,
+      },
+      speed: 1000,
 
       // If we need pagination
       pagination: {
@@ -938,6 +1149,7 @@
       },
     });
 
+    // ======== Sticky Navigation =========
     const navigation = document.getElementById('navigation');
     const header = document.getElementById('header');
 
@@ -952,6 +1164,35 @@
         navigation.classList.add('absolute')
       }
     })
+
+
+    // ========== Countdown ===========
+    const countDate = new Date('Oct 2, 2021 00:00:00').getTime();
+
+    function countDown() {
+      const now = new Date().getTime();
+      const gap = countDate - now;
+
+      const second = 1000;
+      const minute = second * 60;
+      const hour = minute * 60
+      const day = hour * 24
+
+      const d = Math.floor(gap / day);
+      const h = Math.floor((gap % day) / hour);
+      const m = Math.floor((gap % hour) / minute);
+      const s = Math.floor((gap % minute) / second);
+
+      document.getElementById('day').innerHTML = d;
+      document.getElementById('hour').innerHTML = h;
+      document.getElementById('minute').innerHTML = m;
+      document.getElementById('second').innerHTML = s;
+    }
+
+    setInterval(() => {
+      countDown()
+    }, 1000);
+
         </script>
     </body>
 

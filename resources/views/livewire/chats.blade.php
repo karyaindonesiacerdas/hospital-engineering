@@ -5,13 +5,12 @@
                 <!-- left column -->
                 <div class="col-md-12">
                     {{-- wire:poll.60s --}}
-                    <div class="messaging" wire:poll.5s>
+                    <div class="messaging" wire:poll>
                         <div class="inbox_msg">
                             <div class="inbox_people">
                                 <div class="headind_srch">
                                     <div class="recent_heading">
                                         <h4>Recents</h4>
-
                                     </div>
                                     {{-- <div class="srch_bar">
                                         <div class="stylish-input-group">
@@ -64,13 +63,28 @@
                                     @endforeach
                                 </div>
                             </div>
+                            @if (count($chatIds))
+                            <div class="headind_srch">
+                                <div class="recent_heading float-left text-left">
+                                    <h6>{{ count($chatIds) }} selected</h6>
+                                </div>
+                                <div class="recent_heading float-right text-right">
+                                    <button class="btn btn-sm btn-secondary" wire:click='cancelSelectIds'><i
+                                            class="far fa-times-circle"></i></button>
+                                    <button class="btn btn-sm btn-danger" wire:click="deleteSelectIds"
+                                        onclick="return confirm('Do you really want to delete the chat?') || event.stopImmediatePropagation()"><i
+                                            class="fas fa-trash"></i></button>
+                                </div>
+                            </div>
+                            @endif
                             <div class="mesgs">
                                 <div style="height: 550px;">
                                     @if ($receiver_id)
-                                    <div class="msg_history">
+                                    <div class="msg_history" style="height: {{ count($chatIds) ? '510px' : '560px' }};">
                                         @foreach ($chats as $chat)
                                         @if ($chat->sender_id == \Auth::id())
-                                        <div class="outgoing_msg">
+                                        <div class="outgoing_msg {{ in_array($chat->id, $chatIds) ? 'bg-secondary' : null }}"
+                                            wire:click='selectIds({{ $chat->id }})'>
                                             <div class="sent_msg">
                                                 <p>{{ $chat->message }}</p>
                                                 <span class="time_date"> {{ $chat->created_at }}</span>
