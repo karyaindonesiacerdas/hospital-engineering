@@ -32,10 +32,12 @@
                                                         alt="sunil">
                                                 </div>
                                                 <div class="chat_ib">
-                                                    <h5>{{ $user->name }} <span
+                                                    <h5>{{ $user->name }}
+                                                        {{-- <span
                                                             class="chat_date">{{ $latestChat['created_at'] }}</span>
+                                                        --}}
                                                     </h5>
-                                                    <p>{{ $latestChat['message'] }}</p>
+                                                    {{-- <p>{{ $latestChat['message'] }}</p> --}}
                                                 </div>
                                             </div>
                                         </div>
@@ -50,10 +52,11 @@
                                                         alt="sunil">
                                                 </div>
                                                 <div class="chat_ib">
-                                                    <h5>{{ $user->sender->name }} <span
-                                                            class="chat_date">{{ $latestChat['created_at'] }}</span>
+                                                    <h5>{{ $user->sender->name }}
+                                                        {{-- <span
+                                                        class="chat_date">{{ $latestChat['created_at'] }}</span> --}}
                                                     </h5>
-                                                    <p>{{ $latestChat['message'] }}</p>
+                                                    {{-- <p>{{ $latestChat['message'] }}</p> --}}
                                                 </div>
                                             </div>
                                         </div>

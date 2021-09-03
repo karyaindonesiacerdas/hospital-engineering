@@ -19,7 +19,7 @@ class HomeController extends Controller
         return view('home', compact('news'));
     }
 
-    public function aboutHew()
+    public function aboutHef()
     {
         # code...
     }
@@ -31,6 +31,16 @@ class HomeController extends Controller
 
     public function faqGeneral()
     {
-        # code...
+        return view('home.faq-general');
+    }
+
+    public function faqVisitor()
+    {
+        return view('home.faq-visitor');
+    }
+
+    public function faqExhibitor()
+    {
+        return view('home.faq-exhibitor');
     }
 }

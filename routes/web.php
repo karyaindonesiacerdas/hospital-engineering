@@ -21,16 +21,16 @@ Route::get('/', [HomeController::class, 'index']);
 
 Route::prefix('home')->group(function () {
     // OVERVIEW
-    Route::get('about-hew', [HomeController::class, 'aboutHew']);
+    Route::get('about-hef', [HomeController::class, 'aboutHef']);
     Route::get('about-iahe', [HomeController::class, 'aboutIahe']);
     Route::get('seminar-rundown', [HomeController::class, 'seminarRundown']);
     Route::get('news', [HomeController::class, 'news']);
     Route::get('important-dates', [HomeController::class, 'importantDates']);
 
     // FAQ
-    Route::get('faq-general', [HomeController::class, 'faqGeneral']);
-    Route::get('faq-visitor', [HomeController::class, 'faqVisitor']);
-    Route::get('faq-exhibitor', [HomeController::class, 'faqExhibitor']);
+    Route::get('faq-general', [HomeController::class, 'faqGeneral'])->name('faq.general');
+    Route::get('faq-visitor', [HomeController::class, 'faqVisitor'])->name('faq.visitor');
+    Route::get('faq-exhibitor', [HomeController::class, 'faqExhibitor'])->name('faq.exhibitor');
 });
 
 Route::prefix('register')->group(function () {
