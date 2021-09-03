@@ -14,7 +14,7 @@
                         style="text-shadow: 2px 2px rgba(0,0,0, 0.3);">Six Hospital Engineering Area</div>
                     <div class="text-2xl md:text-6xl 2xl:text-7xl md:leading-[80px] drop-shadow-xl text-white font-bold text-center md:text-left"
                         style="text-shadow: 2px 2px rgba(0,0,0, 0.3);">
-                        Hospital Building</div>
+                        Hospital Buildings</div>
                 </div>
             </div>
         </div>
@@ -29,7 +29,7 @@
                         style="text-shadow: 2px 2px rgba(0,0,0, 0.3);">Six Hospital Engineering Area</div>
                     <div class="text-2xl md:text-6xl 2xl:text-7xl md:leading-[80px] drop-shadow-xl text-white font-bold text-center md:text-left"
                         style="text-shadow: 2px 2px rgba(0,0,0, 0.3);">
-                        Hospital Mechanic</div>
+                        Hospital Mechanics</div>
                 </div>
             </div>
         </div>
@@ -44,7 +44,7 @@
                         style="text-shadow: 2px 2px rgba(0,0,0, 0.3);">Six Hospital Engineering Area</div>
                     <div class="text-2xl md:text-6xl 2xl:text-7xl md:leading-[80px] drop-shadow-xl text-white font-bold text-center md:text-left"
                         style="text-shadow: 2px 2px rgba(0,0,0, 0.3);">
-                        Hospital Electric</div>
+                        Hospital Electrics</div>
                 </div>
             </div>
         </div>
@@ -60,7 +60,7 @@
                         style="text-shadow: 2px 2px rgba(0,0,0, 0.3);">Six Hospital Engineering Area</div>
                     <div class="text-2xl md:text-6xl 2xl:text-7xl md:leading-[80px] drop-shadow-xl text-white font-bold text-center md:text-left"
                         style="text-shadow: 2px 2px rgba(0,0,0, 0.3);">
-                        Hospital Environment</div>
+                        Hospital Environments</div>
                 </div>
             </div>
         </div>
