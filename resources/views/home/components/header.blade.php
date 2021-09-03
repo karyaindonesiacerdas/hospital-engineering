@@ -128,7 +128,7 @@
                                     News
                                 </a>
 
-                                <a href="{{ route('overview.important-dates') }}"
+                                <a href="#"
                                     class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
                                     Important Dates
                                 </a>
@@ -216,7 +216,7 @@
                                     Why Exhibit?
                                 </a>
 
-                                <a href="{{ route('exhibitor.packages') }}"
+                                <a href="#"
                                     class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
                                     Packages
                                 </a>
@@ -291,7 +291,8 @@
                     </div>
                     <p class="mt-6 text-center text-base font-medium text-gray-500">
                         Already have an account?
-                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeawVl6UT0m2DwsYryRt1Yf-NSFhSnIR-gE6Baq58qJYSxc_Q/viewform" class="hover:text-[#116368] text-[#00B4BF]">
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeawVl6UT0m2DwsYryRt1Yf-NSFhSnIR-gE6Baq58qJYSxc_Q/viewform"
+                            class="hover:text-[#116368] text-[#00B4BF]">
                             Login
                         </a>
                     </p>
