@@ -21,11 +21,22 @@ Route::get('/', [HomeController::class, 'index']);
 
 Route::prefix('home')->group(function () {
     // OVERVIEW
-    Route::get('about-hef', [HomeController::class, 'aboutHef']);
-    Route::get('about-iahe', [HomeController::class, 'aboutIahe']);
-    Route::get('seminar-rundown', [HomeController::class, 'seminarRundown']);
-    Route::get('news', [HomeController::class, 'news']);
-    Route::get('important-dates', [HomeController::class, 'importantDates']);
+    Route::get('about-hef', [HomeController::class, 'aboutHef'])->name('overview.about-hef');
+    Route::get('about-iahe', [HomeController::class, 'aboutIahe'])->name('overview.about-iahe');
+    Route::get('webinar-rundown', [HomeController::class, 'webinarRundown'])->name('overview.webinar-rundown');
+    Route::get('news', [HomeController::class, 'news'])->name('overview.news');
+    // Route::get('important-dates', [HomeController::class, 'importantDates'])->name('overview.important-dates');
+
+    // EXHIBITOR
+    Route::get('exhibitor-guideline', [HomeController::class, 'exhibitorGuideline'])->name('exhibitor.guideline');
+    Route::get('who-exhibit', [HomeController::class, 'whoExhibit'])->name('exhibitor.who-exhibit');
+    Route::get('why-exhibit', [HomeController::class, 'whyExhibit'])->name('exhibitor.why-exhibit');
+    Route::get('packages', [HomeController::class, 'packages'])->name('exhibitor.packages');
+
+    // VISITOR
+    Route::get('visitor-guideline', [HomeController::class, 'visitorGuideline'])->name('visitor.guideline');
+    Route::get('why-attend', [HomeController::class, 'whyAttend'])->name('visitor.why-attend');
+    Route::get('who-attend', [HomeController::class, 'whoAttend'])->name('visitor.who-attend');
 
     // FAQ
     Route::get('faq-general', [HomeController::class, 'faqGeneral'])->name('faq.general');
@@ -49,7 +60,7 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
     Route::resource('/news', NewsController::class);
     Route::get('chat', Chats::class);
     Route::get('/company', [UserController::class, 'company'])->name('exhibitor.company');
-    Route::get('/guideline', [UserController::class, 'guideline'])->name('exhibitor.guideline');
+    // Route::get('/guideline', [UserController::class, 'guideline'])->name('exhibitor.guideline');
     Route::get('/certificate', [UserController::class, 'certificate'])->name('exhibitor.certificate');
 });
 

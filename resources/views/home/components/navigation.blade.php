@@ -4,7 +4,7 @@
     <div id="navigation-wrapper" class="max-w-7xl mx-auto w-full flex justify-between items-center z-50">
         <ul class="flex space-x-4 lg:space-x-12 font-medium items-center">
             <!-- Home -->
-            <li><a href="index.html"
+            <li><a href="#"
                     class="text-gray-200 hover:text-white cursor-pointer tracking-widest px-3 py-1.5 text-sm md:text-md font-bold uppercase"
                     style="text-shadow: 1px 1px 4px rgba(0,0,0,0.2);">Home</a>
             </li>
@@ -35,27 +35,27 @@
                     <div class="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
                         <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
 
-                            <a href="about-hef.html"
+                            <a href="{{ route('overview.about-hef') }}"
                                 class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
                                 About HEF
                             </a>
 
-                            <a href="about-iahe.html"
+                            <a href="{{ route('overview.about-iahe') }}"
                                 class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
                                 About IAHE
                             </a>
 
-                            <a href="webinar-rundown.html"
+                            <a href="{{ route('overview.webinar-rundown') }}"
                                 class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
                                 Webinar Rundown
                             </a>
 
-                            <a href="news.html"
+                            <a href="{{ route('overview.news') }}"
                                 class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
                                 News
                             </a>
 
-                            <a href="important-dates.html"
+                            <a href="#"
                                 class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
                                 Important Dates
                             </a>
@@ -91,17 +91,17 @@
                     <div class="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
                         <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
 
-                            <a href="#"
+                            <a href="{{ route('visitor.guideline') }}"
                                 class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
                                 Visitor Guideline
                             </a>
 
-                            <a href="who-attend.html"
+                            <a href="{{ route('visitor.who-attend') }}"
                                 class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
                                 Who Attends?
                             </a>
 
-                            <a href="why-attend.html"
+                            <a href="{{ route('visitor.why-attend') }}"
                                 class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
                                 Why Attend
                             </a>
@@ -137,22 +137,22 @@
                     <div class="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
                         <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
 
-                            <a href="#"
+                            <a href="{{ route('exhibitor.guideline') }}"
                                 class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
                                 Exhibitor Guideline
                             </a>
 
-                            <a href="who-exhibit.html"
+                            <a href="{{ route('exhibitor.who-exhibit') }}"
                                 class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
                                 Who Exhibit?
                             </a>
 
-                            <a href="why-exhibit.html"
+                            <a href="{{ route('exhibitor.why-exhibit') }}"
                                 class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
                                 Why Exhibit?
                             </a>
 
-                            <a href="packages.html"
+                            <a href="{{ route('exhibitor.packages') }}"
                                 class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
                                 Packages
                             </a>
@@ -242,12 +242,12 @@
                     <div class="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
                         <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
 
-                            <a href="register-visitor.html"
+                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeawVl6UT0m2DwsYryRt1Yf-NSFhSnIR-gE6Baq58qJYSxc_Q/viewform"
                                 class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
                                 Register as Visitor
                             </a>
 
-                            <a href="register-exhibitor.html"
+                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeawVl6UT0m2DwsYryRt1Yf-NSFhSnIR-gE6Baq58qJYSxc_Q/viewform"
                                 class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
                                 Register as Exhibitor
                             </a>
@@ -256,7 +256,7 @@
                     </div>
                 </div>
             </li>
-            <li><a href="login.html"
+            <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSeawVl6UT0m2DwsYryRt1Yf-NSFhSnIR-gE6Baq58qJYSxc_Q/viewform"
                     class="text-gray-200 hover:text-white cursor-pointer tracking-widest px-3 py-1.5 text-sm md:text-md font-bold border border-gray-200 hover:border-white rounded-md uppercase"
                     style="text-shadow: 1px 1px 4px rgba(0,0,0,0.2)">Login</a>
             </li>

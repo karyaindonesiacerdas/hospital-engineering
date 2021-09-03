@@ -109,22 +109,22 @@
                             <div x-description="Expandable link section, show/hide based on state." class="space-y-1"
                                 id="sub-menu-1" x-show="open">
 
-                                <a href="#"
+                                <a href="{{ route('overview.about-hef') }}"
                                     class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
                                     About HEF
                                 </a>
 
-                                <a href="#"
+                                <a href="{{ route('overview.about-iahe') }}"
                                     class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
                                     About IAHE
                                 </a>
 
-                                <a href="#"
+                                <a href="{{ route('overview.webinar-rundown') }}"
                                     class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
                                     Webinar Rundown
                                 </a>
 
-                                <a href="#"
+                                <a href="{{ route('overview.news') }}"
                                     class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
                                     News
                                 </a>
@@ -161,17 +161,17 @@
                             <div x-description="Expandable link section, show/hide based on state." class="space-y-1"
                                 id="sub-menu-1" x-show="open">
 
-                                <a href="#"
+                                <a href="{{ route('visitor.guideline') }}"
                                     class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
                                     Visitor Guideline
                                 </a>
 
-                                <a href="#"
+                                <a href="{{ route('visitor.who-attend') }}"
                                     class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
                                     Who Attends?
                                 </a>
 
-                                <a href="#"
+                                <a href="{{ route('visitor.why-attend') }}"
                                     class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
                                     Why Attend?
                                 </a>
@@ -202,35 +202,35 @@
                             <div x-description="Expandable link section, show/hide based on state." class="space-y-1"
                                 id="sub-menu-1" x-show="open">
 
-                                <a href="#"
+                               <a href="{{ route('exhibitor.guideline') }}"
                                     class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
                                     Exhibitor Guideline
                                 </a>
 
-                                <a href="#"
+                               <a href="{{ route('exhibitor.who-exhibit') }}"
                                     class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
                                     Who Exhibit?
                                 </a>
 
-                                <a href="#"
+                               <a href="{{ route('exhibitor.why-exhibit') }}"
                                     class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
                                     Why Exhibit?
                                 </a>
 
-                                <a href="#"
+                               <a href="{{ route('exhibitor.packages') }}"
                                     class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
                                     Packages
                                 </a>
 
-                                <a href="#"
+                                {{-- <a href="#"
                                     class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
                                     Exhibitor List
-                                </a>
+                                </a> --}}
 
-                                <a href="#"
+                                {{-- <a href="#"
                                     class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
                                     Sponsor & Partner
-                                </a>
+                                </a> --}}
                             </div>
                         </div>
 
@@ -263,12 +263,12 @@
                                     FAQ General & Technical
                                 </a>
 
-                                <a href="#"
+                                <a href="{{ route('faq.visitor') }}"
                                     class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
                                     FAQ Visitor
                                 </a>
 
-                                <a href="#"
+                                <a href="{{ route('faq.exhibitor') }}"
                                     class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
                                     FAQ Exhibitor
                                 </a>
@@ -281,11 +281,11 @@
             <div class="py-6 px-5 space-y-6">
                 <div>
                     <div class="grid grid-cols-2 gap-2">
-                        <a href="#"
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeawVl6UT0m2DwsYryRt1Yf-NSFhSnIR-gE6Baq58qJYSxc_Q/viewform"
                             class="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white hover:bg-[#116368] bg-[#00B4BF]">
                             Register as Exhibitor
                         </a>
-                        <a href="#"
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeawVl6UT0m2DwsYryRt1Yf-NSFhSnIR-gE6Baq58qJYSxc_Q/viewform"
                             class="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white hover:bg-[#116368] bg-[#00B4BF]">
                             Register as Visitor
                         </a>
