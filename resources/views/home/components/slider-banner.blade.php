@@ -136,22 +136,22 @@
                         <div class="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
                             <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
 
-                                <a href="#"
+                                <a href="{{ route('overview.about-hef') }}"
                                     class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
                                     About HEF
                                 </a>
 
-                                <a href="#"
+                                <a href="{{ route('overview.about-iahe') }}"
                                     class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
                                     About IAHE
                                 </a>
 
-                                <a href="#"
+                                <a href="{{ route('overview.webinar-rundown') }}"
                                     class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
                                     Webinar Rundown
                                 </a>
 
-                                <a href="#"
+                                <a href="{{ route('overview.news') }}"
                                     class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
                                     News
                                 </a>
@@ -192,17 +192,17 @@
                         <div class="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
                             <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
 
-                                <a href="#"
+                                <a href="{{ route('visitor.guideline') }}"
                                     class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
                                     Visitor Guideline
                                 </a>
 
-                                <a href="#"
+                                <a href="{{ route('visitor.who-attend') }}"
                                     class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
                                     Who Attends?
                                 </a>
 
-                                <a href="#"
+                                <a href="{{ route('visitor.why-attend') }}"
                                     class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
                                     Why Attend
                                 </a>
@@ -238,27 +238,27 @@
                         <div class="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
                             <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
 
-                                <a href="#"
+                                <a href="{{ route('exhibitor.guideline') }}"
                                     class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
                                     Exhibitor Guideline
                                 </a>
 
-                                <a href="#"
+                                <a href="{{ route('exhibitor.who-exhibit') }}"
                                     class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
                                     Who Exhibit?
                                 </a>
 
-                                <a href="#"
+                                <a href="{{ route('exhibitor.why-exhibit') }}"
                                     class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
                                     Why Exhibit?
                                 </a>
 
-                                <a href="#"
+                                <a href="{{ route('exhibitor.packages') }}"
                                     class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
                                     Packages
                                 </a>
 
-                                <a href="#"
+                                {{-- <a href="#"
                                     class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
                                     Exhibitor List
                                 </a>
@@ -266,7 +266,7 @@
                                 <a href="#"
                                     class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
                                     Sponsor & Partner
-                                </a>
+                                </a> --}}
 
                             </div>
                         </div>
@@ -304,12 +304,12 @@
                                     FAQ General & Technical
                                 </a>
 
-                                <a href="#"
+                                <a href="{{ route('faq.visitor') }}"
                                     class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
                                     FAQ Visitor
                                 </a>
 
-                                <a href="#"
+                                <a href="{{ route('faq.exhibitor') }}"
                                     class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
                                     FAQ Exhibitor
                                 </a>
