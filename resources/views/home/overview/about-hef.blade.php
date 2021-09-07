@@ -26,7 +26,7 @@
                 invited.
                 We
                 also
-                provide stands for around 100 local and international exhibitors. This event will be co-organised with
+                provide stands for around 100 local and international exhibitors. This event is co-organized by
                 Karya
                 Indonesia
                 Cerdas.
