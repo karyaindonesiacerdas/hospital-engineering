@@ -3,11 +3,24 @@
     <!-- Additional required wrapper -->
     <div class="swiper-wrapper ">
         <!-- Slides -->
+        <div class="swiper-slide relative bg-gradient-to-b from-[#00B4BF] to-transparent swiper-slide-active"
+            data-swiper-slide-index="0" role="group" aria-label="1 / 7" style="width: 1906px;">
+            <img class="object-cover w-full h-full mix-blend-darken swiper-slide"
+                src="{{ asset('assets/img/hospital-engineering-forum-2021.jpg') }}"
+                alt="Hospital Engineering Forum 2021">
+            <div class="mx-auto max-w-7xl w-full flex justify-center px-2">
+                <div class="absolute top-1/2 -translate-y-1/2">
+                    <div class="text-2xl md:text-6xl 2xl:text-7xl md:leading-[80px] drop-shadow-xl text-white font-bold text-center"
+                        style="text-shadow: 2px 2px 4px rgba(0,0,0, 0.5);">
+                        Hospital Engineering Forum 2021</div>
+                </div>
+            </div>
+        </div>
+
         <div style="background: linear-gradient(180deg, rgba(4, 176, 187, 0.71) 0%, rgba(0, 180, 191, 0) 99.99%, rgba(17, 99, 104, 0) 100%);"
             class="swiper-slide relative">
             <img class="object-cover w-full h-full mix-blend-darken swiper-slide"
-                src="https://images.unsplash.com/photo-1586773860418-d37222d8fce3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1052&q=80"
-                alt="MRI machine">
+                src="{{ asset('assets/img/hospital-building.jpg') }}" alt="MRI machine">
             <div class="mx-auto max-w-7xl w-full flex justify-center md:justify-end px-2">
                 <div class="absolute top-1/2 -translate-y-1/2 md:max-w-sm">
                     <div class="uppercase mb-1 text-xl font-bold drop-shadow-xl text-white text-center md:text-left"
@@ -52,8 +65,7 @@
         <div style="background: linear-gradient(180deg, rgba(4, 176, 187, 0.71) 0%, rgba(0, 180, 191, 0) 99.99%, rgba(17, 99, 104, 0) 100%);"
             class="swiper-slide relative">
             <img class="object-cover w-full h-full mix-blend-darken swiper-slide"
-                src="https://images.unsplash.com/photo-1586773860383-dab5f3bc1bcc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1013&q=80"
-                alt="MRI machine">
+                src="{{ asset('assets/img/hospital-environment.jpg') }}" alt="MRI machine">
             <div class="mx-auto max-w-7xl w-full flex justify-center md:justify-end px-2">
                 <div class="absolute top-1/2 -translate-y-1/2 md:max-w-sm">
                     <div class="uppercase mb-1 text-xl font-bold drop-shadow-xl text-white text-center md:text-left"
