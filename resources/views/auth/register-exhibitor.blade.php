@@ -104,8 +104,12 @@
                                         Email address
                                     </label>
                                     <div class="mt-1">
-                                        <input required id="email" name="email" type="email"
+                                        <input required id="email"  value="{{ old('email') }}" name="email" type="email"
                                             class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-[#00B4BF] focus:border-[#00B4BF] sm:text-sm">
+                                            <!-- Error Text -->
+                                            @error('email')
+                                            <span class="text-sm text-red-500">{{ $message }}</span>
+                                            @enderror
                                     </div>
                                 </div>
 
@@ -115,8 +119,11 @@
                                         Mobile (WhatsApp)
                                     </label>
                                     <div class="mt-1">
-                                        <input required id="mobile" name="mobile"
+                                        <input required id="mobile" value="{{ old('mobile') }}" name="mobile"
                                             class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-[#00B4BF] focus:border-[#00B4BF] sm:text-sm">
+                                            @error('mobile')
+                                            <span class="text-sm text-red-500">{{ $message }}</span>
+                                            @enderror
                                     </div>
                                 </div>
 
@@ -126,45 +133,42 @@
                                         Full Name (with title)
                                     </label>
                                     <div class="mt-1">
-                                        <input required id="name" name="name"
+                                        <input required id="name" value="{{ old('name') }}" name="name"
                                             class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-[#00B4BF] focus:border-[#00B4BF] sm:text-sm">
+                                            @error('name')
+                                            <span class="text-sm text-red-500">{{ $message }}</span>
+                                            @enderror
                                     </div>
                                 </div>
 
-                                <!-- Job Function -->
+                               <!-- Job Function -->
                                 <div>
                                     <label for="job_function" class="block text-sm font-medium text-gray-700">
                                         Job Function
                                     </label>
                                     <div class="mt-1">
-                                        <select required id="job_function" name="job_function"
-                                            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-[#00B4BF] focus:border-[#00B4BF] sm:text-sm">
+                                        <select required id="job_function" value="{{ old('job_function') }}" name="job_function"
+                                            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#00B4BF] focus:border-[#00B4BF] sm:text-sm">
                                             <option value="">Pilih</option>
-                                            <option value="Administration/ Office Management">Administration/ Office
-                                                Management</option>
-                                            <option value="Architect">Architect</option>
-                                            <option value="Consultant">Consultant</option>
-                                            <option value="Director">Director</option>
-                                            <option value="Engineer">Engineer</option>
-                                            <option value="Finance and Accounting">Finance and Accounting</option>
-                                            <option value="Human Resource">Human Resource</option>
-                                            <option value="Legal">Legal</option>
-                                            <option value="Logistic, Purchasing, & Procurement">Logistic, Purchasing, &
-                                                Procurement</option>
-                                            <option value="Manager">Manager</option>
-                                            <option value="Manufacturing & Production">Manufacturing & Production
+                                            <option {{ old('job_function') == 'Architect' ? 'selected' : null }} value="Architect">Architect</option>
+                                            <option {{ old('job_function') == 'Director' ? 'selected' : null }} value="Director">Director</option>
+                                            <option {{ old('job_function') == 'Doctor' ? 'selected' : null }} value="Doctor">
+                                                Doctor</option>
+                                            <option {{ old('job_function') == 'Engineer' ? 'selected' : null }} value="Engineer">Engineer</option>
+                                            <option {{ old('job_function') == 'Lecturer' ? 'selected' : null }} value="Lecturer">Lecturer</option>
+                                            <option {{ old('job_function') == 'Manager' ? 'selected' : null }} value="Manager">
+                                                Manager</option>
+                                            <option {{ old('job_function') == 'Nurse' ? 'selected' : null }} value="Nurse">Nurse
                                             </option>
-                                            <option value="Marketing">Marketing</option>
-                                            <option value="Operatin Management">Operatin Management</option>
-                                            <option value="Programmer/ Information and Communication Technology">
-                                                Programmer/ Information and
-                                                Communication Technology</option>
-                                            <option value="Research and Development">Research and Development</option>
-                                            <option value="Sales">Sales</option>
-                                            <option value="Supply Management">Supply Management</option>
-                                            <option value="Technician">Technician</option>
-                                            <option value="Other">Other</option>
+                                            <option {{ old('job_function') == 'Pharmacist' ? 'selected' : null }} value="Pharmacist">Pharmacist</option>
+                                            <option {{ old('job_function') == 'Programmer' ? 'selected' : null }} value="Programmer">Programmer</option>
+                                            <option {{ old('job_function') == 'Technician' ? 'selected' : null }} value="Technician">Technician</option>
+                                            <option {{ old('job_function') == 'Other' ? 'selected' : null }} value="Other">Other
+                                            </option>
                                         </select>
+                                        @error('job_function')
+                                        <span class="text-sm text-red-500">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -174,8 +178,11 @@
                                         Password
                                     </label>
                                     <div class="mt-1">
-                                        <input required id="password" name="password" type="password"
-                                            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-[#00B4BF] focus:border-[#00B4BF] sm:text-sm">
+                                        <input required id="password" value="{{ old('password') }}" name="password" type="password"
+                                            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#00B4BF] focus:border-[#00B4BF] sm:text-sm">
+                                        @error('password')
+                                        <span class="text-sm text-red-500">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -185,9 +192,12 @@
                                         Confirm Password
                                     </label>
                                     <div class="mt-1">
-                                        <input required id="password_confirmation" name="password_confirmation"
-                                            type="password"
-                                            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-[#00B4BF] focus:border-[#00B4BF] sm:text-sm">
+                                        <input required id="password_confirmation" value="{{ old('password_confirmation') }}"
+                                            name="password_confirmation" type="password"
+                                            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#00B4BF] focus:border-[#00B4BF] sm:text-sm">
+                                        @error('password_confirmation')
+                                        <span class="text-sm text-red-500">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
@@ -214,8 +224,11 @@
                                         Company Name
                                     </label>
                                     <div class="mt-1">
-                                        <input required id="company_name" name="company_name"
+                                        <input required id="company_name" value="{{ old('company_name') }}" name="company_name"
                                             class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-[#00B4BF] focus:border-[#00B4BF] sm:text-sm">
+                                            @error('company_name')
+                                            <span class="text-sm text-red-500">{{ $message }}</span>
+                                            @enderror
                                     </div>
                                 </div>
 
@@ -225,8 +238,11 @@
                                         Company Website
                                     </label>
                                     <div class="mt-1">
-                                        <input required id="company_website" name="company_website"
+                                        <input required id="company_website" value="{{ old('company_website') }}" name="company_website"
                                             class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-[#00B4BF] focus:border-[#00B4BF] sm:text-sm">
+                                            @error('company_website')
+                                            <span class="text-sm text-red-500">{{ $message }}</span>
+                                            @enderror
                                     </div>
                                 </div>
 
@@ -236,13 +252,17 @@
                                         Country
                                     </label>
                                     <div class="mt-1">
-                                        <select required id="country" name="country"
-                                            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-[#00B4BF] focus:border-[#00B4BF] sm:text-sm">
+                                        <select required id="country" value="{{ old('country') }}" name="country"
+                                            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#00B4BF] focus:border-[#00B4BF] sm:text-sm">
                                             <option value="">Pilih</option>
                                             @foreach ($countries as $country)
-                                            <option value="{{ $country['name'] }}">{{ $country['name'] }}</option>
+                                            <option value="{{ $country['name'] }}" {{ old("country") == $country['name'] ? "selected": ""}}>
+                                                {{ $country['name'] }}</option>
                                             @endforeach
                                         </select>
+                                        @error('country')
+                                        <span class="text-sm text-red-500">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -252,13 +272,18 @@
                                         Province
                                     </label>
                                     <div class="mt-1">
-                                        <select required id="province" name="province"
-                                            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-[#00B4BF] focus:border-[#00B4BF] sm:text-sm">
+                                        <select required id="province" value="{{ old('province') }}" name="province"
+                                            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#00B4BF] focus:border-[#00B4BF] sm:text-sm">
                                             <option value="">Pilih</option>
+                                            <option value="Non-Indonesian">Non-Indonesian</option>
                                             @foreach ($province as $item)
-                                            <option value="{{ $item['nama'] }}">{{ $item['nama'] }}</option>
+                                            <option value="{{ $item['nama'] }}" {{ old("province") == $item['nama'] ? "selected": ""}}>
+                                                {{ $item['nama'] }}</option>
                                             @endforeach
                                         </select>
+                                        @error('province')
+                                        <span class="text-sm text-red-500">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -317,6 +342,9 @@
                                             <span id="pricing-plans-0-label" class="text-gray-900 ml-3">Other</span>
                                         </div>
                                     </div>
+                                    @error('business_nature')
+                                    <span class="text-sm text-red-500">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                         </div>

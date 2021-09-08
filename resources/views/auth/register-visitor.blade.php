@@ -74,15 +74,6 @@
                     </a>
                     <h2 class="text-3xl text-gray-800 font-bold">Register as Visitor</h2>
                 </div>
-                @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-                @endif
                 <form action="{{ route('register') }}" method="POST">
                     @csrf
                     <input type="hidden" name="role" value="visitor">
@@ -95,8 +86,11 @@
                                 Email address
                             </label>
                             <div class="mt-1">
-                                <input required id="email" name="email" type="email"
-                                    class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#00B4BF] focus:border-[#00B4BF] sm:text-sm">
+                                <input required id="email" value="{{ old('email') }}" name="email" type="email"
+                                    class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#00B4BF] focus:border-[#00B4BF] sm:text-sm is-invalid">
+                                @error('email')
+                                <span class="text-sm text-red-500">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
 
@@ -106,8 +100,11 @@
                                 Mobile (WhatsApp)
                             </label>
                             <div class="mt-1">
-                                <input required id="mobile" name="mobile"
+                                <input required id="mobile" value="{{ old('mobile') }}" name="mobile"
                                     class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#00B4BF] focus:border-[#00B4BF] sm:text-sm">
+                                @error('mobile')
+                                <span class="text-sm text-red-500">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
 
@@ -117,8 +114,11 @@
                                 Full Name (with title)
                             </label>
                             <div class="mt-1">
-                                <input required id="name" name="name"
+                                <input required id="name" value="{{ old('name') }}" name="name"
                                     class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#00B4BF] focus:border-[#00B4BF] sm:text-sm">
+                                @error('name')
+                                <span class="text-sm text-red-500">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
 
@@ -128,21 +128,35 @@
                                 Job Function
                             </label>
                             <div class="mt-1">
-                                <select required id="job_function" name="job_function"
+                                <select required id="job_function" value="{{ old('job_function') }}" name="job_function"
                                     class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#00B4BF] focus:border-[#00B4BF] sm:text-sm">
                                     <option value="">Pilih</option>
-                                    <option value="Architect">Architect</option>
-                                    <option value="Director">Director</option>
-                                    <option value="Doctor">Doctor</option>
-                                    <option value="Engineer">Engineer</option>
-                                    <option value="Lecturer">Lecturer</option>
-                                    <option value="Manager">Manager</option>
-                                    <option value="Nurse">Nurse</option>
-                                    <option value="Pharmacist">Pharmacist</option>
-                                    <option value="Programmer">Programmer</option>
-                                    <option value="Technician">Technician</option>
-                                    <option value="Other">Other</option>
+                                    <option {{ old('job_function') == 'Architect' ? 'selected' : null }}
+                                        value="Architect">Architect</option>
+                                    <option {{ old('job_function') == 'Director' ? 'selected' : null }}
+                                        value="Director">Director</option>
+                                    <option {{ old('job_function') == 'Doctor' ? 'selected' : null }} value="Doctor">
+                                        Doctor</option>
+                                    <option {{ old('job_function') == 'Engineer' ? 'selected' : null }}
+                                        value="Engineer">Engineer</option>
+                                    <option {{ old('job_function') == 'Lecturer' ? 'selected' : null }}
+                                        value="Lecturer">Lecturer</option>
+                                    <option {{ old('job_function') == 'Manager' ? 'selected' : null }} value="Manager">
+                                        Manager</option>
+                                    <option {{ old('job_function') == 'Nurse' ? 'selected' : null }} value="Nurse">Nurse
+                                    </option>
+                                    <option {{ old('job_function') == 'Pharmacist' ? 'selected' : null }}
+                                        value="Pharmacist">Pharmacist</option>
+                                    <option {{ old('job_function') == 'Programmer' ? 'selected' : null }}
+                                        value="Programmer">Programmer</option>
+                                    <option {{ old('job_function') == 'Technician' ? 'selected' : null }}
+                                        value="Technician">Technician</option>
+                                    <option {{ old('job_function') == 'Other' ? 'selected' : null }} value="Other">Other
+                                    </option>
                                 </select>
+                                @error('job_function')
+                                <span class="text-sm text-red-500">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
 
@@ -152,8 +166,12 @@
                                 Password
                             </label>
                             <div class="mt-1">
-                                <input required id="password" name="password" type="password"
+                                <input required id="password" value="{{ old('password') }}" name="password"
+                                    type="password"
                                     class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#00B4BF] focus:border-[#00B4BF] sm:text-sm">
+                                @error('password')
+                                <span class="text-sm text-red-500">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
 
@@ -163,8 +181,12 @@
                                 Confirm Password
                             </label>
                             <div class="mt-1">
-                                <input required id="password_confirmation" name="password_confirmation" type="password"
+                                <input required id="password_confirmation" value="{{ old('password_confirmation') }}"
+                                    name="password_confirmation" type="password"
                                     class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#00B4BF] focus:border-[#00B4BF] sm:text-sm">
+                                @error('password_confirmation')
+                                <span class="text-sm text-red-500">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
 
@@ -176,8 +198,12 @@
                                 Institution Name
                             </label>
                             <div class="mt-1">
-                                <input required id="institution_name" name="institution_name"
+                                <input required id="institution_name" value="{{ old('institution_name') }}"
+                                    name="institution_name"
                                     class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#00B4BF] focus:border-[#00B4BF] sm:text-sm">
+                                @error('institution_name')
+                                <span class="text-sm text-red-500">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
 
@@ -190,31 +216,73 @@
                                 <select required id="institution_type" name="institution_type"
                                     class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#00B4BF] focus:border-[#00B4BF] sm:text-sm">
                                     <option value="">Pilih</option>
-                                    <option value="Comunity Health Services">Comunity Health Services</option>
-                                    <option value="Consultancy Services">Consultancy Services</option>
-                                    <option value="Contractor (Hospital)">Contractor (Hospital)</option>
-                                    <option value="Dealers & Distributors">Dealers & Distributors</option>
-                                    <option value="Educational Institute (Medical)">Educational Institute (Medical)
+                                    <option value="Comunity Health Services"
+                                        {{ old('institution_type') == 'Comunity Health Services' ? 'selected' : null }}>
+                                        Comunity Health Services</option>
+                                    <option value="Consultancy Services" {{ old('institution_type') == 'Consultancy
+                                        Services' ? 'selected' : null }}>Consultancy
+                                        Services</option>
+                                    <option value="Contractor (Hospital)" {{ old('institution_type') == 'Contractor
+                                        (Hospital)' ? 'selected' : null }}>Contractor
+                                        (Hospital)</option>
+                                    <option value="Dealers & Distributors" {{ old('institution_type') == 'Dealers &
+                                        Distributors' ? 'selected' : null }}>Dealers &
+                                        Distributors</option>
+                                    <option value="Educational Institute (Medical)" {{ old('institution_type') == 'Educational
+                                        Institute (Medical)' ? 'selected' : null }}>Educational
+                                        Institute (Medical)
                                     </option>
-                                    <option value="Educational Institute (Non-Medical)">Educational Institute
+                                    <option value="Educational Institute (Non-Medical)" {{ old('institution_type') == 'Educational
+                                        Institute
+                                        (Non-Medical)' ? 'selected' : null }}>Educational
+                                        Institute
                                         (Non-Medical)</option>
-                                    <option value="Government (Ministry of Health)">Government (Ministry of Health)
+                                    <option value="Government (Ministry of Health)" {{ old('institution_type') == 'Government
+                                        (Ministry of Health)' ? 'selected' : null }}>Government
+                                        (Ministry of Health)
                                     </option>
-                                    <option value="Hospital (Private)">Hospital (Private)</option>
-                                    <option value="Hospital (Public)">Hospital (Public)</option>
-                                    <option value="Import & Export (Healthcare)">Import & Export (Healthcare)</option>
-                                    <option value="Information Technology/ Software (Healthcare)">Information
+                                    <option value="Hospital (Private)" {{ old('institution_type') == 'Hospital
+                                        (Private)' ? 'selected' : null }}>Hospital
+                                        (Private)</option>
+                                    <option value="Hospital (Public)"
+                                        {{ old('institution_type') == 'Hospital (Public)' ? 'selected' : null }}>
+                                        Hospital (Public)
+                                    </option>
+                                    <option value="Import & Export (Healthcare)" {{ old('institution_type') == 'Import & Export
+                                        (Healthcare)' ? 'selected' : null }}>Import & Export
+                                        (Healthcare)</option>
+                                    <option value="Information Technology/ Software (Healthcare)"
+                                        {{ old('institution_type') == 'Information Technology/ Software (Healthcare)' ? 'selected' : null }}>
+                                        Information
                                         Technology/ Software
                                         (Healthcare)</option>
-                                    <option value="Investor (Healthcare)">Investor (Healthcare)</option>
-                                    <option value="Laboratories (Medical)">Laboratories (Medical)</option>
-                                    <option value="Laboratory">Laboratory</option>
-                                    <option value="Manufacturer (Medical)">Manufacturer (Medical)</option>
-                                    <option value="Medical Practice">Medical Practice</option>
-                                    <option value="Medical Travel">Medical Travel</option>
-                                    <option value="Technology (Medical)">Technology (Medical)</option>
-                                    <option value="Other">Other</option>
+                                    <option value="Investor (Healthcare)"
+                                        {{ old('institution_type') == 'Investor (Healthcare)' ? 'selected' : null }}>
+                                        Investor (Healthcare)</option>
+                                    <option value="Laboratories (Medical)"
+                                        {{ old('institution_type') == 'Laboratories (Medical)' ? 'selected' : null }}>
+                                        Laboratories (Medical)</option>
+                                    <option value="Laboratory"
+                                        {{ old('institution_type') == 'Laboratory' ? 'selected' : null }}>Laboratory
+                                    </option>
+                                    <option value="Manufacturer (Medical)"
+                                        {{ old('institution_type') == 'Manufacturer (Medical)' ? 'selected' : null }}>
+                                        Manufacturer (Medical)</option>
+                                    <option value="Medical Practice"
+                                        {{ old('institution_type') == 'Medical Practice' ? 'selected' : null }}>Medical
+                                        Practice</option>
+                                    <option value="Medical Travel"
+                                        {{ old('institution_type') == 'Medical Travel' ? 'selected' : null }}>Medical
+                                        Travel</option>
+                                    <option value="Technology (Medical)"
+                                        {{ old('institution_type') == 'Technology (Medical)' ? 'selected' : null }}>
+                                        Technology (Medical)</option>
+                                    <option value="Other" {{ old('institution_type') == 'Other' ? 'selected' : null }}>
+                                        Other</option>
                                 </select>
+                                @error('institution_type')
+                                <span class="text-sm text-red-500">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
 
@@ -224,13 +292,18 @@
                                 Country
                             </label>
                             <div class="mt-1">
-                                <select required id="country" name="country"
+                                <select required id="country" value="{{ old('country') }}" name="country"
                                     class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#00B4BF] focus:border-[#00B4BF] sm:text-sm">
                                     <option value="">Pilih</option>
                                     @foreach ($countries as $country)
-                                    <option value="{{ $country['name'] }}">{{ $country['name'] }}</option>
+                                    <option value="{{ $country['name'] }}"
+                                        {{ old("country") == $country['name'] ? "selected": ""}}>
+                                        {{ $country['name'] }}</option>
                                     @endforeach
                                 </select>
+                                @error('country')
+                                <span class="text-sm text-red-500">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
 
@@ -240,13 +313,19 @@
                                 Province
                             </label>
                             <div class="mt-1">
-                                <select required id="province" name="province"
+                                <select required id="province" value="{{ old('province') }}" name="province"
                                     class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#00B4BF] focus:border-[#00B4BF] sm:text-sm">
                                     <option value="">Pilih</option>
+                                    <option value="Non-Indonesian">Non-Indonesian</option>
                                     @foreach ($province as $item)
-                                    <option value="{{ $item['nama'] }}">{{ $item['nama'] }}</option>
+                                    <option value="{{ $item['nama'] }}"
+                                        {{ old("province") == $item['nama'] ? "selected": ""}}>
+                                        {{ $item['nama'] }}</option>
                                     @endforeach
                                 </select>
+                                @error('province')
+                                <span class="text-sm text-red-500">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
 
@@ -256,17 +335,35 @@
                                 Visitor Type
                             </label>
                             <div class="mt-1">
-                                <select required id="visitor_type" name="visitor_type"
+                                <select required id="visitor_type" value="{{ old('visitor_type') }}" name="visitor_type"
                                     class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#00B4BF] focus:border-[#00B4BF] sm:text-sm">
                                     <option value="">Pilih</option>
-                                    <option value="Hospital Management Staff">Hospital Management Staff</option>
-                                    <option value="Hospital Clinical Staff">Hospital Clinical Staff</option>
-                                    <option value="Hospital Engineering Staff">Hospital Engineering Staff</option>
-                                    <option value="Biomedical Engineering">Biomedical Engineering</option>
-                                    <option value="Medical Doctor">Medical Doctor</option>
-                                    <option value="Government Staff">Government Staff</option>
-                                    <option value="University Lecturer">University Lecturer</option>
+                                    <option value="Hospital Management Staff"
+                                        {{ old('visitor_type') == 'Hospital Management Staff' ? 'selected' : null }}>
+                                        Hospital Management Staff</option>
+                                    <option value="Hospital Clinical Staff"
+                                        {{ old('visitor_type') == 'Hospital Clinical Staff' ? 'selected' : null }}>
+                                        Hospital Clinical Staff</option>
+                                    <option value="Hospital Engineering Staff"
+                                        {{ old('visitor_type') == 'Hospital Engineering Staff' ? 'selected' : null }}>
+                                        Hospital Engineering Staff</option>
+                                    <option value="Biomedical Engineering"
+                                        {{ old('visitor_type') == 'Biomedical Engineering' ? 'selected' : null }}>
+                                        Biomedical Engineering</option>
+                                    <option value="Medical Doctor"
+                                        {{ old('visitor_type') == 'Medical Doctor' ? 'selected' : null }}>Medical Doctor
+                                    </option>
+                                    <option value="Government Staff"
+                                        {{ old('visitor_type') == 'Government Staff' ? 'selected' : null }}>Government
+                                        Staff</option>
+                                    <option value="University Lecturer"
+                                        {{ old('visitor_type') == 'University Lecturer' ? 'selected' : null }}>
+                                        University
+                                        Lecturer</option>
                                 </select>
+                                @error('visitor_type')
+                                <span class="text-sm text-red-500">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
 
@@ -322,6 +419,9 @@
                                     <span id="pricing-plans-0-label" class="text-gray-900 ml-3">Other</span>
                                 </div>
                             </div>
+                            @error('product_interest')
+                            <span class="text-sm text-red-500">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <!-- Purpose of Visiting -->
@@ -362,6 +462,9 @@
                                     <span id="pricing-plans-0-label" class="text-gray-900 ml-3">Other</span>
                                 </div>
                             </div>
+                            @error('visit_purpose')
+                            <span class="text-sm text-red-500">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <!-- Have registered in SEHAT-RI -->
@@ -386,9 +489,25 @@
                                     <span id="pricing-plans-0-label" class="text-gray-900 ml-3">I Forget</span>
                                 </div>
                             </div>
+                            @error('member_sehat_ri')
+                            <span class="text-sm text-red-500">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="md:col-span-2">
+                            <div class="mb-1 text-sm text-gray-700">By registering for HEF 2021, you will automatically
+                                become a
+                                sehat-RI member and we will send you a
+                                referal code to your
+                                email later. This referal code is used to utilize the sehat-RI application.</div>
+                            <div class="flex items-center space-x-1">
+                                <input type="checkbox" required
+                                    class="h-4 w-4 text-[#00B4BF] border-gray-300 focus:ring-[#00B4BF]">
+                                <span class="text-sm text-gray-700">I
+                                    understand
+                                    and accept the condition</span>
+                            </div>
                         </div>
                     </div>
-
 
                     <div>
                         <button type="submit"

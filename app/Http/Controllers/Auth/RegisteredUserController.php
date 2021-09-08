@@ -33,12 +33,37 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'mobile' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+        if ($request->role == 'visitor') {
+            $request->validate([
+                'email' => 'required|string|email|max:255|unique:users',
+                'mobile' => 'required|string|max:255',
+                'name' => 'required|string|max:255',
+                'job_function' => 'required',
+                'password' => ['required', 'confirmed', Rules\Password::defaults()],
+                'institution_name' => 'required',
+                'institution_type' => 'required',
+                'country' => 'required',
+                'province' => 'required',
+                'visitor_type' => 'required',
+                'product_interest' => 'required',
+                'visit_purpose' => 'required',
+                'member_sehat_ri' => 'required',
+            ]);
+        }
+        if ($request->role == 'exhibitor') {
+            $request->validate([
+                'email' => 'required|string|email|max:255|unique:users',
+                'mobile' => 'required|string|max:255',
+                'name' => 'required|string|max:255',
+                'job_function' => 'required',
+                'password' => ['required', 'confirmed', Rules\Password::defaults()],
+                'company_name' => 'required',
+                'company_website' => 'required',
+                'country' => 'required',
+                'province' => 'required',
+                'business_nature' => 'required',
+            ]);
+        }
 
         $data = $request->except('password_confirmation');
         $data['password'] = Hash::make($request->password);

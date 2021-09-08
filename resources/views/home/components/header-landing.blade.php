@@ -8,9 +8,9 @@
                 Hospital
                 Engineering Forum 2021
             </div>
-            <div class="hidden sm:block text-xs xl:text-md uppercase text-gray-600 tracking-wider">Plan your
-                hospital with
-                the latest technologies!
+            <div class="hidden sm:block text-xs xl:text-md uppercase text-gray-600 tracking-wider">
+                {{-- Plan your hospital with the latest technologies! --}}
+                {{ trans('messages.welcome') }}
             </div>
         </div>
     </div>

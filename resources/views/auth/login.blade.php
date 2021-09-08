@@ -85,6 +85,10 @@
                         <div class="mt-1">
                             <input required id="email" name="email" type="email"
                                 class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#00B4BF] focus:border-[#00B4BF] sm:text-sm">
+                            <!-- Error Text -->
+                            @error('email')
+                            <span class="text-sm text-red-500">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
 
@@ -96,6 +100,10 @@
                         <div class="mt-1">
                             <input required id="password" name="password" type="password"
                                 class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#00B4BF] focus:border-[#00B4BF] sm:text-sm">
+                            <!-- Error Text -->
+                            @error('password')
+                            <span class="text-sm text-red-500">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
 

@@ -10,14 +10,17 @@ use App\Http\Controllers\UserController;
 use App\Http\Livewire\Chats;
 use App\Models\Chat;
 use App\Models\User;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
-Route::get('/tes', function () {
-    // return auth()->id();
-    return $users = Chat::where('receiver_id', auth()->id())->orWhere('sender_id', auth()->id())->latest()->first();
-})->middleware('auth');
+Route::get('/lang', function (Request $request) {
+    $locale = $request->input('locale', 'en');
+    App::setLocale($locale);
+    return view('demo');
+});
 
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'index'])->middleware('set.locale');
 
 Route::prefix('home')->group(function () {
     // OVERVIEW
