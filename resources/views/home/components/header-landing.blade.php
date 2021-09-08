@@ -9,7 +9,7 @@
                 Engineering Forum 2021
             </div>
             <div class="hidden sm:block text-xs xl:text-md uppercase text-gray-600 tracking-wider">
-                Plan your hospital with the latest technologies!
+                Plan your hospital with the latest technologies! _
             </div>
         </div>
     </div>
