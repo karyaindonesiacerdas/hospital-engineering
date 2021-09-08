@@ -12,7 +12,7 @@
         separately
     </p>
     <div class="my-4">
-        <img src="assets/packages.png" alt="Packages">
+        <img src="{{ asset('assets/img/packages.png') }}" alt="Packages">
     </div>
     <p class="max-w-5xl text-lg leading-relaxed lg:text-xl lg:leading-loose text-gray-600">For more information about
         the price, you can contact us in +62 858 9377 7283 (Adrian).</p>

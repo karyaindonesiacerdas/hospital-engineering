@@ -59,44 +59,51 @@
             navigation.classList.add('static')
         }
     });
+
     // FAQ
     const faq = [
     {
-        question: "I want to attend HEF 2021. How can I register?",
-        answer: [
-        { text: "If you are interested in attending HEF 2021, please fill your details in the registration form here:" },
-        { text: "Register as Visitor", link: "register-visitor.html" },
-        { text: "For further information, you can contact us in +62 858 9377 7283 (Adrian)." }
-        ]
+    question: "I want to attend HEF 2021. How can I register?",
+    answer: [
+    { text: "If you are interested in attending HEF 2021, please fill your details in the registration form here:" },
+    { text: "Register as Visitor", link: "{{ route('register.visitor') }}" },
+    { text: "For further information, you can contact us in +62 858 9377 7283 (Adrian)." }
+    ]
     },
     {
-        question: "Is there a participation fee for HEF 2021?",
-        answer: [
-        { text: "In HEF 2021, you’ll be able to: " },
-        { text: "1. Watch seminars and participate in live Q&A sessions with the speakers" },
-        { text: "2. View a wide range of products from 6 hospital engineering areas exhibitors and engage with company representatives" },
-        { text: "3. Consult with consultants or companies for free" },
-        ]
+    question: "Is there a participation fee for HEF 2021?",
+    answer: [
+    { text: "No, it’s completely free of charge to participate as visitors in our event! You can share this good news to your colleagues that might be interested in joining this event as well!" },
+    ]
     },
     {
-        question: "What’s the benefit of attending HEF 2021?",
-        answer: [
-        { text: "To see the benefits of attending HEF 2021, please visit the Why Attend? page under Visitor Menu or click the link below" }, {
-            text: "Why Attend", link: "why-attend.html"
-        }
-        ]
+    question: "What can I expect from this event?",
+    answer: [
+    { text: "In HEF 2021, you’ll be able to: " },
+    { text: "1. Watch seminars and participate in live Q&A sessions with the speakers" },
+    { text: "2. View a wide range of products from 6 hospital engineering areas exhibitors and engage with company representatives" },
+    { text: "3. Consult with consultants or companies for free" },
+    ]
     },
     {
-        question: "Can I talk to people on the stand?",
-        answer: [
-        { text: "You can communicate with exhibitors in several ways. One way of communicating with the exhibitors is to message them via live chat and leave a question about their products or services and the stand representative will reply back as soon as possible. Alternatively, you can book a 1 on 1 meeting session with the exhibitors." }
-        ]
+    question: "What’s the benefit of attending HEF 2021?",
+    answer: [
+    { text: "To see the benefits of attending HEF 2021, please visit the Why Attend? page under Visitor Menu or click the link below" }, {
+    text: "Why Attend", link: "{{ route('visitor.why-attend') }}"
+    }
+    ]
     },
     {
-        question: "How do I make an enquiry about a product I’ve seen?",
-        answer: [
-        { "text": "If you’re interested in the products of a company, you can book a 1 on 1 meeting session to enquire about the products and negotiate with the company representative." }
-        ]
+    question: "Can I talk to people on the stand?",
+    answer: [
+    { text: "You can communicate with exhibitors in several ways. One way of communicating with the exhibitors is to message them via live chat and leave a question about their products or services and the stand representative will reply back as soon as possible. Alternatively, you can book a 1 on 1 meeting session with the exhibitors." }
+    ]
+    },
+    {
+    question: "How do I make an enquiry about a product I’ve seen?",
+    answer: [
+    { "text": "If you’re interested in the products of a company, you can book a 1 on 1 meeting session to enquire about the products and negotiate with the company representative." }
+    ]
     },
     ];
 </script>
