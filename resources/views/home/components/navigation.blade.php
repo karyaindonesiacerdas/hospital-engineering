@@ -152,7 +152,7 @@
                                 Why Exhibit?
                             </a>
 
-                            <a href="#"
+                            <a href="{{ route('exhibitor.packages') }}"
                                 class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
                                 Packages
                             </a>
