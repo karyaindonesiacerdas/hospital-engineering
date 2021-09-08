@@ -20,7 +20,7 @@ Route::get('/lang', function (Request $request) {
     return view('demo');
 });
 
-Route::get('/', [HomeController::class, 'index'])->middleware('set.locale');
+Route::get('/', [HomeController::class, 'index']);
 
 Route::prefix('home')->group(function () {
     // OVERVIEW
