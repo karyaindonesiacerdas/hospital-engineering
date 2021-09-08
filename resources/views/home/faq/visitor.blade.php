@@ -66,7 +66,7 @@
     question: "I want to attend HEF 2021. How can I register?",
     answer: [
     { text: "If you are interested in attending HEF 2021, please fill your details in the registration form here:" },
-    { text: "Register as Visitor", link: "{{ route('register.visitor') }}" },
+    { text: "Register as Visitor", link: "https://docs.google.com/forms/d/e/1FAIpQLSeawVl6UT0m2DwsYryRt1Yf-NSFhSnIR-gE6Baq58qJYSxc_Q/viewform" },
     { text: "For further information, you can contact us in +62 858 9377 7283 (Adrian)." }
     ]
     },
