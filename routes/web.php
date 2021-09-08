@@ -20,7 +20,7 @@ Route::get('/lang', function (Request $request) {
     return view('demo');
 });
 
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::prefix('home')->group(function () {
     // OVERVIEW

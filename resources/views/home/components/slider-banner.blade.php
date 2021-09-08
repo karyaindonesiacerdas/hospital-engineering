@@ -117,7 +117,7 @@
         <div id="navigation-wrapper" class="max-w-7xl mx-auto w-full flex justify-between items-center z-50">
             <ul class="flex space-x-4 lg:space-x-12 font-medium items-center">
                 <!-- Home -->
-                <li><a href="#"
+                <li><a href="{{ route('home') }}"
                         class="text-gray-200 hover:text-white cursor-pointer tracking-widest px-3 py-1.5 text-sm md:text-md font-bold uppercase"
                         style="text-shadow: 1px 1px 4px rgba(0,0,0,0.2);">Home</a>
                 </li>
@@ -265,7 +265,7 @@
                                     Why Exhibit?
                                 </a>
 
-                                <a href="#"
+                                <a href="{{ route('exhibitor.packages') }}"
                                     class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
                                     Packages
                                 </a>

@@ -71,7 +71,7 @@
                 <div class="mt-6">
                     <nav class="grid gap-y-4">
                         <!-- Home -->
-                        <a href="#"
+                        <a href="{{ route('home') }}"
                             class="bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900 group w-full flex items-center pl-2 pr-1 py-2 text-left text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-[#00B4BF]">
                             <!-- Heroicon name: outline/chart-bar -->
                             <svg class="flex-shrink-0 h-6 w-6 text-[#00B4BF]" xmlns="http://www.w3.org/2000/svg"
