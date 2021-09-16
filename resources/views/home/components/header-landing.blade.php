@@ -20,12 +20,6 @@
             Select Language
         </label>
         <form action="myservlet.do" method="POST">
-            <select name="myselect" id="myselect" onchange="this.form.submit()">
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-                <option value="4">Four</option>
-            </select>
             <select name="Language" id="language"
                 class="block appearance-none w-full pl-3 pr-8 py-1.5 sm:py-2 border  rounded-md placeholder-gray-400 focus:outline-none focus:ring-[#00B4BF] focus:border-[#00B4BF] text-xs sm:text-sm border-gray-300">
                 <option value="EN" selected>English</option>
