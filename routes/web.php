@@ -3,6 +3,7 @@
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProductController;
@@ -20,15 +21,26 @@ Route::get('/lang', function (Request $request) {
     return view('demo');
 });
 
+// DashboardController
+Route::get('/main-hall', [DashboardController::class, 'mainHall'])->name('main-hall');
+Route::get('/live-schedule', [DashboardController::class, 'liveSchedule'])->name('live-schedule');
+Route::get('/consultation', [DashboardController::class, 'consultation'])->name('consultation');
+Route::get('/exhibitor-list', [DashboardController::class, 'exhibitorList'])->name('exhibitor-list');
+
+
+
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/under-construction', [HomeController::class, 'maintenance'])->name('maintenance');
 
 Route::prefix('home')->group(function () {
     // OVERVIEW
     Route::get('about-hef', [HomeController::class, 'aboutHef'])->name('overview.about-hef');
     Route::get('about-iahe', [HomeController::class, 'aboutIahe'])->name('overview.about-iahe');
+    Route::get('programs', [HomeController::class, 'programs'])->name('overview.programs');
     Route::get('webinar-rundown', [HomeController::class, 'webinarRundown'])->name('overview.webinar-rundown');
     Route::get('news', [HomeController::class, 'news'])->name('overview.news');
-    // Route::get('important-dates', [HomeController::class, 'importantDates'])->name('overview.important-dates');
+    Route::get('important-dates', [HomeController::class, 'importantDates'])->name('overview.important-dates');
 
     // EXHIBITOR
     Route::get('exhibitor-guideline', [HomeController::class, 'exhibitorGuideline'])->name('exhibitor.guideline');

@@ -2,19 +2,15 @@
 <section class="bg-[#25243A]">
     <div class="max-w-7xl mx-auto pt-6 md:pt-20 md:pb-28 px-2 grid md:grid-cols-2 gap-6 items-center overflow-hidden">
         <div>
-            <div class="text-[#00B4BF] uppercase font-medium text-lg tracking-widest">Contact</div>
-            <h3 class="mt-2 text-3xl font-bold text-white">Contact Us</h3>
+            <div class="text-[#00B4BF] uppercase font-medium text-lg tracking-widest">@lang('messages.CONTACT')</div>
+            <h3 class="mt-2 text-3xl font-bold text-white">@lang('messages.CONTACT_US')</h3>
             <div class="mt-10 flex flex-col space-y-8">
                 <div class="flex space-x-3 items-start">
                     <div class="border border-gray-600 rounded-full w-10 h-10 flex items-center justify-center">
                         <img class="w-4" src="{{ asset('assets/icons/address.svg') }}" alt="Address">
                     </div>
                     <span class="flex-1 max-w-[350px] text-sm md:text-md text-white mt-0.5">
-                        Gedung Wisma NH Building Lantai 1, Jl. Raya Pasar Minggu No.2B-C 2 1 2, RT.2/RW.2,
-                        Pancoran, Kec.
-                        Pancoran,
-                        Kota Jakarta
-                        Selatan, Daerah Khusus Ibukota Jakarta 12780
+                        @lang('messages.ADDRESS_US')
                     </span>
                 </div>
 

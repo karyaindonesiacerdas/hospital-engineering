@@ -24,7 +24,7 @@
             class="max-w-5xl mx-auto leading-relaxed lg:text-lg lg:leading-relaxed text-gray-700 list-decimal space-y-4 pl-6">
             <li>
                 Go to the exhibitor’s registration page at <a href="register-exhibitor.html"
-                    class="text-[#00B4BF] hover:text-[#116368]">https://hospital-engineering-expo.com/register-exhibitor/</a>
+                    class="text-[#00B4BF] hover:text-[#116368]">https://docs.google.com/forms/d/e/1FAIpQLSeawVl6UT0m2DwsYryRt1Yf-NSFhSnIR-gE6Baq58qJYSxc_Q/viewform</a>
             <li>
                 Enter your company’s representative information
             </li>

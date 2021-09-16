@@ -33,7 +33,7 @@
             </p>
         </div>
         <div>
-            <img src="{{ asset('assets/img/about-hef.png') }}" alt="About HEF">
+            <img src="{{ asset('assets/img/virtual-exhibition.jpg') }}" alt="About HEF">
         </div>
     </div>
 

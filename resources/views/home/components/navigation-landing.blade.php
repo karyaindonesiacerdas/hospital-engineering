@@ -1,19 +1,19 @@
 <!-- Navigation -->
 <nav id="navigation"
-    class="hidden md:flex w-full top-0 left-0 right-0 justify-between items-center py-4 px-4 md:px-2 z-50 bg-[#25243A]">
+    class="hidden absolute md:flex w-full top-0 left-0 right-0 justify-between items-center py-4 px-4 md:px-2 z-50">
     <div id="navigation-wrapper" class="max-w-7xl mx-auto w-full flex justify-between items-center z-50">
         <ul class="flex space-x-4 lg:space-x-12 font-medium items-center">
             <!-- Home -->
             <li><a href="{{ route('home') }}"
                     class="text-gray-200 hover:text-white cursor-pointer tracking-widest px-3 py-1.5 text-sm md:text-md font-bold uppercase"
-                    style="text-shadow: 1px 1px 4px rgba(0,0,0,0.2);">Home</a>
+                    style="text-shadow: 1px 1px 4px rgba(0,0,0,0.2);">@lang('messages.HOME')</a>
             </li>
 
             <!-- Overview -->
             <li class="relative" x-data="{open: false}"><button @click="open = true"
                     class="text-gray-200 hover:text-white cursor-pointer tracking-widest px-3 py-1.5 text-sm md:text-md font-bold uppercase pt-[9px] flex items-center group"
                     style="text-shadow: 1px 1px 4px rgba(0,0,0,0.2);">
-                    <span>Overview</span>
+                    <span>@lang('messages.OVERVIEW')</span>
                     <svg class="text-gray-200 group-hover:text-white ml-2 h-5 w-5" viewBox="0 0 20 20"
                         fill="currentColor" aria-hidden="true">
                         <path fill-rule="evenodd"
@@ -37,12 +37,12 @@
 
                             <a href="{{ route('overview.about-hef') }}"
                                 class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
-                                About HEF
+                                @lang('messages.ABOUT_HEF')
                             </a>
 
                             <a href="{{ route('overview.about-iahe') }}"
                                 class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
-                                About IAHE
+                                @lang('messages.ABOUT_IAHE')
                             </a>
 
                             <a href="{{ route('overview.programs') }}"
@@ -52,17 +52,17 @@
 
                             <a href="{{ route('overview.webinar-rundown') }}"
                                 class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
-                                Webinar Rundown
+                                @lang('messages.WEBINAR_RUNDOWN')
                             </a>
 
                             <a href="{{ route('overview.news') }}"
                                 class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
-                                News
+                                @lang('messages.NEWS')
                             </a>
 
                             <a href="{{ route('overview.important-dates') }}"
                                 class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
-                                Important Dates
+                                @lang('messages.IMPORTANT_DATES')
                             </a>
 
                         </div>
@@ -162,13 +162,15 @@
                                 Packages
                             </a>
 
-                            <!-- <a href="#" class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
-                  Exhibitor List
-                </a>
+                            {{-- <a href="#"
+                                    class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
+                                    Exhibitor List
+                                </a>
 
-                <a href="#" class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
-                  Sponsor & Partner
-                </a> -->
+                                <a href="#"
+                                    class="-m-3 p-3 block rounded-md hover:bg-gray-50 transition ease-in-out duration-150">
+                                    Sponsor & Partner
+                                </a> --}}
 
                         </div>
                     </div>

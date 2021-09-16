@@ -13,10 +13,18 @@ class HomeController extends Controller
         App::setLocale($locale);
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->locale) {
+            $this->setLang($request->locale);
+        }
         $news = News::take(3)->get();
         return view('home', compact('news'));
+    }
+
+    public function maintenance()
+    {
+        return view('under-construction');
     }
 
     public function newsDetail($slug)
@@ -80,6 +88,11 @@ class HomeController extends Controller
     public function aboutIahe()
     {
         return view('home.overview.about-iahe');
+    }
+
+    public function programs()
+    {
+        return view('home.overview.programs');
     }
 
     public function webinarRundown()

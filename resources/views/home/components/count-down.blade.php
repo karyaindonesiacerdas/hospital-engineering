@@ -56,9 +56,7 @@
                 class="bg-white flex flex-col items-center py-2 px-2 md:py-6 md:px-6 rounded-3xl shadow-2xl hover:shadow-none">
                 <img class="w-12 md:w-20" src="{{ asset('assets/icons/register-exhibitor') }}.svg"
                     alt="Register as Exhibitor">
-                <span class="mt-4 uppercase font-medium tracking-wider text-xs md:text-sm text-center">Register
-                    as
-                    Exhibitor</span>
+                <span class="mt-4 uppercase font-medium tracking-wider text-xs md:text-sm text-center">@lang('messages.REGISTER_EXHIBITOR')</span>
             </a>
             <a href="#"
                 class="bg-white flex flex-col items-center py-2 px-2 md:py-6 md:px-6 rounded-3xl shadow-2xl hover:shadow-none">
@@ -70,8 +68,7 @@
                 class="bg-white flex flex-col items-center py-2 px-2 md:py-6 md:px-6 rounded-3xl shadow-2xl hover:shadow-none">
                 <img class="w-12 md:w-20" src="{{ asset('assets/icons/exhibitor-list.svg') }}"
                     alt="Exhibitor List 2021">
-                <span class="mt-4 uppercase font-medium tracking-wider text-xs md:text-sm text-center">Exhibitor
-                    Guideline</span>
+                <span class="mt-4 uppercase font-medium tracking-wider text-xs md:text-sm text-center">@lang('messages.EXHIBITOR_GUIDELINE')</span>
             </a>
             <a href="#"
                 class="bg-white flex flex-col items-center py-2 px-2 md:py-6 md:px-6 rounded-3xl shadow-2xl hover:shadow-none">
@@ -83,9 +80,7 @@
                 class="bg-white flex flex-col items-center py-2 px-2 md:py-6 md:px-6 rounded-3xl shadow-2xl hover:shadow-none">
                 <img class="w-12 md:w-20" src="{{ asset('assets/icons/register-visitor.svg') }}"
                     alt="Register as Visitor">
-                <span class="mt-4 uppercase font-medium tracking-wider text-xs md:text-sm text-center">Register
-                    as
-                    Visitor</span>
+                <span class="mt-4 uppercase font-medium tracking-wider text-xs md:text-sm text-center">@lang('messages.REGISTER_VISITOR')</span>
             </a>
             <a href="#"
                 class="bg-white flex flex-col items-center py-2 px-2 md:py-6 md:px-6 rounded-3xl shadow-2xl hover:shadow-none">
@@ -97,8 +92,7 @@
                 class="bg-white flex flex-col items-center py-2 px-2 md:py-6 md:px-6 rounded-3xl shadow-2xl hover:shadow-none">
                 <img class="w-12 md:w-20" src="{{ asset('assets/icons/sponsor-partner') }}.svg"
                     alt="Sponsorship and Partner">
-                <span class="mt-4 uppercase font-medium tracking-wider text-xs md:text-sm text-center">Visitor
-                    Guideline</span>
+                <span class="mt-4 uppercase font-medium tracking-wider text-xs md:text-sm text-center">@lang('messages.VISITOR_GUIDELINE')</span>
             </a>
         </div>
     </div>

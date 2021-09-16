@@ -36,7 +36,7 @@
                     </svg>
                     <div class="flex-1 text-gray-700 text-lg flex flex-col space-y-1">
                         <span class="font-semibold">Hospital Mechanics</span>
-                        <span>Plumbing, Lift & AC</span>
+                        <span>Plumbing, lift, AC, medical gas, steam, installation and fire prevention, ambulance</span>
                     </div>
                 </li>
                 <li class="flex items-start space-x-3 text-gray-700">
@@ -96,6 +96,8 @@
                     </svg>
                     <div class="flex-1 text-gray-700 text-lg flex flex-col space-y-1">
                         <span class="font-semibold">COVID-19 Products</span>
+                        <span>PCR equipment, respiratory equipment, antigen test kit, medical oxygen supplies and equipment, isolation room, Personal
+                        Protective Equipment (PPE)</span>
                     </div>
                 </li>
             </ul>

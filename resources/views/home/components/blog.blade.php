@@ -15,8 +15,7 @@
             <p class="mt-3 text-gray-600 line-clamp-2 lg:line-clamp-3">
                 IAHE Announces its First Hospital Engineering Forum
             </p>
-            <button class="mt-6 bg-[#00B4BF] hover:bg-[#116368] text-white px-3 py-1 rounded-lg ">Read
-                More</button>
+            <button class="mt-6 bg-[#00B4BF] hover:bg-[#116368] text-white px-3 py-1 rounded-lg ">@lang('messages.READ_MORE')</button>
         </a>
     </div>
 </section>

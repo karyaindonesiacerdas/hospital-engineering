@@ -1,19 +1,33 @@
 <!-- Header -->
 <header
     class="sticky z-40 md:z-auto top-0 sm:top-auto bg-white sm:bg-transparent flex sm:flex h-[50px] sm:h-[70px] max-w-7xl mx-auto px-4 md:px-2 items-center justify-between">
+    <!-- Logo -->
     <div class="flex items-center space-x-2 sm:space-x-3">
         <img class="w-10 h-10 sm:w-14 sm:h-14" src="{{ asset('assets/img/ptpi.png') }}" alt="Logo PTPI">
         <div>
             <div class="text-sm sm:text-lg xl:text-2xl uppercase font-bold text-gray-800 tracking-wider">
-                Hospital
-                Engineering Forum 2021
+                @lang('messages.EVENT_TITLE')
             </div>
             <div class="hidden sm:block text-xs xl:text-md uppercase text-gray-600 tracking-wider">
-                Plan your hospital with the latest technologies! _
+                @lang('messages.EVENT_TAGLINE')
             </div>
         </div>
     </div>
-    <div class="block md:hidden">
+
+    <!-- Select Language -->
+    <div>
+        <label for="language" class="sr-only">
+            Select Language
+        </label>
+        <select name="Language" id="language"
+            class="block appearance-none w-full pl-3 pr-8 py-1.5 sm:py-2 border  rounded-md placeholder-gray-400 focus:outline-none focus:ring-[#00B4BF] focus:border-[#00B4BF] text-xs sm:text-sm border-gray-300">
+            <option value="EN" selected>English</option>
+            <option value="ID">Indonesia</option>
+        </select>
+    </div>
+
+    <!-- Menu Button -->
+    <div class="block md:hidden ml-2">
         <button @click="openMobileMenu = true" type="button"
             class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#116368]"
             aria-expanded="false">
@@ -40,10 +54,7 @@
                         <div>
                             <div
                                 class="text-sm sm:text-lg xl:text-2xl uppercase font-bold text-gray-800 tracking-wider">
-                                Hospital
-                                Engineering
-                                Forum
-                                2021
+                                @lang('messages.welcome')
                             </div>
                             <div class="hidden sm:block text-xs xl:text-md uppercase text-gray-600 tracking-wider">
                                 Plan your
@@ -80,7 +91,7 @@
                                     d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                             </svg>
                             <span class="ml-3 text-base font-medium text-gray-900">
-                                Home
+                                @lang('messages.HOME')
                             </span>
                         </a>
 
@@ -97,7 +108,7 @@
                                         d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
                                 </svg>
                                 <span class="flex-1 ml-3 text-base font-medium text-gray-900">
-                                    Overview
+                                    @lang('messages.OVERVIEW')
                                 </span>
                                 <svg class="text-gray-300 ml-3 flex-shrink-0 h-5 w-5 transform group-hover:text-gray-400 transition-colors ease-in-out duration-150"
                                     viewBox="0 0 20 20" x-state:on="Expanded" x-state:off="Collapsed" aria-hidden="true"
@@ -110,27 +121,27 @@
 
                                 <a href="{{ route('overview.about-hef') }}"
                                     class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
-                                    About HEF
+                                    @lang('messages.ABOUT_HEF')
                                 </a>
 
                                 <a href="{{ route('overview.about-iahe') }}"
                                     class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
-                                    About IAHE
+                                    @lang('messages.ABOUT_IAHE')
                                 </a>
 
                                 <a href="{{ route('overview.webinar-rundown') }}"
                                     class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
-                                    Webinar Rundown
+                                    @lang('messages.WEBINAR_RUNDOWN')
                                 </a>
 
                                 <a href="{{ route('overview.news') }}"
                                     class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
-                                    News
+                                    @lang('messages.NEWS')
                                 </a>
 
                                 <a href="#"
                                     class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
-                                    Important Dates
+                                    @lang('messages.IMPORTANT_DATES')
                                 </a>
 
                             </div>
@@ -149,7 +160,7 @@
                                         d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                                 </svg>
                                 <span class="flex-1 ml-3 text-base font-medium text-gray-900">
-                                    Visitor
+                                    @lang('messages.VISITORS')
                                 </span>
                                 <svg class="text-gray-300 ml-3 flex-shrink-0 h-5 w-5 transform group-hover:text-gray-400 transition-colors ease-in-out duration-150"
                                     viewBox="0 0 20 20" x-state:on="Expanded" x-state:off="Collapsed" aria-hidden="true"
@@ -162,17 +173,17 @@
 
                                 <a href="{{ route('visitor.guideline') }}"
                                     class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
-                                    Visitor Guideline
+                                    @lang('messages.VISITOR_GUIDELINE')
                                 </a>
 
                                 <a href="{{ route('visitor.who-attend') }}"
                                     class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
-                                    Who Attends?
+                                    @lang('messages.WHO_ATTEND')
                                 </a>
 
                                 <a href="{{ route('visitor.why-attend') }}"
                                     class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
-                                    Why Attend?
+                                    @lang('messages.WHY_ATTEND')
                                 </a>
                             </div>
                         </div>
@@ -190,7 +201,7 @@
                                         d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
                                 </svg>
                                 <span class="flex-1 ml-3 text-base font-medium text-gray-900">
-                                    Exhibitor
+                                    @lang('messages.EXHIBITOR')
                                 </span>
                                 <svg class="text-gray-300 ml-3 flex-shrink-0 h-5 w-5 transform group-hover:text-gray-400 transition-colors ease-in-out duration-150"
                                     viewBox="0 0 20 20" x-state:on="Expanded" x-state:off="Collapsed" aria-hidden="true"
@@ -203,7 +214,7 @@
 
                                 <a href="{{ route('exhibitor.guideline') }}"
                                     class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
-                                    Exhibitor Guideline
+                                    @lang('messages.EXHIBITOR_GUIDELINE')
                                 </a>
 
                                 <a href="{{ route('exhibitor.who-exhibit') }}"
@@ -213,12 +224,12 @@
 
                                 <a href="{{ route('exhibitor.why-exhibit') }}"
                                     class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
-                                    Why Exhibit?
+                                    @lang('messages.WHY_EXHIBIT')
                                 </a>
 
                                 <a href="{{ route('exhibitor.packages') }}"
                                     class="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
-                                    Packages
+                                    @lang('messages.PACKAGES')
                                 </a>
 
                                 {{-- <a href="#"
@@ -282,18 +293,18 @@
                     <div class="grid grid-cols-2 gap-2">
                         <a href="https://docs.google.com/forms/d/e/1FAIpQLSeawVl6UT0m2DwsYryRt1Yf-NSFhSnIR-gE6Baq58qJYSxc_Q/viewform"
                             class="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white hover:bg-[#116368] bg-[#00B4BF]">
-                            Register as Exhibitor
+                            @lang('messages.REGISTER_EXHIBITOR')
                         </a>
                         <a href="https://docs.google.com/forms/d/e/1FAIpQLSeawVl6UT0m2DwsYryRt1Yf-NSFhSnIR-gE6Baq58qJYSxc_Q/viewform"
                             class="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white hover:bg-[#116368] bg-[#00B4BF]">
-                            Register as Visitor
+                            @lang('messages.REGISTER_VISITOR')
                         </a>
                     </div>
                     <p class="mt-6 text-center text-base font-medium text-gray-500">
                         Already have an account?
                         <a href="https://docs.google.com/forms/d/e/1FAIpQLSeawVl6UT0m2DwsYryRt1Yf-NSFhSnIR-gE6Baq58qJYSxc_Q/viewform"
                             class="hover:text-[#116368] text-[#00B4BF]">
-                            Login
+                            @lang('messages.LOGIN')
                         </a>
                     </p>
                 </div>

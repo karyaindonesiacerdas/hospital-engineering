@@ -18,7 +18,7 @@
         realization of
         hospitals in Indonesia that are Safe, environMentally friendly, Affordable, secuRe, and worThwhile (SMART).
     </p>
-    <div class="text-[#00B4BF] text-xl font-bold mt-10 mb-6">Why IAHE?</div>
+    <div class="mx-auto max-w-5xl text-center text-[#00B4BF] text-xl font-bold mt-10 mb-6">Why IAHE?</div>
     <ol class="max-w-5xl text-lg leading-relaxed lg:text-xl lg:leading-loose text-gray-600 list-decimal space-y-4 pl-6">
         <li>
             IAHE is an association of hospital engineering experts who are capable of designing, analyzing and
