@@ -48,6 +48,7 @@ class RegisteredUserController extends Controller
                 'product_interest' => 'required',
                 'visit_purpose' => 'required',
                 'member_sehat_ri' => 'required',
+                'allow_share_info' => 'required',
             ]);
         }
         if ($request->role == 'exhibitor') {
@@ -67,6 +68,9 @@ class RegisteredUserController extends Controller
 
         $data = $request->except('password_confirmation');
         $data['password'] = Hash::make($request->password);
+        if ($request->has('allow_share_info')) {
+            $data['allow_share_info'] = $request->allow_share_info == 'true' ? true : false;
+        }
 
         $user = User::create($data);
 
@@ -74,6 +78,19 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        if (auth()->check()) {
+            if (auth()->user()->role == 'visitor') {
+                return redirect()->intended(route('main-hall'));
+            }
+            if (auth()->user()->role == 'exhibitor') {
+                return redirect()->intended(route('maintenance'));
+            }
+            if (auth()->user()->role == 'admin') {
+                return redirect()->intended(route('maintenance'));
+            }
+        } else {
+            return back();
+        }
+        return back();
     }
 }

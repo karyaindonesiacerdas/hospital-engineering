@@ -6,7 +6,8 @@
             <div class="relative h-12 2xl:h-16 flex items-center justify-between">
                 <div class="px-2 flex items-center lg:px-0">
                     <a href="index.html" class="flex-shrink-0 flex items-center space-x-3">
-                        <img class="block h-10 w-10 2xl:h-12 2xl:w-12" src="{{ asset('assets/img/ptpi.png') }}" alt="Workflow">
+                        <img class="block h-10 w-10 2xl:h-12 2xl:w-12" src="{{ asset('assets/img/ptpi.png') }}"
+                            alt="Workflow">
                         <div class="hidden lg:block text-2xl font-bold text-[#00B4BF]">HEF 2021</div>
                     </a>
                 </div>
@@ -98,10 +99,13 @@
                         Settings
                     </a>
 
-                    <a href="#"
-                        class="block rounded-md py-2 px-3 text-base font-medium text-gray-900 hover:text-[#00B4BF]">
-                        Sign out
-                    </a>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <a href="#" onclick="event.preventDefault(); this.closest('form').submit();"
+                            class="block rounded-md py-2 px-3 text-base font-medium text-gray-900 hover:text-[#00B4BF]">
+                            Sign out
+                        </a>
+                    </form>
                 </div>
             </div>
         </div>

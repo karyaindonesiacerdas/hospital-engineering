@@ -99,11 +99,14 @@
                                     Settings
                                 </a>
 
-                                <a href="#"
-                                    class="block py-2 px-4 text-sm text-gray-900 hover:text-[#00B4BF] font-medium"
-                                    role="menuitem" tabindex="-1" id="user-menu-item-2">
-                                    Sign out
-                                </a>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <a href="#" onclick="event.preventDefault(); this.closest('form').submit();"
+                                        class="block py-2 px-4 text-sm text-gray-900 hover:text-[#00B4BF] font-medium"
+                                        role="menuitem" tabindex="-1" id="user-menu-item-2">
+                                        Sign out
+                                    </a>
+                                </form>
                             </div>
                         </div>
                     </div>

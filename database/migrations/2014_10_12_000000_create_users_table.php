@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->string('country')->nullable();
             $table->string('province')->nullable();
             $table->string('business_nature')->nullable();
+
             // ================
             $table->string('institution_name')->nullable();
             $table->string('institution_type')->nullable();
@@ -31,6 +32,8 @@ class CreateUsersTable extends Migration
             $table->json('product_interest')->nullable();
             $table->json('visit_purpose')->nullable();
             $table->string('member_sehat_ri')->nullable();
+
+            $table->boolean('allow_share_info')->default(false);
 
             // COMPANY
             $table->string('company_logo')->nullable();

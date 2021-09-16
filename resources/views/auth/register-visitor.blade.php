@@ -507,6 +507,24 @@
                                     and accept the condition</span>
                             </div>
                         </div>
+                        <div class="md:col-span-2">
+                            <div class="mb-1 text-sm text-gray-700">In order to qualify for HEF 2021 door prize, Do you
+                                agree to share
+                                these information to our exhibitors for marketing purpose?</div>
+                            <div class="flex items-center space-x-4">
+                                <div>
+                                    <input id="yes" name="allow_share_info" type="radio" value="true"
+                                        class="h-4 w-4 text-[#00B4BF] border-gray-300 focus:ring-[#00B4BF]" checked>
+                                    <label for="yes" class="text-sm text-gray-700">Yes</label>
+                                </div>
+                                <div>
+                                    <input id="no" name="allow_share_info" type="radio" value="false"
+                                        class="h-4 w-4 text-[#00B4BF] border-gray-300 focus:ring-[#00B4BF]"> <label
+                                        for="no" class="text-sm text-gray-700">No</label>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
                     <div>

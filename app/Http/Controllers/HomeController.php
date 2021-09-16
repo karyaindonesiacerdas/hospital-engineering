@@ -13,6 +13,11 @@ class HomeController extends Controller
         App::setLocale($locale);
     }
 
+    public function language(Request $request)
+    {
+        //
+    }
+
     public function index(Request $request)
     {
         if ($request->locale) {

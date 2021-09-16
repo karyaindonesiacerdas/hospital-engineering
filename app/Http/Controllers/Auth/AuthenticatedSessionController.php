@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
+use Carbon\Laravel\ServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -32,7 +33,20 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        if (auth()->check()) {
+            if (auth()->user()->role == 'visitor') {
+                return redirect()->intended(route('main-hall'));
+            }
+            if (auth()->user()->role == 'exhibitor') {
+                return redirect()->intended(route('maintenance'));
+            }
+            if (auth()->user()->role == 'admin') {
+                return redirect()->intended(route('maintenance'));
+            }
+        } else {
+            return back();
+        }
+        return back();
     }
 
     /**
