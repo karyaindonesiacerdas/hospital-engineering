@@ -26,6 +26,8 @@ class AuthController extends Controller
      */
     public function register(Request $request)
     {
+        // return $request->role;
+
         if ($request->role == 'visitor') {
             $request->validate([
                 'email' => 'required|string|email|max:255|unique:users',
@@ -44,6 +46,7 @@ class AuthController extends Controller
                 'allow_share_info' => 'required',
             ]);
         }
+
         if ($request->role == 'exhibitor') {
             $request->validate([
                 'email' => 'required|string|email|max:255|unique:users',
@@ -58,6 +61,7 @@ class AuthController extends Controller
                 'business_nature' => 'required',
             ]);
         }
+
 
         $data = $request->except('password_confirmation');
         $data['password'] = Hash::make($request->password);
@@ -98,13 +102,31 @@ class AuthController extends Controller
      */
     public function login()
     {
-        $credentials = request(['email', 'password']);
-
-        if (!$token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+        try {
+            $credentials = request(['email', 'password']);
+            if (!$token = auth()->attempt($credentials)) {
+                return response()->json(['error' => 'Unauthorized'], 401);
+            } else {
+                return response()->json([
+                    'code' => 200,
+                    'type' => 'success',
+                    'message' => 'Data successfully fetched',
+                    'data' => [
+                        'token' => $token,
+                        'token_type' => 'bearer',
+                        'user' => auth()->user()
+                    ],
+                ], 200);
+            }
+            return $this->respondWithToken($token);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'code' => 400,
+                'type' => 'danger',
+                'message' => 'Login failed',
+                'data' => $th->getMessage(),
+            ], 400);
         }
-
-        return $this->respondWithToken($token);
     }
 
     public function loginEmail()
