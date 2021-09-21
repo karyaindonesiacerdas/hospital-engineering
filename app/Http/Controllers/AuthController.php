@@ -18,16 +18,8 @@ class AuthController extends Controller
         $this->middleware('jwt.verify')->except(['login', 'loginEmail', 'register']);
     }
 
-    // API =======================================
-    /**
-     * Get a JWT via given credentials.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function register(Request $request)
     {
-        // return $request->role;
-
         if ($request->role == 'visitor') {
             $request->validate([
                 'email' => 'required|string|email|max:255|unique:users',
@@ -62,7 +54,6 @@ class AuthController extends Controller
             ]);
         }
 
-
         $data = $request->except('password_confirmation');
         $data['password'] = Hash::make($request->password);
         if ($request->has('allow_share_info')) {
@@ -76,7 +67,7 @@ class AuthController extends Controller
                 return response()->json([
                     'code' => 200,
                     'type' => 'success',
-                    'message' => 'Data successfully fetched',
+                    'message' => 'Successful registration',
                     'data' => [
                         'token' => $token,
                         'token_type' => 'bearer',
@@ -89,7 +80,7 @@ class AuthController extends Controller
             return response()->json([
                 'code' => 400,
                 'type' => 'danger',
-                'message' => 'Login failed',
+                'message' => 'Registration failed',
                 'data' => $th->getMessage(),
             ], 400);
         }
@@ -110,7 +101,7 @@ class AuthController extends Controller
                 return response()->json([
                     'code' => 200,
                     'type' => 'success',
-                    'message' => 'Data successfully fetched',
+                    'message' => 'Successfully logged in',
                     'data' => [
                         'token' => $token,
                         'token_type' => 'bearer',
@@ -158,14 +149,14 @@ class AuthController extends Controller
                 return response()->json([
                     'code' => 200,
                     'type' => 'success',
-                    'message' => 'Data successfully fetched',
+                    'message' => 'Data retrieved successfully',
                     'data' => auth()->user(),
                 ], 200);
             } else {
                 return response()->json([
                     'code' => 400,
                     'type' => 'danger',
-                    'message' => 'Data failed',
+                    'message' => 'Data failed to retrieve',
                     'data' => 'Error..',
                 ], 400);
             }
@@ -173,7 +164,7 @@ class AuthController extends Controller
             return response()->json([
                 'code' => 400,
                 'type' => 'danger',
-                'message' => 'Data failed',
+                'message' => 'Data failed to retrieve',
                 'data' => $th->getMessage(),
             ], 400);
         }

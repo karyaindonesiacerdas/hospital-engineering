@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('company_website')->nullable();
             $table->string('country')->nullable();
             $table->string('province')->nullable();
+            $table->string('packages')->nullable();
             $table->string('business_nature')->nullable();
 
             // ================
@@ -32,8 +33,10 @@ class CreateUsersTable extends Migration
             $table->json('product_interest')->nullable();
             $table->json('visit_purpose')->nullable();
             $table->string('member_sehat_ri')->nullable();
-
             $table->boolean('allow_share_info')->default(false);
+
+            // exhibitor only
+            $table->text('additional_remarks')->nullable();
 
             // COMPANY
             $table->string('company_logo')->nullable();

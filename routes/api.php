@@ -3,7 +3,10 @@
 use App\Http\Controllers\Api\BroadcastController;
 use App\Http\Controllers\Api\ForumController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BannerController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\ConsultationController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('tes', function () {
@@ -35,3 +38,23 @@ Route::prefix('forum')->group(function () {
     Route::get('/', [ForumController::class, 'index']);
     Route::post('/', [ForumController::class, 'store']);
 });
+
+Route::prefix('consultation')->group(function () {
+    Route::get('/', [ConsultationController::class, 'index']);
+    Route::post('/', [ConsultationController::class, 'store']);
+});
+
+Route::prefix('exhibitor')->group(function () {
+    Route::get('/', [UserController::class, 'exhibitorList']);
+    // Route::post('/', [ConsultationController::class, 'store']);
+
+    // BANNER
+    Route::get('/banner', [BannerController::class, 'list']);
+    Route::post('/banner', [BannerController::class, 'store']);
+});
+
+
+// Route::prefix('product')->group(function () {
+//     Route::get('/', [ConsultationController::class, 'index']);
+//     Route::post('/', [ConsultationController::class, 'store']);
+// });

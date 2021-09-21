@@ -13,6 +13,37 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function exhibitorList(Request $request)
+    {
+        try {
+            $users = User::where('role', 'exhibitor');
+            if ($request->search) {
+                $users->where('name', 'like', "%" . $request->search . "%");
+            }
+            if ($request->category) {
+                $users->whereJsonContains('business_nature', $request->category);
+            }
+            return response()->json([
+                'code' => 200,
+                'type' => 'success',
+                'message' => 'Fetch succeed',
+                'data' => $users->get(['id', 'name', 'company_logo']),
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'code' => 400,
+                'type' => 'danger',
+                'message' => 'Fetch failed',
+                'data' => $th->getMessage(),
+            ], 400);
+        }
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         //

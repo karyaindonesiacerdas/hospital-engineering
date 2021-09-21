@@ -18,10 +18,8 @@ class ChatController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function contactChatList()
+    public function contactChatList(Request $request)
     {
-        // return $latestChat = Chat::where('receiver_id', auth()->id())->orWhere('sender_id', auth()->id())->latest()->first();
-
         try {
             $listUsersContact = User::query();
             if (auth()->user()->role == 'visitor') {
@@ -30,17 +28,33 @@ class ChatController extends Controller
             if (auth()->user()->role == 'exhibitor') {
                 $listUsersContact->where('role', 'visitor');
             }
+            if ($request->search) {
+                $listUsersContact->where('name', 'like', "%" . $request->search . "%");
+            }
+            $chats = [];
+            foreach ($listUsersContact->get() as $key => $user) {
+                $chat = '';
+                if (count(auth()->user()->chats)) {
+                    $chat = optional(collect(auth()->user()->chats->where('receiver_id', $user->id))->last())->message;
+                }
+                $user['message'] = $chat;
+                array_push(
+                    $chats,
+                    $user
+                );
+            }
+
             return response()->json([
                 'code' => 200,
                 'type' => 'success',
                 'message' => 'Data successfully fetched',
-                'data' => $listUsersContact->get(),
+                'data' => $chats,
             ], 200);
         } catch (\Throwable $th) {
             return response()->json([
                 'code' => 400,
                 'type' => 'danger',
-                'message' => 'Login failed',
+                'message' => 'Data failed to retrieve',
                 'data' => $th->getMessage(),
             ], 400);
         }
@@ -64,7 +78,7 @@ class ChatController extends Controller
             return response()->json([
                 'code' => 400,
                 'type' => 'danger',
-                'message' => 'Login failed',
+                'message' => 'Data failed to retrieve',
                 'data' => $th->getMessage(),
             ], 400);
         }
@@ -85,14 +99,14 @@ class ChatController extends Controller
                     return response()->json([
                         'code' => 200,
                         'type' => 'success',
-                        'message' => 'Data successfully fetched',
+                        'message' => 'Chat successfully sent',
                         'data' => $chat,
                     ], 200);
                 } else {
                     return response()->json([
                         'code' => 400,
                         'type' => 'danger',
-                        'message' => 'Login failed',
+                        'message' => 'Chat failed to send',
                         'data' => 'Error sent',
                     ], 400);
                 }
@@ -100,7 +114,7 @@ class ChatController extends Controller
                 return response()->json([
                     'code' => 400,
                     'type' => 'danger',
-                    'message' => 'Send Chat failed',
+                    'message' => 'Chat failed to send',
                     'data' => 'Error sent',
                 ], 400);
             }
@@ -108,7 +122,7 @@ class ChatController extends Controller
             return response()->json([
                 'code' => 400,
                 'type' => 'danger',
-                'message' => 'Login failed',
+                'message' => 'Chat failed to send',
                 'data' => $th->getMessage(),
             ], 400);
         }
@@ -121,21 +135,21 @@ class ChatController extends Controller
                 return response()->json([
                     'code' => 200,
                     'type' => 'success',
-                    'message' => 'Data successfully fetched',
+                    'message' => 'Chat successfully deleted',
                     'data' => 'Chat Deleted',
                 ], 200);
             }
             return response()->json([
                 'code' => 400,
                 'type' => 'danger',
-                'message' => 'Login failed',
+                'message' => 'Chat failed to delete',
                 'data' => 'Error sent',
             ], 400);
         } catch (\Throwable $th) {
             return response()->json([
                 'code' => 400,
                 'type' => 'danger',
-                'message' => 'Login failed',
+                'message' => 'Chat failed to delete',
                 'data' => $th->getMessage(),
             ], 400);
         }
