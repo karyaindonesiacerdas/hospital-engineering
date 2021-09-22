@@ -1,5 +1,8 @@
 <?php
 
+// PINDAH SEMUA CONTROLLER KE API DIR
+// JANGAN IMPORT CONTROLLER TAPI TULIS LENGKAP NAMESPACE, EQ. [App\Http\Controllers\Api\BroadcastController::class, 'SOMETHING'];
+
 use App\Http\Controllers\Api\BroadcastController;
 use App\Http\Controllers\Api\ForumController;
 use App\Http\Controllers\AuthController;
@@ -8,6 +11,7 @@ use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+
 
 Route::get('tes', function () {
     return 'tes';
@@ -20,6 +24,7 @@ Route::prefix('auth')->group(function () {
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::post('me', [AuthController::class, 'me']);
+    Route::put('update', [AuthController::class, 'update']);
 });
 
 Route::prefix('chat')->group(function () {

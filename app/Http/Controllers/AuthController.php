@@ -69,9 +69,9 @@ class AuthController extends Controller
                     'type' => 'success',
                     'message' => 'Successful registration',
                     'data' => [
-                        'token' => $token,
+                        'user' => collect($user)->only(['id', 'name', 'email', 'role', 'mobile']),
                         'token_type' => 'bearer',
-                        'user' => $user
+                        'token' => $token,
                     ],
                 ], 200);
             }
@@ -86,11 +86,6 @@ class AuthController extends Controller
         }
     }
 
-    /**
-     * Get a JWT via given credentials.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function login()
     {
         try {
@@ -103,9 +98,9 @@ class AuthController extends Controller
                     'type' => 'success',
                     'message' => 'Successfully logged in',
                     'data' => [
-                        'token' => $token,
+                        'user' => collect(auth()->user())->only(['id', 'name', 'email', 'role', 'mobile']),
                         'token_type' => 'bearer',
-                        'user' => auth()->user()
+                        'token' => $token,
                     ],
                 ], 200);
             }
@@ -122,35 +117,54 @@ class AuthController extends Controller
 
     public function loginEmail()
     {
-        if ($user = User::where('email', request('email'))->first()) {
-            if (!$token = auth()->login($user)) {
-                return response()->json(['error' => 'Unauthorized'], 401);
+        try {
+            if ($user = User::where('email', request('email'))->first()) {
+                if (!$token = auth()->login($user)) {
+                    return response()->json(['error' => 'Unauthorized'], 401);
+                }
+                return response()->json([
+                    'code' => 200,
+                    'type' => 'success',
+                    'message' => 'Successfully logged in',
+                    'data' => [
+                        'user' => collect($user)->only(['id', 'name', 'email', 'role', 'mobile']),
+                        'token_type' => 'bearer',
+                        'token' => $token,
+                    ],
+                ], 200);
+            } else {
+                return response()->json([
+                    'code' => 400,
+                    'type' => 'danger',
+                    'message' => 'Login failed',
+                    'data' => 'Error..',
+                ], 400);
             }
-            return $this->respondWithToken($token);
-        } else {
+        } catch (\Throwable $th) {
             return response()->json([
                 'code' => 400,
                 'type' => 'danger',
                 'message' => 'Login failed',
-                'data' => 'Error..',
+                'data' => $th->getMessage(),
             ], 400);
         }
     }
 
-    /**
-     * Get the authenticated User.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function me()
     {
         try {
             if (auth()->user()) {
+                if (auth()->user()->role == 'visitor') {
+                    $user = collect(auth()->user())->except(['created_at', 'updated_at', 'email_verified_at', 'company_description', 'company_name', 'company_website', 'packages', 'business_nature', 'additional_remarks', 'company_logo']);
+                }
+                if (auth()->user()->role == 'exhibitor') {
+                    $user = collect(auth()->user())->except(['created_at', 'updated_at', 'email_verified_at', 'visit_purpose', 'product_interest', 'visitor_type', 'institution_type', 'institution_name']);
+                }
                 return response()->json([
                     'code' => 200,
                     'type' => 'success',
                     'message' => 'Data retrieved successfully',
-                    'data' => auth()->user(),
+                    'data' => $user,
                 ], 200);
             } else {
                 return response()->json([
@@ -170,35 +184,60 @@ class AuthController extends Controller
         }
     }
 
-    /**
-     * Log the user out (Invalidate the token).
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
+    public function update(Request $request)
+    {
+        try {
+            $requestData = $request->all();
+            if ($request->password) {
+                $request['password'] = bcrypt($request->password);
+            }
+            if ($request->hasFile('company_logo')) {
+                $companyFileName = md5($request->file('company_logo') . microtime()) . '.' . $request->file('company_logo')->extension();
+                $requestData['company_logo'] = $companyFileName;
+                $request->file('company_logo')->storeAs('companies', $companyFileName);
+            }
+            if ($request->hasFile('img_profile')) {
+                $profileFileName = md5($request->file('img_profile') . microtime()) . '.' . $request->file('img_profile')->extension();
+                $requestData['img_profile'] = $profileFileName;
+                $request->file('img_profile')->storeAs('profiles', $profileFileName);
+            }
+
+            if (auth()->user()->update($requestData)) {
+                return response()->json([
+                    'code' => 200,
+                    'type' => 'success',
+                    'message' => 'Data updated successfully',
+                    'data' => auth()->user(),
+                ], 200);
+            } else {
+                return response()->json([
+                    'code' => 400,
+                    'type' => 'danger',
+                    'message' => 'Data failed to update',
+                    'data' => 'Error..',
+                ], 400);
+            }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'code' => 400,
+                'type' => 'danger',
+                'message' => 'Data failed to update',
+                'data' => $th->getMessage(),
+            ], 400);
+        }
+    }
+
     public function logout()
     {
         auth()->logout();
-
         return response()->json(['message' => 'Successfully logged out']);
     }
 
-    /**
-     * Refresh a token.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function refresh()
     {
         return $this->respondWithToken(auth()->refresh());
     }
 
-    /**
-     * Get the token array structure.
-     *
-     * @param  string $token
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
     protected function respondWithToken($token)
     {
         return response()->json([
