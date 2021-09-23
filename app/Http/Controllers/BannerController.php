@@ -68,6 +68,7 @@ class BannerController extends Controller
                 $request->file('image')->storeAs('banner', $name);
                 $banner = auth()->user()->banners()->create([
                     'image' => $name,
+                    'display_name' => $request->display_name,
                     'description' => $request->input('description', null),
                     'order' => $request->order
                 ]);
@@ -84,6 +85,7 @@ class BannerController extends Controller
                 $request->file('image')->storeAs('banner', $name);
                 $banner = auth()->user()->banners()->update([
                     'image' => $name,
+                    'display_name' => $request->display_name,
                     'description' => $request->input('description', null),
                     'order' => $request->order
                 ]);

@@ -3,27 +3,21 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Post;
+use App\Models\Package;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
-class PostController extends Controller
+class PackageController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('jwt.verify')->only(['store', 'update', 'destroy']);
-    }
-
     public function index()
     {
         try {
-            $posts = Post::paginate(10);
-            if ($posts) {
+            $packages = Package::all();
+            if ($packages) {
                 return response()->json([
                     'code' => 200,
                     'type' => 'success',
                     'message' => 'Data successfully fetched',
-                    'data' => $posts,
+                    'data' => $packages,
                 ], 200);
             }
         } catch (\Throwable $th) {
@@ -40,23 +34,13 @@ class PostController extends Controller
     {
         try {
             if (auth()->user()->role == 'admin') {
-                $nameFile = null;
-                if ($request->hasFile('thumbnail')) {
-                    $nameFile = md5($request->file('thumbnail') . microtime()) . '.' . $request->file('thumbnail')->extension();
-                    $request->file('thumbnail')->storeAs('posts', $nameFile);
-                }
-                $post = auth()->user()->posts()->create([
-                    'title' => $request->title,
-                    'slug' => Str::slug($request->title),
-                    'body' => $request->body,
-                    'thumbnail' => $nameFile,
-                ]);
-                if ($post) {
+                $package = Package::create($request->all());
+                if ($package) {
                     return response()->json([
                         'code' => 200,
                         'type' => 'success',
-                        'message' => 'Data successfully posted',
-                        'data' => $post,
+                        'message' => 'Data successfully saved',
+                        'data' => $package,
                     ], 200);
                 }
             }
@@ -64,54 +48,43 @@ class PostController extends Controller
             return response()->json([
                 'code' => 400,
                 'type' => 'danger',
-                'message' => 'Failed to post',
+                'message' => 'Failed to save',
                 'data' => $th->getMessage(),
             ], 400);
         }
     }
 
-    public function show(Post $post)
+    public function show(Package $package)
     {
         try {
-            if ($post) {
+            if (auth()->user()->role == 'admin') {
                 return response()->json([
                     'code' => 200,
                     'type' => 'success',
                     'message' => 'Data successfully fetched',
-                    'data' => $post,
+                    'data' => $package,
                 ], 200);
             }
         } catch (\Throwable $th) {
             return response()->json([
                 'code' => 400,
                 'type' => 'danger',
-                'message' => 'Data failed to retrieve',
+                'message' => 'Failed to fetch',
                 'data' => $th->getMessage(),
             ], 400);
         }
     }
 
-    public function update(Request $request, Post $post)
+    public function update(Request $request, Package $package)
     {
         try {
             if (auth()->user()->role == 'admin') {
-                $nameFile = null;
-                if ($request->hasFile('thumbnail')) {
-                    $nameFile = md5($request->file('thumbnail') . microtime()) . '.' . $request->file('thumbnail')->extension();
-                    $request->file('thumbnail')->storeAs('posts', $nameFile);
-                }
-                $post = auth()->user()->posts()->update([
-                    'title' => $request->title,
-                    'slug' => Str::slug($request->title),
-                    'body' => $request->body,
-                    'thumbnail' => $nameFile,
-                ]);
-                if ($post) {
+                if ($package->update($request->all())) {
                     return response()->json([
                         'code' => 200,
                         'type' => 'success',
                         'message' => 'Data successfully updated',
-                        'data' => $post,
+                        'data' => $package,
                     ], 200);
                 }
             }
@@ -119,16 +92,16 @@ class PostController extends Controller
             return response()->json([
                 'code' => 400,
                 'type' => 'danger',
-                'message' => 'Failed to post',
+                'message' => 'Failed to update',
                 'data' => $th->getMessage(),
             ], 400);
         }
     }
 
-    public function destroy(Post $post)
+    public function destroy(Package $package)
     {
         try {
-            if ($post->delete()) {
+            if ($package->delete()) {
                 return response()->json([
                     'code' => 200,
                     'type' => 'success',

@@ -27,7 +27,8 @@ Route::prefix('auth')->group(function () {
     Route::put('update', [AuthController::class, 'update']);
 });
 
-Route::apiResource('/post', App\Http\Controllers\Api\PostController::class);
+Route::resource('/post', App\Http\Controllers\Api\PostController::class);
+Route::apiResource('/package', App\Http\Controllers\Api\PackageController::class);
 
 Route::prefix('chat')->group(function () {
     Route::get('/contact-list', [ChatController::class, 'contactChatList']);
@@ -52,12 +53,14 @@ Route::prefix('consultation')->group(function () {
 });
 
 Route::prefix('exhibitor')->group(function () {
+    Route::get('/banner', [BannerController::class, 'list']);
+    Route::post('/banner', [BannerController::class, 'store']);
+
     Route::get('/', [UserController::class, 'exhibitorList']);
+    Route::get('/{user}', [UserController::class, 'exhibitorDetail']);
     // Route::post('/', [ConsultationController::class, 'store']);
 
     // BANNER
-    Route::get('/banner', [BannerController::class, 'list']);
-    Route::post('/banner', [BannerController::class, 'store']);
 });
 
 

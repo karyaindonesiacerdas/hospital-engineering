@@ -27,8 +27,29 @@ class UserController extends Controller
                 'code' => 200,
                 'type' => 'success',
                 'message' => 'Fetch succeed',
-                'data' => $users->get(['id', 'name', 'company_logo']),
+                'data' => $users->get(['id', 'name', 'company_logo', 'business_nature']),
             ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'code' => 400,
+                'type' => 'danger',
+                'message' => 'Fetch failed',
+                'data' => $th->getMessage(),
+            ], 400);
+        }
+    }
+
+    public function exhibitorDetail(User $user)
+    {
+        try {
+            if ($user->role == 'exhibitor') {
+                return response()->json([
+                    'code' => 200,
+                    'type' => 'success',
+                    'message' => 'Fetch succeed',
+                    'data' => collect(User::with('banners')->find($user->id))->except(['created_at', 'updated_at', 'email_verified_at', 'visit_purpose', 'product_interest', 'visitor_type', 'institution_type', 'institution_name']),
+                ], 200);
+            }
         } catch (\Throwable $th) {
             return response()->json([
                 'code' => 400,

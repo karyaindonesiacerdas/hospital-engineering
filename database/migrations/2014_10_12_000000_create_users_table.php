@@ -41,7 +41,7 @@ class CreateUsersTable extends Migration
             $table->string('company_logo')->nullable();
             $table->string('company_video_url')->nullable();
             $table->text('company_description')->nullable();
-            $table->string('packages')->nullable();
+            $table->unsignedBigInteger('package_id')->nullable();
             $table->string('business_nature')->nullable();
 
             $table->timestamp('email_verified_at')->nullable();

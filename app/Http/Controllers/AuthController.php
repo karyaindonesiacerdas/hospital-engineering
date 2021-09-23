@@ -154,6 +154,9 @@ class AuthController extends Controller
     {
         try {
             if (auth()->user()) {
+                if (auth()->user()->role == 'admin') {
+                    $user = collect(auth()->user())->only(['name', 'email']);
+                }
                 if (auth()->user()->role == 'visitor') {
                     $user = collect(auth()->user())->except(['created_at', 'updated_at', 'email_verified_at', 'company_description', 'company_name', 'company_website', 'packages', 'business_nature', 'additional_remarks', 'company_logo']);
                 }
