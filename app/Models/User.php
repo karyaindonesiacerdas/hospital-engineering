@@ -78,6 +78,6 @@ class User extends Authenticatable implements JWTSubject
 
     public function package()
     {
-        return $this->belongsTo('App\Models\Package');
+        return $this->belongsTo('App\Models\Package')->orderByDesc('order');
     }
 }

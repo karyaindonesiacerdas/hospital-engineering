@@ -22,7 +22,7 @@ class UserController extends Controller
                 'code' => 200,
                 'type' => 'success',
                 'message' => 'Fetch succeed',
-                'data' => $users->where('package_id', '!=', null)->get(['id', 'name', 'company_logo', 'company_name', 'business_nature', 'package_id']),
+                'data' => $users->where('package_id', '!=', null)->orderByDesc('package_id')->get(['id', 'name', 'company_logo', 'company_name', 'business_nature', 'package_id']),
             ], 200);
         } catch (\Throwable $th) {
             return response()->json([
