@@ -38,6 +38,7 @@ class BannerController extends Controller
         try {
             $checkAlreadyExists = auth()->user()->banners->where('order', $request->order)->first();
             if (!$checkAlreadyExists) {
+                return 1;
                 $name = md5($request->file('image') . microtime()) . '.' . $request->file('image')->extension();
                 $request->file('image')->storeAs('banner', $name);
                 $banner = auth()->user()->banners()->create([
@@ -57,7 +58,7 @@ class BannerController extends Controller
             } else {
                 $name = md5($request->file('image') . microtime()) . '.' . $request->file('image')->extension();
                 $request->file('image')->storeAs('banner', $name);
-                $banner = auth()->user()->banners()->update([
+                $banner = auth()->user()->banners->where('order', $request->order)->first()->update([
                     'image' => $name,
                     'display_name' => $request->display_name,
                     'description' => $request->input('description', null),
