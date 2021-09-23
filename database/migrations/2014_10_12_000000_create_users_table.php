@@ -20,14 +20,10 @@ class CreateUsersTable extends Migration
             $table->string('mobile')->nullable();
             $table->string('img_profile')->nullable();
             $table->string('job_function')->nullable();
-            $table->string('company_name')->nullable();
-            $table->string('company_website')->nullable();
+
             $table->string('country')->nullable();
             $table->string('province')->nullable();
-            $table->string('packages')->nullable();
-            $table->string('business_nature')->nullable();
 
-            // ================
             $table->string('institution_name')->nullable();
             $table->string('institution_type')->nullable();
             $table->string('visitor_type')->nullable();
@@ -35,15 +31,19 @@ class CreateUsersTable extends Migration
             $table->json('visit_purpose')->nullable();
             $table->string('member_sehat_ri')->nullable();
             $table->boolean('allow_share_info')->default(false);
+            $table->string('role', 20)->nullable();
 
             // exhibitor only
+            $table->text('ala_carte')->nullable();
             $table->text('additional_remarks')->nullable();
-
-            // COMPANY
+            $table->string('company_name')->nullable();
+            $table->string('company_website')->nullable();
             $table->string('company_logo')->nullable();
             $table->string('company_video_url')->nullable();
             $table->text('company_description')->nullable();
-            $table->string('role', 20)->nullable();
+            $table->string('packages')->nullable();
+            $table->string('business_nature')->nullable();
+
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->rememberToken();

@@ -27,6 +27,8 @@ Route::prefix('auth')->group(function () {
     Route::put('update', [AuthController::class, 'update']);
 });
 
+Route::apiResource('/post', App\Http\Controllers\Api\PostController::class);
+
 Route::prefix('chat')->group(function () {
     Route::get('/contact-list', [ChatController::class, 'contactChatList']);
     Route::get('/user/{user}', [ChatController::class, 'ChatDetail']);
