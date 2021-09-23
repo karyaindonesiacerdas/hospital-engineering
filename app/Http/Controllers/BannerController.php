@@ -38,7 +38,6 @@ class BannerController extends Controller
         try {
             $checkAlreadyExists = auth()->user()->banners->where('order', $request->order)->first();
             if (!$checkAlreadyExists) {
-                return 1;
                 $name = md5($request->file('image') . microtime()) . '.' . $request->file('image')->extension();
                 $request->file('image')->storeAs('banner', $name);
                 $banner = auth()->user()->banners()->create([
