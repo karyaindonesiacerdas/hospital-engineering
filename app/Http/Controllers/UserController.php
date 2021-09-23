@@ -8,15 +8,10 @@ use Image;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function exhibitorList(Request $request)
     {
         try {
-            $users = User::where('role', 'exhibitor');
+            $users = User::with('package')->where('role', 'exhibitor');
             if ($request->search) {
                 $users->where('name', 'like', "%" . $request->search . "%");
             }
@@ -27,7 +22,7 @@ class UserController extends Controller
                 'code' => 200,
                 'type' => 'success',
                 'message' => 'Fetch succeed',
-                'data' => $users->get(['id', 'name', 'company_logo', 'business_nature']),
+                'data' => $users->where('package_id', '!=', null)->get(['id', 'name', 'company_logo', 'company_name', 'business_nature', 'package_id']),
             ], 200);
         } catch (\Throwable $th) {
             return response()->json([
@@ -60,66 +55,6 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(User $user)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, User $user)
     {
         $this->validate($request, [
@@ -133,9 +68,6 @@ class UserController extends Controller
             $img->resize(100, 100, function ($constraint) {
                 $constraint->aspectRatio();
             })->save($destinationPath . '/' . $input['imagename']);
-
-            // $destinationPath = public_path('images');
-            // $image->move($destinationPath, $input['imagename']);
 
             auth()->user()->update([
                 'company_name' => $request->company_name,
@@ -153,17 +85,6 @@ class UserController extends Controller
             ]);
         }
         return back();
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(User $user)
-    {
-        //
     }
 
     public function company()
