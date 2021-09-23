@@ -53,8 +53,9 @@ Route::prefix('consultation')->group(function () {
 });
 
 Route::prefix('exhibitor')->group(function () {
-    Route::get('/banner', [BannerController::class, 'list']);
+    Route::get('/banner', [BannerController::class, 'index']);
     Route::post('/banner', [BannerController::class, 'store']);
+    Route::delete('/banner/{banner}', [BannerController::class, 'destroy']);
 
     Route::get('/', [UserController::class, 'exhibitorList']);
     Route::get('/{user}', [UserController::class, 'exhibitorDetail']);

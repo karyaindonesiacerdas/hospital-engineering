@@ -17,6 +17,7 @@ class CreateBannersTable extends Migration
             $table->id();
             $table->unsignedBigInteger('exhibitor_id');
             $table->string('image');
+            $table->string('type')->nullable();
             $table->string('display_name')->nullable();
             $table->integer('order');
             $table->text('description')->nullable();
