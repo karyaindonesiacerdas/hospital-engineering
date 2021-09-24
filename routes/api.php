@@ -50,7 +50,9 @@ Route::prefix('forum')->group(function () {
 Route::prefix('consultation')->group(function () {
     Route::get('/', [ConsultationController::class, 'index']);
     Route::get('/available', [ConsultationController::class, 'available']);
+    Route::put('/{consultation}', [ConsultationController::class, 'update']);
     Route::post('/', [ConsultationController::class, 'store']);
+    Route::delete('/{consultation}', [ConsultationController::class, 'destroy']);
 });
 
 Route::prefix('exhibitor')->group(function () {

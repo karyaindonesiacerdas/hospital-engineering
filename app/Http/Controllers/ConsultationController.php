@@ -45,12 +45,12 @@ class ConsultationController extends Controller
             if ($request->exhibitor_id) {
                 $consultations->where('exhibitor_id', $request->exhibitor_id);
             }
-            $consultations = $consultations->where('status', $request->status);
+            $consultations = $consultations->where('status', '!=', null);
             return response()->json([
                 'code' => 200,
                 'type' => 'success',
                 'message' => 'Data successfully fetched',
-                'data' => $consultations->get(['date', 'time']),
+                'data' => $consultations->get(['id', 'date', 'time']),
             ], 200);
         } catch (\Throwable $th) {
             return response()->json([
@@ -62,22 +62,6 @@ class ConsultationController extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         try {
@@ -85,6 +69,7 @@ class ConsultationController extends Controller
                 'exhibitor_id' => $request->exhibitor_id,
                 'date' => $request->date,
                 'time' => $request->time,
+                'status' => 1,
             ]);
             if ($consultation) {
                 return response()->json([
@@ -111,48 +96,52 @@ class ConsultationController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Consultation  $consultation
-     * @return \Illuminate\Http\Response
-     */
     public function show(Consultation $consultation)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Consultation  $consultation
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Consultation $consultation)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Consultation  $consultation
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Consultation $consultation)
     {
-        //
+        try {
+            $consultation = $consultation->update([
+                'status' => $request->status,
+            ]);
+            if ($consultation) {
+                return response()->json([
+                    'code' => 200,
+                    'type' => 'success',
+                    'message' => 'Data successfully updated',
+                    'data' => $consultation,
+                ], 200);
+            }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'code' => 400,
+                'type' => 'danger',
+                'message' => 'Failed to post',
+                'data' => $th->getMessage(),
+            ], 400);
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Consultation  $consultation
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Consultation $consultation)
     {
-        //
+        try {
+            if ($consultation->delete()) {
+                return response()->json([
+                    'code' => 200,
+                    'type' => 'success',
+                    'message' => 'Data successfully deleted',
+                ], 200);
+            }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'code' => 400,
+                'type' => 'danger',
+                'message' => 'Data failed to retrieve',
+                'data' => $th->getMessage(),
+            ], 400);
+        }
     }
 }
