@@ -49,6 +49,7 @@ Route::prefix('forum')->group(function () {
 
 Route::prefix('consultation')->group(function () {
     Route::get('/', [ConsultationController::class, 'index']);
+    Route::get('/available', [ConsultationController::class, 'available']);
     Route::post('/', [ConsultationController::class, 'store']);
 });
 

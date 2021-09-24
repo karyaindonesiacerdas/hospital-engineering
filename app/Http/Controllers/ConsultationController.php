@@ -38,6 +38,30 @@ class ConsultationController extends Controller
         }
     }
 
+    public function available(Request $request)
+    {
+        try {
+            $consultations = Consultation::query();
+            if ($request->exhibitor_id) {
+                $consultations->where('exhibitor_id', $request->exhibitor_id);
+            }
+            $consultations = $consultations->where('status', $request->status);
+            return response()->json([
+                'code' => 200,
+                'type' => 'success',
+                'message' => 'Data successfully fetched',
+                'data' => $consultations->get(['date', 'time']),
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'code' => 400,
+                'type' => 'danger',
+                'message' => 'Data failed to retrieve',
+                'data' => $th->getMessage(),
+            ], 400);
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *
