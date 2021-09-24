@@ -11,13 +11,18 @@ class Consultation extends Model
 
     protected $guarded = [];
 
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User', 'visitor_id');
+    }
+
     public function visitor()
     {
-        return $this->belongsTo('App\Models\Visitor', 'visitor_id');
+        return $this->belongsTo('App\Models\User', 'visitor_id');
     }
 
     public function exhibitor()
     {
-        return $this->belongsTo('App\Models\Visitor', 'exhibitor_id');
+        return $this->belongsTo('App\Models\User', 'exhibitor_id');
     }
 }

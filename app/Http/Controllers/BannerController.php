@@ -55,10 +55,14 @@ class BannerController extends Controller
                     ], 200);
                 }
             } else {
-                $name = md5($request->file('image') . microtime()) . '.' . $request->file('image')->extension();
-                $request->file('image')->storeAs('banner', $name);
-                $banner = auth()->user()->banners->where('order', $request->order)->first()->update([
-                    'image' => $name,
+                $name = null;
+                if ($request->hasFile('image')) {
+                    $name = md5($request->file('image') . microtime()) . '.' . $request->file('image')->extension();
+                    $request->file('image')->storeAs('banner', $name);
+                }
+                $banner = auth()->user()->banners->where('order', $request->order)->first();
+                $banner->update([
+                    'image' => $name ? $name : $banner->image,
                     'display_name' => $request->display_name,
                     'description' => $request->input('description', null),
                     'order' => $request->order

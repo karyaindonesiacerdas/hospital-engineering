@@ -20,6 +20,7 @@ class CreateBannersTable extends Migration
             $table->string('type')->nullable();
             $table->string('display_name')->nullable();
             $table->integer('order');
+            $table->string('booth_type')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();
         });

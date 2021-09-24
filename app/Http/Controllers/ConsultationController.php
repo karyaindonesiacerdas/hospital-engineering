@@ -12,14 +12,21 @@ class ConsultationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         try {
+            if (auth()->user()->role == 'visitor') {
+                $consultations = auth()->user()->consultations->load(['visitor:id,name,institution_name', 'exhibitor:id,company_name']);
+            }
+            if (auth()->user()->role == 'exhibitor') {
+                $consultations = auth()->user()->consultations_exhibitor->load(['visitor:id,name,institution_name', 'exhibitor:id,company_name']);
+            }
+            $consultations = $consultations->where('status', $request->input('status', 0));
             return response()->json([
                 'code' => 200,
                 'type' => 'success',
                 'message' => 'Data successfully fetched',
-                'data' => auth()->user()->consultations,
+                'data' => $consultations,
             ], 200);
         } catch (\Throwable $th) {
             return response()->json([
