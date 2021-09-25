@@ -17,7 +17,7 @@ class CreateConsultationsTable extends Migration
             $table->id();
             $table->date('date');
             $table->time('time');
-            $table->unsignedBigInteger('visitor_id');
+            $table->unsignedBigInteger('visitor_id')->nullable();
             $table->unsignedBigInteger('exhibitor_id');
             $table->integer('status')->default(1);
             $table->timestamps();

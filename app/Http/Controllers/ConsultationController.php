@@ -7,11 +7,6 @@ use Illuminate\Http\Request;
 
 class ConsultationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
         try {
@@ -21,12 +16,12 @@ class ConsultationController extends Controller
             if (auth()->user()->role == 'exhibitor') {
                 $consultations = auth()->user()->consultations_exhibitor->load(['visitor:id,name,institution_name', 'exhibitor:id,company_name']);
             }
-            $consultations = $consultations->where('status', $request->input('status', 0));
+            $consultations = $consultations->where('status', $request->status);
             return response()->json([
                 'code' => 200,
                 'type' => 'success',
                 'message' => 'Data successfully fetched',
-                'data' => $consultations,
+                'data' => $consultations->values(),
             ], 200);
         } catch (\Throwable $th) {
             return response()->json([
@@ -65,8 +60,7 @@ class ConsultationController extends Controller
     public function store(Request $request)
     {
         try {
-            $consultation = auth()->user()->consultations()->create([
-                'exhibitor_id' => $request->exhibitor_id,
+            $consultation = auth()->user()->consultations_exhibitor()->create([
                 'date' => $request->date,
                 'time' => $request->time,
                 'status' => 1,
@@ -76,14 +70,14 @@ class ConsultationController extends Controller
                     'code' => 200,
                     'type' => 'success',
                     'message' => 'Book succeed',
-                    'data' => auth()->user()->consultations,
+                    'data' => $consultation,
                 ], 200);
             } else {
                 return response()->json([
                     'code' => 400,
                     'type' => 'danger',
                     'message' => 'Book failed',
-                    'data' => auth()->user()->consultations,
+                    'data' => 'Book failed',
                 ], 200);
             }
         } catch (\Throwable $th) {
@@ -105,6 +99,7 @@ class ConsultationController extends Controller
     {
         try {
             $consultation = $consultation->update([
+                'visitor_id' => auth()->id(),
                 'status' => $request->status,
             ]);
             if ($consultation) {
