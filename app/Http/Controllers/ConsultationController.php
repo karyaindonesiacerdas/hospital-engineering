@@ -16,12 +16,14 @@ class ConsultationController extends Controller
             if (auth()->user()->role == 'exhibitor') {
                 $consultations = auth()->user()->consultations_exhibitor->load(['visitor:id,name,institution_name', 'exhibitor:id,company_name']);
             }
-            $consultations = $consultations->where('status', $request->status);
+            if ($request->status) {
+                $consultations = $consultations->where('status', $request->status)->values();
+            }
             return response()->json([
                 'code' => 200,
                 'type' => 'success',
                 'message' => 'Data successfully fetched',
-                'data' => $consultations->values(),
+                'data' => $consultations,
             ], 200);
         } catch (\Throwable $th) {
             return response()->json([
@@ -40,7 +42,7 @@ class ConsultationController extends Controller
             if ($request->exhibitor_id) {
                 $consultations->where('exhibitor_id', $request->exhibitor_id);
             }
-            $consultations = $consultations->where('status', '!=', null);
+            $consultations = $consultations->where('status', 1);
             return response()->json([
                 'code' => 200,
                 'type' => 'success',
