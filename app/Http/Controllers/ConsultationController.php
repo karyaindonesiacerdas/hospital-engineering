@@ -100,35 +100,11 @@ class ConsultationController extends Controller
         //
     }
 
-    public function visitorBook(Request $request, Consultation $consultation)
+    public function update(Request $request, Consultation $consultation)
     {
         try {
-            $consultation = $consultation->update([
+            $consultation = auth()->user()->consultations_exhibitor()->update([
                 'visitor_id' => auth()->id(),
-                'status' => $request->status,
-            ]);
-            if ($consultation) {
-                return response()->json([
-                    'code' => 200,
-                    'type' => 'success',
-                    'message' => 'Data successfully updated',
-                    'data' => $consultation,
-                ], 200);
-            }
-        } catch (\Throwable $th) {
-            return response()->json([
-                'code' => 400,
-                'type' => 'danger',
-                'message' => 'Failed to post',
-                'data' => $th->getMessage(),
-            ], 400);
-        }
-    }
-
-    public function updateStatus(Request $request, Consultation $consultation)
-    {
-        try {
-            $consultation = $consultation->update([
                 'status' => $request->status,
             ]);
             if ($consultation) {

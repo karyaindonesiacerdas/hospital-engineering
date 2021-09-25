@@ -29,6 +29,7 @@ Route::prefix('auth')->group(function () {
 
 Route::resource('/post', App\Http\Controllers\Api\PostController::class);
 Route::apiResource('/package', App\Http\Controllers\Api\PackageController::class);
+Route::apiResource('/rundown', App\Http\Controllers\Api\RundownController::class);
 
 Route::prefix('chat')->group(function () {
     Route::get('/contact-list', [ChatController::class, 'contactChatList']);
@@ -50,8 +51,7 @@ Route::prefix('forum')->group(function () {
 Route::prefix('consultation')->group(function () {
     Route::get('/', [ConsultationController::class, 'index']);
     Route::get('/available', [ConsultationController::class, 'available']);
-    Route::put('/{consultation}', [ConsultationController::class, 'visitorBook']);
-    Route::put('/status/{consultation}', [ConsultationController::class, 'updateStatus']);
+    Route::put('/{consultation}', [ConsultationController::class, 'update']);
     Route::post('/', [ConsultationController::class, 'store']);
     Route::delete('/{consultation}', [ConsultationController::class, 'destroy']);
 });
