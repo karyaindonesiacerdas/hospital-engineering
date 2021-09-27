@@ -9,4 +9,14 @@ class CounterVisitor extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function visitor()
+    {
+        return $this->belongsTo('App\Models\User', 'visitor_id');
+    }
+
+    public function exhibitor()
+    {
+        return $this->belongsTo('App\Models\User', 'exhibitor_id');
+    }
 }

@@ -18,7 +18,7 @@ class CounterVisitorController extends Controller
                         'code' => 200,
                         'type' => 'success',
                         'message' => 'Data successfully saved',
-                        'data' => $counters,
+                        'data' => $counters->load(['visitor:id,name,institution_name,email,mobile']),
                     ], 200);
                 }
             }
