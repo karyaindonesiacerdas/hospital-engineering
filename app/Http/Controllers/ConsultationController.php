@@ -105,7 +105,6 @@ class ConsultationController extends Controller
     {
         try {
             $consultation = auth()->user()->consultations_exhibitor()->update([
-                'visitor_id' => auth()->id(),
                 'status' => $request->status,
             ]);
             if ($consultation) {
