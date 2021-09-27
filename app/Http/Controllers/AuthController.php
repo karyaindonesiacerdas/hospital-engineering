@@ -22,7 +22,7 @@ class AuthController extends Controller
     {
         if ($request->role == 'visitor') {
             $request->validate([
-                'email' => 'required|string|email|max:255|unique:users',
+                'email' => 'required|string|email|max:255',
                 'mobile' => 'required|string|max:255',
                 'name' => 'required|string|max:255',
                 'job_function' => 'required',
@@ -41,7 +41,7 @@ class AuthController extends Controller
 
         if ($request->role == 'exhibitor') {
             $request->validate([
-                'email' => 'required|string|email|max:255|unique:users',
+                'email' => 'required|string|email|max:255',
                 'mobile' => 'required|string|max:255',
                 'name' => 'required|string|max:255',
                 'job_function' => 'required',
@@ -61,27 +61,34 @@ class AuthController extends Controller
         }
         try {
             $user = User::create($data);
-            if (!$token = auth()->login($user)) {
-                return response()->json(['error' => 'Unauthorized'], 401);
+            if ($user) {
+                if (!$token = auth()->login($user)) {
+                    return response()->json(['error' => 'Unauthorized'], 401);
+                } else {
+                    return response()->json([
+                        'code' => 200,
+                        'type' => 'success',
+                        'message' => 'Successful registration',
+                        'data' => [
+                            'user' => collect($user)->only(['id', 'name', 'email', 'role', 'mobile']),
+                            'token_type' => 'bearer',
+                            'token' => $token,
+                        ],
+                    ], 200);
+                }
+                return $this->respondWithToken($token);
             } else {
                 return response()->json([
-                    'code' => 200,
-                    'type' => 'success',
-                    'message' => 'Successful registration',
-                    'data' => [
-                        'user' => collect($user)->only(['id', 'name', 'email', 'role', 'mobile']),
-                        'token_type' => 'bearer',
-                        'token' => $token,
-                    ],
-                ], 200);
+                    'code' => 400,
+                    'type' => 'danger',
+                    'message' => 'The Email Account Already Exists!',
+                ], 400);
             }
-            return $this->respondWithToken($token);
         } catch (\Throwable $th) {
             return response()->json([
                 'code' => 400,
                 'type' => 'danger',
-                'message' => 'Registration failed',
-                'data' => $th->getMessage(),
+                'message' => $th->getMessage(),
             ], 400);
         }
     }
@@ -91,7 +98,11 @@ class AuthController extends Controller
         try {
             $credentials = request(['email', 'password']);
             if (!$token = auth()->attempt($credentials)) {
-                return response()->json(['error' => 'Unauthorized'], 401);
+                return response()->json([
+                    'code' => 400,
+                    'type' => 'danger',
+                    'message' => 'You have entered an invalid username or password',
+                ], 400);
             } else {
                 return response()->json([
                     'code' => 200,
@@ -109,8 +120,7 @@ class AuthController extends Controller
             return response()->json([
                 'code' => 400,
                 'type' => 'danger',
-                'message' => 'Login failed',
-                'data' => $th->getMessage(),
+                'message' => $th->getMessage(),
             ], 400);
         }
     }
@@ -120,7 +130,7 @@ class AuthController extends Controller
         try {
             if ($user = User::where('email', request('email'))->first()) {
                 if (!$token = auth()->login($user)) {
-                    return response()->json(['error' => 'Unauthorized'], 401);
+                    return response()->json(['error' => 'You have entered an invalid username or password'], 401);
                 }
                 return response()->json([
                     'code' => 200,
@@ -136,16 +146,14 @@ class AuthController extends Controller
                 return response()->json([
                     'code' => 400,
                     'type' => 'danger',
-                    'message' => 'Login failed',
-                    'data' => 'Error..',
+                    'message' => 'You have entered an invalid username or password',
                 ], 400);
             }
         } catch (\Throwable $th) {
             return response()->json([
                 'code' => 400,
                 'type' => 'danger',
-                'message' => 'Login failed',
-                'data' => $th->getMessage(),
+                'message' => $th->getMessage(),
             ], 400);
         }
     }
@@ -173,16 +181,14 @@ class AuthController extends Controller
                 return response()->json([
                     'code' => 400,
                     'type' => 'danger',
-                    'message' => 'Data failed to retrieve',
-                    'data' => 'Error..',
+                    'message' => 'Error, Data failed to retrieve',
                 ], 400);
             }
         } catch (\Throwable $th) {
             return response()->json([
                 'code' => 400,
                 'type' => 'danger',
-                'message' => 'Data failed to retrieve',
-                'data' => $th->getMessage(),
+                'message' => $th->getMessage(),
             ], 400);
         }
     }
@@ -216,16 +222,14 @@ class AuthController extends Controller
                 return response()->json([
                     'code' => 400,
                     'type' => 'danger',
-                    'message' => 'Data failed to update',
-                    'data' => 'Error..',
+                    'message' => 'Error, data failed to update',
                 ], 400);
             }
         } catch (\Throwable $th) {
             return response()->json([
                 'code' => 400,
                 'type' => 'danger',
-                'message' => 'Data failed to update',
-                'data' => $th->getMessage(),
+                'message' => $th->getMessage(),
             ], 400);
         }
     }

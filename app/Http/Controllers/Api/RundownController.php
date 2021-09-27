@@ -29,8 +29,7 @@ class RundownController extends Controller
             return response()->json([
                 'code' => 400,
                 'type' => 'danger',
-                'message' => 'Data failed to retrieve',
-                'data' => $th->getMessage(),
+                'message' => $th->getMessage(),
             ], 400);
         }
     }
@@ -48,13 +47,14 @@ class RundownController extends Controller
                         'data' => $rundown,
                     ], 200);
                 }
+            } else {
+                return response()->json(['error' => 'Unauthorized'], 401);
             }
         } catch (\Throwable $th) {
             return response()->json([
                 'code' => 400,
                 'type' => 'danger',
-                'message' => 'Failed to save',
-                'data' => $th->getMessage(),
+                'message' => $th->getMessage(),
             ], 400);
         }
     }
@@ -69,13 +69,14 @@ class RundownController extends Controller
                     'message' => 'Data successfully fetched',
                     'data' => $rundown,
                 ], 200);
+            } else {
+                return response()->json(['error' => 'Unauthorized'], 401);
             }
         } catch (\Throwable $th) {
             return response()->json([
                 'code' => 400,
                 'type' => 'danger',
-                'message' => 'Failed to fetch',
-                'data' => $th->getMessage(),
+                'message' => $th->getMessage(),
             ], 400);
         }
     }
@@ -92,13 +93,14 @@ class RundownController extends Controller
                         'data' => $rundown,
                     ], 200);
                 }
+            } else {
+                return response()->json(['error' => 'Unauthorized'], 401);
             }
         } catch (\Throwable $th) {
             return response()->json([
                 'code' => 400,
                 'type' => 'danger',
-                'message' => 'Failed to update',
-                'data' => $th->getMessage(),
+                'message' => $th->getMessage(),
             ], 400);
         }
     }
@@ -117,8 +119,7 @@ class RundownController extends Controller
             return response()->json([
                 'code' => 400,
                 'type' => 'danger',
-                'message' => 'Data failed to retrieve',
-                'data' => $th->getMessage(),
+                'message' => $th->getMessage(),
             ], 400);
         }
     }

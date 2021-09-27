@@ -59,6 +59,8 @@ class PostController extends Controller
                         'data' => $post,
                     ], 200);
                 }
+            } else {
+                return response()->json(['error' => 'Unauthorized'], 401);
             }
         } catch (\Throwable $th) {
             return response()->json([
@@ -114,6 +116,8 @@ class PostController extends Controller
                         'data' => $post,
                     ], 200);
                 }
+            } else {
+                return response()->json(['error' => 'Unauthorized'], 401);
             }
         } catch (\Throwable $th) {
             return response()->json([
