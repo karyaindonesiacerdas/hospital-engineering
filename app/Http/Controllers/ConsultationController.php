@@ -65,10 +65,11 @@ class ConsultationController extends Controller
     public function store(Request $request)
     {
         try {
-            $consultation = auth()->user()->consultations_exhibitor()->create([
+            $consultation = auth()->user()->consultations()->create([
                 'date' => $request->date,
                 'time' => $request->time,
                 'status' => 1,
+                'exhibitor_id' => $request->exhibitor_id,
             ]);
             if ($consultation) {
                 return response()->json([
