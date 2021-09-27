@@ -11,7 +11,7 @@ class ConsultationController extends Controller
     {
         try {
             if (auth()->user()->role == 'admin') {
-                $consultations = Consultation::where('status', '>', 1)->get()->load(['visitor:id,name,institution_name', 'exhibitor:id,company_name']);
+                $consultations = Consultation::where('status', 1)->get()->load(['visitor:id,name,institution_name', 'exhibitor:id,company_name']);
             }
             if (auth()->user()->role == 'visitor') {
                 $consultations = auth()->user()->consultations->load(['visitor:id,name,institution_name', 'exhibitor:id,company_name']);
