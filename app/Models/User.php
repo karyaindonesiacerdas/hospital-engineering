@@ -85,4 +85,14 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->belongsTo('App\Models\Package')->orderByDesc('order');
     }
+
+    public function counters()
+    {
+        return $this->hasMany('App\Models\CounterVisitor', 'visitor_id');
+    }
+
+    public function counters_exhibitor()
+    {
+        return $this->hasMany('App\Models\CounterVisitor', 'exhibitor_id');
+    }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRundownsTable extends Migration
+class CreateCounterVisitorsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,10 @@ class CreateRundownsTable extends Migration
      */
     public function up()
     {
-        Schema::create('rundowns', function (Blueprint $table) {
+        Schema::create('counter_visitors', function (Blueprint $table) {
             $table->id();
-            $table->date('date');
-            $table->string('time');
-            $table->string('title');
-            $table->string('speakers');
-            $table->string('embedd_link');
-            $table->smallInteger('status');
+            $table->unsignedBigInteger('visitor_id');
+            $table->unsignedBigInteger('exhibitor_id');
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ class CreateRundownsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rundowns');
+        Schema::dropIfExists('counter_visitors');
     }
 }

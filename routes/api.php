@@ -31,6 +31,10 @@ Route::resource('/post', App\Http\Controllers\Api\PostController::class);
 Route::apiResource('/package', App\Http\Controllers\Api\PackageController::class);
 Route::apiResource('/rundown', App\Http\Controllers\Api\RundownController::class);
 
+// COUNTER
+Route::get('/list-visitor-views', [App\Http\Controllers\Api\CounterVisitorController::class, 'listVisitorViews']);
+Route::post('/count-visitor-views', [App\Http\Controllers\Api\CounterVisitorController::class, 'countVisitorViews']);
+
 Route::prefix('chat')->group(function () {
     Route::get('/contact-list', [ChatController::class, 'contactChatList']);
     Route::get('/user/{user}', [ChatController::class, 'ChatDetail']);
