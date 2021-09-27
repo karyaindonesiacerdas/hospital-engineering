@@ -104,7 +104,7 @@ class ConsultationController extends Controller
     public function update(Request $request, Consultation $consultation)
     {
         try {
-            $consultation = auth()->user()->consultations_exhibitor()->update([
+            $consultation = $consultation->update([
                 'status' => $request->status,
             ]);
             if ($consultation) {
