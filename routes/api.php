@@ -13,6 +13,8 @@ Route::prefix('auth')->group(function () {
     Route::put('update/status', [App\Http\Controllers\Api\AuthController::class, 'adminUpdateStatus']);
 });
 
+Route::apiResource('/setting', App\Http\Controllers\Api\SettingController::class);
+
 Route::resource('/post', App\Http\Controllers\Api\PostController::class);
 Route::apiResource('/package', App\Http\Controllers\Api\PackageController::class);
 Route::apiResource('/rundown', App\Http\Controllers\Api\RundownController::class);
