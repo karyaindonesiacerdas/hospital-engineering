@@ -18,11 +18,14 @@ class UserController extends Controller
             if ($request->category) {
                 $users->whereJsonContains('business_nature', $request->category);
             }
+            if ($request->show_package == 1) {
+                $users = $users->where('package_id', '!=', null)->orderByDesc('package_id');
+            }
             return response()->json([
                 'code' => 200,
                 'type' => 'success',
                 'message' => 'Fetch succeed',
-                'data' => $users->where('package_id', '!=', null)->orderByDesc('package_id')->get(['id', 'name', 'company_logo', 'company_name', 'business_nature', 'package_id']),
+                'data' => $users->get(['id', 'name', 'company_logo', 'company_name', 'business_nature', 'package_id']),
             ], 200);
         } catch (\Throwable $th) {
             return response()->json([
