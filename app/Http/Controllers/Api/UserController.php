@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Image;
@@ -88,21 +89,5 @@ class UserController extends Controller
             ]);
         }
         return back();
-    }
-
-    public function company()
-    {
-        $user = auth()->user();
-        return view('exhibitor.company.index', compact('user'));
-    }
-
-    public function guideline()
-    {
-        return view('exhibitor.guideline.index');
-    }
-
-    public function certificate()
-    {
-        return view('exhibitor.certificate.index');
     }
 }

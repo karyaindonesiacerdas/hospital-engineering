@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -285,13 +286,6 @@ class AuthController extends Controller
     }
     // API =======================================
 
-    public function registerVisitor()
-    {
-        $countries = Http::get('https://restcountries.eu/rest/v2/all')->json();
-        $province = Http::get('https://dev.farizdotid.com/api/daerahindonesia/provinsi')['provinsi'];
-        return view('auth.register-visitor', compact('countries', 'province'));
-    }
-
     public function registerGuest(Request $request)
     {
         $user = User::create($request->all());
@@ -301,12 +295,5 @@ class AuthController extends Controller
             session(['name' => $user->name, 'email' => $user->email]);
             return redirect(RouteServiceProvider::HOME);
         }
-    }
-
-    public function registerExhibitor()
-    {
-        $countries = Http::get('https://restcountries.eu/rest/v2/all')->json();
-        $province = Http::get('https://dev.farizdotid.com/api/daerahindonesia/provinsi')['provinsi'];
-        return view('auth.register-exhibitor', compact('countries', 'province'));
     }
 }
