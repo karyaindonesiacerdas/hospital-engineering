@@ -25,6 +25,7 @@ Route::prefix('auth')->group(function () {
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::post('me', [AuthController::class, 'me']);
     Route::put('update', [AuthController::class, 'update']);
+    Route::put('update/status', [AuthController::class, 'adminUpdateStatus']);
 });
 
 Route::resource('/post', App\Http\Controllers\Api\PostController::class);

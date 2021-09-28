@@ -234,6 +234,36 @@ class AuthController extends Controller
         }
     }
 
+    public function adminUpdateStatus(Request $request)
+    {
+        try {
+            if (auth()->user()->role == 'admin') {
+                if (User::find($request->user_id)->update(['package_id' => $request->package_id])) {
+                    return response()->json([
+                        'code' => 200,
+                        'type' => 'success',
+                        'message' => 'Data updated successfully',
+                        'data' => auth()->user(),
+                    ], 200);
+                } else {
+                    return response()->json([
+                        'code' => 400,
+                        'type' => 'danger',
+                        'message' => 'Error, data failed to update',
+                    ], 400);
+                }
+            } else {
+                return response()->json(['error' => 'Unauthorized'], 401);
+            }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'code' => 400,
+                'type' => 'danger',
+                'message' => $th->getMessage(),
+            ], 400);
+        }
+    }
+
     public function logout()
     {
         auth()->logout();
