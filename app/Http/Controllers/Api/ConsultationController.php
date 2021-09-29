@@ -73,25 +73,33 @@ class ConsultationController extends Controller
                     'message' => 'Failed, already booked',
                 ], 400);
             } else {
-                $consultation = auth()->user()->consultations()->create([
-                    'date' => $request->date,
-                    'time' => $request->time,
-                    'status' => 1,
-                    'exhibitor_id' => $request->exhibitor_id,
-                ]);
-                if ($consultation) {
-                    return response()->json([
-                        'code' => 200,
-                        'type' => 'success',
-                        'message' => 'Book succeed',
-                        'data' => $consultation,
-                    ], 200);
-                } else {
+                if (auth()->user()->consultations->where('exhibitor_id', $request->exhibitor_id)->first()) {
                     return response()->json([
                         'code' => 400,
                         'type' => 'danger',
-                        'message' => 'Book failed',
+                        'message' => 'Failed, already booked',
                     ], 400);
+                } else {
+                    $consultation = auth()->user()->consultations()->create([
+                        'date' => $request->date,
+                        'time' => $request->time,
+                        'status' => 1,
+                        'exhibitor_id' => $request->exhibitor_id,
+                    ]);
+                    if ($consultation) {
+                        return response()->json([
+                            'code' => 200,
+                            'type' => 'success',
+                            'message' => 'Book succeed',
+                            'data' => $consultation,
+                        ], 200);
+                    } else {
+                        return response()->json([
+                            'code' => 400,
+                            'type' => 'danger',
+                            'message' => 'Book failed',
+                        ], 400);
+                    }
                 }
             }
         } catch (\Throwable $th) {
