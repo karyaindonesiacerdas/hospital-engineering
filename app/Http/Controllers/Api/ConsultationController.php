@@ -44,9 +44,8 @@ class ConsultationController extends Controller
         try {
             $consultations = Consultation::query();
             if ($request->exhibitor_id) {
-                $consultations->where('exhibitor_id', $request->exhibitor_id);
+                $consultations = $consultations->where('exhibitor_id', $request->exhibitor_id);
             }
-            $consultations = $consultations->where('status', 1);
             return response()->json([
                 'code' => 200,
                 'type' => 'success',
