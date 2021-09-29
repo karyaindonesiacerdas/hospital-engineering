@@ -65,33 +65,40 @@ class ConsultationController extends Controller
     public function store(Request $request)
     {
         try {
-            $consultation = auth()->user()->consultations()->create([
-                'date' => $request->date,
-                'time' => $request->time,
-                'status' => 1,
-                'exhibitor_id' => $request->exhibitor_id,
-            ]);
-            if ($consultation) {
-                return response()->json([
-                    'code' => 200,
-                    'type' => 'success',
-                    'message' => 'Book succeed',
-                    'data' => $consultation,
-                ], 200);
-            } else {
+            $consultationAlreadyExist = Consultation::where(['exhibitor_id' => $request->exhibitor_id, 'date' => $request->date, 'time' => $request->time])->first();
+            if ($consultationAlreadyExist) {
                 return response()->json([
                     'code' => 400,
                     'type' => 'danger',
-                    'message' => 'Book failed',
-                    'data' => 'Book failed',
+                    'message' => 'Failed, already booked',
                 ], 200);
+            } else {
+                $consultation = auth()->user()->consultations()->create([
+                    'date' => $request->date,
+                    'time' => $request->time,
+                    'status' => 1,
+                    'exhibitor_id' => $request->exhibitor_id,
+                ]);
+                if ($consultation) {
+                    return response()->json([
+                        'code' => 200,
+                        'type' => 'success',
+                        'message' => 'Book succeed',
+                        'data' => $consultation,
+                    ], 200);
+                } else {
+                    return response()->json([
+                        'code' => 400,
+                        'type' => 'danger',
+                        'message' => 'Book failed',
+                    ], 200);
+                }
             }
         } catch (\Throwable $th) {
             return response()->json([
                 'code' => 400,
                 'type' => 'danger',
-                'message' => 'Book succeed',
-                'data' => $th->getMessage(),
+                'message' => $th->getMessage(),
             ], 400);
         }
     }
