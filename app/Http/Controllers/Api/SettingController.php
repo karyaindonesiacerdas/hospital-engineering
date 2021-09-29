@@ -11,15 +11,13 @@ class SettingController extends Controller
     public function index()
     {
         try {
-            if (auth()->user()->role == 'admin') {
-                $setting = Setting::first();
-                return response()->json([
-                    'code' => 200,
-                    'type' => 'success',
-                    'message' => 'Data successfully fetched',
-                    'data' => $setting,
-                ], 200);
-            }
+            $setting = Setting::first();
+            return response()->json([
+                'code' => 200,
+                'type' => 'success',
+                'message' => 'Data successfully fetched',
+                'data' => $setting,
+            ], 200);
         } catch (\Throwable $th) {
             return response()->json([
                 'code' => 400,
@@ -33,14 +31,18 @@ class SettingController extends Controller
     public function store(Request $request)
     {
         try {
-            $setting = Setting::create($request->all());
-            if ($setting) {
-                return response()->json([
-                    'code' => 200,
-                    'type' => 'success',
-                    'message' => 'Data successfully stored',
-                    'data' => $setting,
-                ], 200);
+            if (auth()->user()->role == 'admin') {
+                $setting = Setting::create($request->all());
+                if ($setting) {
+                    return response()->json([
+                        'code' => 200,
+                        'type' => 'success',
+                        'message' => 'Data successfully stored',
+                        'data' => $setting,
+                    ], 200);
+                }
+            } else {
+                return response()->json(['error' => 'Unauthorized'], 401);
             }
         } catch (\Throwable $th) {
             return response()->json([
@@ -55,13 +57,17 @@ class SettingController extends Controller
     public function update(Request $request, Setting $setting)
     {
         try {
-            if ($setting->update($request->all())) {
-                return response()->json([
-                    'code' => 200,
-                    'type' => 'success',
-                    'message' => 'Data successfully updated',
-                    'data' => $setting,
-                ], 200);
+            if (auth()->user()->role == 'admin') {
+                if ($setting->update($request->all())) {
+                    return response()->json([
+                        'code' => 200,
+                        'type' => 'success',
+                        'message' => 'Data successfully updated',
+                        'data' => $setting,
+                    ], 200);
+                }
+            } else {
+                return response()->json(['error' => 'Unauthorized'], 401);
             }
         } catch (\Throwable $th) {
             return response()->json([
@@ -76,12 +82,16 @@ class SettingController extends Controller
     public function destroy(Setting $setting)
     {
         try {
-            if ($setting->delete()) {
-                return response()->json([
-                    'code' => 200,
-                    'type' => 'success',
-                    'message' => 'Data successfully deleted',
-                ], 200);
+            if (auth()->user()->role == 'admin') {
+                if ($setting->delete()) {
+                    return response()->json([
+                        'code' => 200,
+                        'type' => 'success',
+                        'message' => 'Data successfully deleted',
+                    ], 200);
+                }
+            } else {
+                return response()->json(['error' => 'Unauthorized'], 401);
             }
         } catch (\Throwable $th) {
             return response()->json([
