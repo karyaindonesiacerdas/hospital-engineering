@@ -199,7 +199,7 @@ class AuthController extends Controller
         try {
             $requestData = $request->all();
             if ($request->password) {
-                $request['password'] = bcrypt($request->password);
+                $requestData['password'] = bcrypt($request->password);
             }
             if ($request->hasFile('company_logo')) {
                 $companyFileName = md5($request->file('company_logo') . microtime()) . '.' . $request->file('company_logo')->extension();
@@ -211,7 +211,6 @@ class AuthController extends Controller
                 $requestData['img_profile'] = $profileFileName;
                 $request->file('img_profile')->storeAs('profiles', $profileFileName);
             }
-
             if (auth()->user()->update($requestData)) {
                 return response()->json([
                     'code' => 200,
