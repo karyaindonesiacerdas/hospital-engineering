@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\CounterVisitor;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -40,6 +41,13 @@ class UserController extends Controller
     public function exhibitorDetail(User $user)
     {
         try {
+            if (auth()->user()->role == 'visitor') {
+                $checkAlreadyExist = CounterVisitor::where(['visitor_id' => auth()->id(), 'exhibitor_id' => $user->id])->first();
+                if (!$checkAlreadyExist) {
+                    auth()->user()->counters()->create(['exhibitor_id' => $user->id]);
+                }
+            }
+
             if ($user->role == 'exhibitor') {
                 return response()->json([
                     'code' => 200,
