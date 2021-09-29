@@ -19,6 +19,7 @@ class CreateRundownsTable extends Migration
             $table->string('time');
             $table->string('title');
             $table->text('subtitle')->nullable();
+            $table->string('position')->nullable();
             $table->string('speakers');
             $table->string('embedd_link');
             $table->smallInteger('status');
