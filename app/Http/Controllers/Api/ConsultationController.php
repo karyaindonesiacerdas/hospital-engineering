@@ -12,13 +12,13 @@ class ConsultationController extends Controller
     {
         try {
             if (auth()->user()->role == 'admin') {
-                $consultations = Consultation::get()->load(['visitor:id,name,institution_name', 'exhibitor:id,company_name']);
+                $consultations = Consultation::get()->load(['visitor:id,name,institution_name,mobile', 'exhibitor:id,company_name']);
             }
             if (auth()->user()->role == 'visitor') {
-                $consultations = auth()->user()->consultations->load(['visitor:id,name,institution_name', 'exhibitor:id,company_name']);
+                $consultations = auth()->user()->consultations->load(['visitor:id,name,institution_name,mobile', 'exhibitor:id,company_name']);
             }
             if (auth()->user()->role == 'exhibitor') {
-                $consultations = auth()->user()->consultations_exhibitor->load(['visitor:id,name,institution_name', 'exhibitor:id,company_name']);
+                $consultations = auth()->user()->consultations_exhibitor->load(['visitor:id,name,institution_name,mobile', 'exhibitor:id,company_name']);
             }
             if ($request->status) {
                 $consultations = $consultations->where('status', $request->status)->values();
