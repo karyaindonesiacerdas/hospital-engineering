@@ -2,6 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 
+Route::get('download/{storage}/{filename}', function ($storage, $filename) {
+    return response()->download(public_path('storage/' . $storage) . '/' . $filename);
+});
+Route::get('/banner/download/storage/{filename}', [App\Http\Controllers\Api\BannerController::class, 'download']);
+
 Route::prefix('auth')->group(function () {
     Route::post('register', [App\Http\Controllers\Api\AuthController::class, 'register']);
     Route::post('login/email', [App\Http\Controllers\Api\AuthController::class, 'loginEmail']);
@@ -50,7 +55,6 @@ Route::prefix('consultation')->group(function () {
 
 Route::prefix('exhibitor')->group(function () {
     Route::get('/banner', [App\Http\Controllers\Api\BannerController::class, 'index']);
-    Route::get('/banner/download', [App\Http\Controllers\Api\BannerController::class, 'download']);
     Route::post('/banner', [App\Http\Controllers\Api\BannerController::class, 'store']);
     Route::delete('/banner/{banner}', [App\Http\Controllers\Api\BannerController::class, 'destroy']);
 

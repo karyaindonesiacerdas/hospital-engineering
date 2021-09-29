@@ -34,11 +34,6 @@ class BannerController extends Controller
         }
     }
 
-    public function download()
-    {
-        return response()->download('https://api.hospital-engineering-expo.com/storage/banner/e38d117e8a943d73c8c510c3fd1313c1.jpg');
-    }
-
     public function store(Request $request)
     {
         try {
