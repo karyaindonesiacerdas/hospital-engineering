@@ -70,14 +70,14 @@ class ConsultationController extends Controller
                 return response()->json([
                     'code' => 400,
                     'type' => 'danger',
-                    'message' => 'Failed, already booked',
+                    'message' => 'You have already registered, a maximum of one',
                 ], 400);
             } else {
                 if (auth()->user()->consultations->where('exhibitor_id', $request->exhibitor_id)->first()) {
                     return response()->json([
                         'code' => 400,
                         'type' => 'danger',
-                        'message' => 'Failed, already booked',
+                        'message' => 'You have already registered, a maximum of one',
                     ], 400);
                 } else {
                     $consultation = auth()->user()->consultations()->create([
@@ -97,7 +97,7 @@ class ConsultationController extends Controller
                         return response()->json([
                             'code' => 400,
                             'type' => 'danger',
-                            'message' => 'Book failed',
+                            'message' => 'You have already registered, a maximum of one',
                         ], 400);
                     }
                 }
