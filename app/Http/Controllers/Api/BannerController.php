@@ -10,7 +10,7 @@ class BannerController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('jwt.verify');
+        $this->middleware('jwt.verify')->except('download');
     }
 
     public function index()
@@ -32,6 +32,11 @@ class BannerController extends Controller
                 'data' => $th->getMessage(),
             ], 400);
         }
+    }
+
+    public function download()
+    {
+        return response()->download('https://api.hospital-engineering-expo.com/storage/banner/e38d117e8a943d73c8c510c3fd1313c1.jpg');
     }
 
     public function store(Request $request)

@@ -50,6 +50,7 @@ Route::prefix('consultation')->group(function () {
 
 Route::prefix('exhibitor')->group(function () {
     Route::get('/banner', [App\Http\Controllers\Api\BannerController::class, 'index']);
+    Route::get('/banner/download', [App\Http\Controllers\Api\BannerController::class, 'download']);
     Route::post('/banner', [App\Http\Controllers\Api\BannerController::class, 'store']);
     Route::delete('/banner/{banner}', [App\Http\Controllers\Api\BannerController::class, 'destroy']);
 
