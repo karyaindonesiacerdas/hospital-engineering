@@ -71,7 +71,7 @@ class ConsultationController extends Controller
                     'code' => 400,
                     'type' => 'danger',
                     'message' => 'Failed, already booked',
-                ], 200);
+                ], 400);
             } else {
                 $consultation = auth()->user()->consultations()->create([
                     'date' => $request->date,
@@ -91,7 +91,7 @@ class ConsultationController extends Controller
                         'code' => 400,
                         'type' => 'danger',
                         'message' => 'Book failed',
-                    ], 200);
+                    ], 400);
                 }
             }
         } catch (\Throwable $th) {
