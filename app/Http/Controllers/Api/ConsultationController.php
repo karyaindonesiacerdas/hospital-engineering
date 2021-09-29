@@ -65,7 +65,7 @@ class ConsultationController extends Controller
     public function store(Request $request)
     {
         try {
-            $consultationAlreadyExist = Consultation::where(['exhibitor_id' => $request->exhibitor_id, 'date' => $request->date, 'time' => $request->time])->first();
+            $consultationAlreadyExist = Consultation::where(['date' => $request->date, 'time' => $request->time])->first();
             if ($consultationAlreadyExist) {
                 return response()->json([
                     'code' => 400,
