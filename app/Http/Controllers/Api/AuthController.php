@@ -194,7 +194,7 @@ class AuthController extends Controller
         }
     }
 
-    public function visitorDetail(User $user)
+    public function userDetail(User $user)
     {
         try {
             if ($user->role == 'visitor') {
