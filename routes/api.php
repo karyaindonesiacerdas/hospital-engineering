@@ -27,6 +27,7 @@ Route::apiResource('/rundown', App\Http\Controllers\Api\RundownController::class
 
 // COUNTER
 Route::get('/list-visitor-views', [App\Http\Controllers\Api\CounterVisitorController::class, 'listVisitorViews']);
+Route::get('/admin/list-visitor-views', [App\Http\Controllers\Api\CounterVisitorController::class, 'adminListVisitorViews']);
 
 Route::prefix('chat')->group(function () {
     Route::get('/contact-list', [App\Http\Controllers\Api\ChatController::class, 'contactChatList']);
