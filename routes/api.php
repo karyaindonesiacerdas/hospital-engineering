@@ -20,6 +20,7 @@ Route::prefix('auth')->group(function () {
 
 Route::apiResource('/setting', App\Http\Controllers\Api\SettingController::class);
 
+Route::get('visitor/{user}', [App\Http\Controllers\Api\AuthController::class, 'visitorDetail']);
 Route::resource('/post', App\Http\Controllers\Api\PostController::class);
 Route::apiResource('/package', App\Http\Controllers\Api\PackageController::class);
 Route::apiResource('/rundown', App\Http\Controllers\Api\RundownController::class);

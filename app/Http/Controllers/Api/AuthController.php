@@ -16,7 +16,7 @@ class AuthController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('jwt.verify')->except(['login', 'loginEmail', 'register']);
+        $this->middleware('jwt.verify')->except(['login', 'loginEmail', 'register', 'visitorDetail']);
     }
 
     public function register(Request $request)
@@ -171,6 +171,38 @@ class AuthController extends Controller
                 }
                 if (auth()->user()->role == 'exhibitor') {
                     $user = collect(auth()->user())->except(['created_at', 'updated_at', 'email_verified_at', 'visit_purpose', 'product_interest', 'visitor_type', 'institution_type', 'institution_name']);
+                }
+                return response()->json([
+                    'code' => 200,
+                    'type' => 'success',
+                    'message' => 'Data retrieved successfully',
+                    'data' => $user,
+                ], 200);
+            } else {
+                return response()->json([
+                    'code' => 400,
+                    'type' => 'danger',
+                    'message' => 'Error, Data failed to retrieve',
+                ], 400);
+            }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'code' => 400,
+                'type' => 'danger',
+                'message' => $th->getMessage(),
+            ], 400);
+        }
+    }
+
+    public function visitorDetail(User $user)
+    {
+        try {
+            if ($user->role == 'visitor') {
+                if (auth()->user()->role == 'visitor') {
+                    $user = collect(auth()->user())->only(['name', 'email', 'img_profile', 'institution_name', 'role', 'company_name']);
+                }
+                if (auth()->user()->role == 'exhibitor') {
+                    $user = collect(auth()->user())->only(['name', 'email', 'img_profile', 'institution_name', 'role', 'company_name']);
                 }
                 return response()->json([
                     'code' => 200,
