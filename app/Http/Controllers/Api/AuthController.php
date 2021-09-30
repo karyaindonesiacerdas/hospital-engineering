@@ -197,17 +197,17 @@ class AuthController extends Controller
     public function userDetail(User $user)
     {
         try {
-            if (auth()->user()->role == 'visitor') {
-                $user = collect(auth()->user())->only(['name', 'email', 'img_profile', 'institution_name', 'role', 'company_name']);
+            if ($user->role == 'visitor') {
+                $userData = collect($user)->only(['name', 'email', 'img_profile', 'institution_name', 'role', 'company_name']);
             }
-            if (auth()->user()->role == 'exhibitor') {
-                $user = collect(auth()->user())->only(['name', 'email', 'img_profile', 'institution_name', 'role', 'company_name']);
+            if ($user->role == 'exhibitor') {
+                $userData = collect($user)->only(['name', 'email', 'img_profile', 'institution_name', 'role', 'company_name']);
             }
             return response()->json([
                 'code' => 200,
                 'type' => 'success',
                 'message' => 'Data retrieved successfully',
-                'data' => $user,
+                'data' => $userData,
             ], 200);
             return response()->json([
                 'code' => 400,
