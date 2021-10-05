@@ -13,15 +13,15 @@ class CounterVisitorController extends Controller
     {
         try {
             if (auth()->user()->role == 'exhibitor') {
-                $counters = auth()->user()->counters_exhibitor;
-                if ($counters) {
-                    return response()->json([
-                        'code' => 200,
-                        'type' => 'success',
-                        'message' => 'Data successfully retrived',
-                        'data' => $counters->load(['visitor:id,name,institution_name,email,mobile']),
-                    ], 200);
-                }
+                $counters = CounterVisitor::with(array('visitor' => function ($query) {
+                    $query->select('id', 'name', 'institution_name', 'email', 'mobile');
+                }))->where('exhibitor_id', auth()->id());
+                return response()->json([
+                    'code' => 200,
+                    'type' => 'success',
+                    'message' => 'Data successfully retrived',
+                    'data' => $counters->paginate(7),
+                ], 200);
             }
             if (auth()->user()->role == 'admin') {
                 $counters = CounterVisitor::with(array('visitor' => function ($query) {
