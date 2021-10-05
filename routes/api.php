@@ -54,6 +54,10 @@ Route::prefix('consultation')->group(function () {
     Route::delete('/{consultation}', [App\Http\Controllers\Api\ConsultationController::class, 'destroy']);
 });
 
+Route::prefix('user')->group(function () {
+    Route::get('/list', [App\Http\Controllers\Api\UserController::class, 'userList']);
+});
+
 Route::prefix('exhibitor')->group(function () {
     Route::get('/banner', [App\Http\Controllers\Api\BannerController::class, 'index']);
     Route::post('/banner', [App\Http\Controllers\Api\BannerController::class, 'store']);

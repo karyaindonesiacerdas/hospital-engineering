@@ -65,4 +65,27 @@ class UserController extends Controller
             ], 400);
         }
     }
+
+    public function userList(Request $request)
+    {
+        try {
+            $users = User::query();
+            if ($request->status) {
+                $users->where('status', $request->status);
+            }
+            return response()->json([
+                'code' => 200,
+                'type' => 'success',
+                'message' => 'Fetch succeed',
+                'data' => $users->paginate(7),
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'code' => 400,
+                'type' => 'danger',
+                'message' => 'Fetch failed',
+                'data' => $th->getMessage(),
+            ], 400);
+        }
+    }
 }

@@ -24,15 +24,16 @@ class CounterVisitorController extends Controller
                 }
             }
             if (auth()->user()->role == 'admin') {
-                $counters = CounterVisitor::with(['visitor', 'exhibitor'])->get();
-                if ($counters) {
-                    return response()->json([
-                        'code' => 200,
-                        'type' => 'success',
-                        'message' => 'Data successfully retrived',
-                        'data' => $counters->load(['visitor:id,name,institution_name,email,mobile']),
-                    ], 200);
-                }
+                $counters = CounterVisitor::with(array('visitor' => function ($query) {
+                    $query->where('allow_share_info', 1);
+                    $query->select('id', 'name', 'institution_name', 'email', 'mobile');
+                }));
+                return response()->json([
+                    'code' => 200,
+                    'type' => 'success',
+                    'message' => 'Data successfully retrived',
+                    'data' => $counters->paginate(7),
+                ], 200);
             }
         } catch (\Throwable $th) {
             return response()->json([
