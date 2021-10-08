@@ -34,7 +34,7 @@ class CreateUsersTable extends Migration
             $table->string('role', 20)->nullable();
 
             // exhibitor only
-            $table->text('ala_carte')->nullable();
+            $table->json('ala_carte')->nullable();
             $table->text('additional_remarks')->nullable();
             $table->string('company_name')->nullable();
             $table->string('company_website')->nullable();

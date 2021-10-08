@@ -24,6 +24,7 @@ class User extends Authenticatable implements JWTSubject
         'product_interest' => 'array',
         'visit_purpose' => 'array',
         'business_nature' => 'array',
+        'ala_carte' => 'array',
     ];
 
     public function getJWTIdentifier()
