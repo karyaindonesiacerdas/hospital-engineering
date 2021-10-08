@@ -25,6 +25,9 @@ Route::resource('/post', App\Http\Controllers\Api\PostController::class);
 Route::apiResource('/package', App\Http\Controllers\Api\PackageController::class);
 Route::apiResource('/rundown', App\Http\Controllers\Api\RundownController::class);
 
+Route::get('/tracker', [App\Http\Controllers\Api\TrackerController::class, 'index']);
+Route::post('/tracker', [App\Http\Controllers\Api\TrackerController::class, 'store']);
+
 // COUNTER
 Route::get('/list-visitor-views', [App\Http\Controllers\Api\CounterVisitorController::class, 'listVisitorViews']);
 Route::get('/admin/list-visitor-views', [App\Http\Controllers\Api\CounterVisitorController::class, 'adminListVisitorViews']);
