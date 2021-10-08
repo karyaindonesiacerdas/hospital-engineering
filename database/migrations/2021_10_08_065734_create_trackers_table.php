@@ -17,6 +17,7 @@ class CreateTrackersTable extends Migration
             $table->id();
             $table->string('ip');
             $table->date('date');
+            $table->string('province')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
         });

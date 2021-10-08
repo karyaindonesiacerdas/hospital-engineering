@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Tracker;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Date;
+use Stevebauman\Location\Facades\Location;
 
 class TrackerController extends Controller
 {
@@ -14,14 +14,15 @@ class TrackerController extends Controller
     {
         try {
             if (auth()->user()->role == 'admin') {
-                $trackers = Tracker::with(array('user' => function ($query) {
-                    $query->select('id', 'name', 'email', 'mobile', 'province');
-                }))->paginate(7);
+                $trackers = Tracker::with('user')->get()->groupBy('user.province')->map->count();
                 return response()->json([
                     'code' => 200,
                     'type' => 'success',
                     'message' => 'Data successfully retrived',
-                    'data' => $trackers,
+                    'data' => [
+                        'total' => count($trackers),
+                        'data' => $trackers
+                    ],
                 ], 200);
             } else {
                 return response()->json(['error' => 'Unauthorized'], 401);
@@ -39,8 +40,9 @@ class TrackerController extends Controller
     public function store(Request $request)
     {
         try {
+            $location = Location::get();
             if (auth()->check()) {
-                $trackerAlreadyExist = Tracker::where(['ip' => $request->ip(), 'date' => Carbon::now()->toDate()])->first();
+                $trackerAlreadyExist = Tracker::where(['ip' => $request->ip(), 'date' => Carbon::now()->toDateString()])->first();
                 if ($trackerAlreadyExist) {
                     $trackerAlreadyExist->update([
                         'user_id' => auth()->id()
@@ -48,16 +50,18 @@ class TrackerController extends Controller
                 } else {
                     Tracker::create([
                         'ip' => $request->ip(),
-                        'date' => Carbon::now()->toDate(),
-                        'user_id' => auth()->id()
+                        'date' => Carbon::now()->toDateString(),
+                        'user_id' => auth()->id(),
+                        'province' => $location->regionName,
                     ]);
                 }
             } else {
-                $trackerAlreadyExistGuest = Tracker::where(['ip' => $request->ip(), 'date' => Carbon::now()->toDate()])->first();
+                $trackerAlreadyExistGuest = Tracker::where(['ip' => $request->ip(), 'date' => Carbon::now()->toDateString()])->first();
                 if (!$trackerAlreadyExistGuest) {
                     Tracker::create([
                         'ip' => $request->ip(),
-                        'date' => Carbon::now()->toDate(),
+                        'date' => Carbon::now()->toDateString(),
+                        'province' => $location->regionName,
                     ]);
                 }
             }
