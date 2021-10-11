@@ -201,7 +201,7 @@ class AuthController extends Controller
                 'code' => 200,
                 'type' => 'success',
                 'message' => 'Data retrieved successfully',
-                'data' => $user->only(['name', 'email', 'img_profile', 'institution_name', 'role', 'company_name']),
+                'data' => $user->only(['name', 'email', 'img_profile', 'institution_name', 'role', 'company_name', 'allow_share_info']),
             ], 200);
             return response()->json([
                 'code' => 400,
