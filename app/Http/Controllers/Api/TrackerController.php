@@ -14,14 +14,49 @@ class TrackerController extends Controller
     {
         try {
             if (auth()->user()->role == 'admin') {
-                $trackers = Tracker::with('user')->get()->groupBy('user.province')->map->count();
+                // $trackers = Tracker::with('user')->get()->groupBy('user.province')->map->count();
+                $trackers = \DB::table('trackers')
+                    ->join('users', 'trackers.user_id', '=', 'users.id')
+                    ->select('users.province', \DB::raw('count(users.province) as total'))
+                    ->where('users.province', '!=', null)
+                    ->where('users.province', '!=', '-')
+                    ->groupBy('users.province')
+                    ->get();
+                // $trackersTable = Tracker::where('province', '=', null)->get();
+                // $pushProvinceEmpty = \DB::table('trackers')
+                //     ->join('users', 'trackers.user_id', '=', 'users.id')
+                //     ->select('users.province', \DB::raw('count(users.province) as total'))
+                //     ->where('users.province', '=', null)
+                //     ->groupBy('users.province')
+                //     ->get();
+                // return $pushProvinceEmpty;
+
+                // $provinceEmpty = 0;
+                // foreach ($trackers as $key => $tracker) {
+                //     if ($tracker->province == null || $tracker->province == '-') {
+                //         $provinceEmpty++;
+                //     }
+                // }
+                // $trackerTables = Tracker::all();
+                // foreach ($trackerTables as $key => $item) {
+                //     if ($item->province == null || $item->province == '') {
+                //         $provinceEmpty++;
+                //     }
+                // }
+                // // return $provinceEmpty;
+
+                $trackers['-'] = [
+                    "province" => "-",
+                    "total" => count(Tracker::where('province', '=', null)->get())
+                ];
+
                 return response()->json([
                     'code' => 200,
                     'type' => 'success',
                     'message' => 'Data successfully retrived',
                     'data' => [
-                        'total' => count($trackers),
-                        'data' => $trackers
+                        'total' => count(Tracker::all()),
+                        'data' => $trackers->values()
                     ],
                 ], 200);
             } else {
