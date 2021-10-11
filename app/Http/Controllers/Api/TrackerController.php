@@ -40,19 +40,22 @@ class TrackerController extends Controller
     public function store(Request $request)
     {
         try {
-            $location = Location::get();
+            $client = new \GuzzleHttp\Client();
+            $request = $client->get('https://api.ipdata.co?api-key=fe40639e2842bdfa598df2f58eb9f3820fb1380c01cf0a574e0de68e');
+            $location = json_decode($request->getBody());
+
             if (auth()->check()) {
-                $trackerAlreadyExist = Tracker::where(['ip' => $request->ip(), 'date' => Carbon::now()->toDateString()])->first();
+                $trackerAlreadyExist = Tracker::where(['ip' => $location->ip, 'date' => Carbon::now()->toDateString()])->first();
                 if ($trackerAlreadyExist) {
                     $trackerAlreadyExist->update([
                         'user_id' => auth()->id()
                     ]);
                 } else {
                     Tracker::create([
-                        'ip' => $request->ip(),
+                        'ip' => $location->ip,
                         'date' => Carbon::now()->toDateString(),
                         'user_id' => auth()->id(),
-                        'province' => $location->regionName,
+                        'province' => $location->region,
                     ]);
                 }
             } else {
@@ -61,7 +64,7 @@ class TrackerController extends Controller
                     Tracker::create([
                         'ip' => $request->ip(),
                         'date' => Carbon::now()->toDateString(),
-                        'province' => $location->regionName,
+                        'province' => $location->region,
                     ]);
                 }
             }
