@@ -66,7 +66,7 @@ class TrackerController extends Controller
 
     public function index(Request $request)
     {
-        // $users = Tracker::where('user_id', '=', null)->where('province', '=', null)->take(20)->get();
+        // $users = Tracker::whereNull('province')->take(5)->get();
         // foreach ($users as $user) {
         //     $client = new \GuzzleHttp\Client();
         //     $request = $client->get('http://api.db-ip.com/addrinfo?api_key=bc2ab711d740d7cfa6fcb0ca8822cb327e38844f&addr=' . $user->ip);
@@ -76,42 +76,20 @@ class TrackerController extends Controller
         // return 'ok';
         try {
             if (auth()->user()->role == 'admin') {
-                $trackers = \DB::table('trackers')
-                    ->join('users', 'trackers.user_id', '=', 'users.id')
-                    ->select('users.province', \DB::raw('count(users.province) as total'), 'date');
-                // ->where('users.province', '!=', null)
-                // ->where('users.province', '!=', '-');
-
-                $trackerNull = Tracker::where('province', '=', null);
-                $trackerTotal = Tracker::query();
-
+                $trackers = Tracker::groupBy('province');
                 if ($request->date) {
-                    $trackers = $trackers->where('date', $request->date);
-                    $trackerNull = $trackerNull->where('date', $request->date);
-                    $trackerTotal = $trackerTotal->where('date', $request->date);
+                    $trackers = $trackers->select('province', 'user_id', 'date', \DB::raw('count(*) as total'))->where('date', $request->date);
+                } else {
+                    $trackers = $trackers->select('province', 'user_id', \DB::raw('count(*) as total'));
                 }
-
-                $trackers = $trackers->groupBy(['users.province', 'date'])->get();
-
-                // $trackersFiltered = $trackers;
-                // return $trackersFiltered;
-
-                // if ($trackers->)
-
-                // $trackers['-'] = [
-                //     "province" => "-",
-                //     "total" => count($trackerNull->get()),
-                //     'date' => $request->input('date', '-')
-                // ];
+                $total = $trackers->pluck('total');
 
                 return response()->json([
                     'code' => 200,
                     'type' => 'success',
                     'message' => 'Data successfully retrived',
-                    'data' => [
-                        'total' => count($trackerTotal->get()),
-                        'data' => $trackers->values()
-                    ],
+                    'total' => $total->sum(),
+                    'data' => $trackers->get()
                 ], 200);
             } else {
                 return response()->json(['error' => 'Unauthorized'], 401);
