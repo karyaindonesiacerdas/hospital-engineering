@@ -6,39 +6,45 @@ use App\Http\Controllers\Controller;
 use App\Models\Tracker;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Stevebauman\Location\Facades\Location;
 
 class TrackerController extends Controller
 {
     public function store(Request $request)
     {
+        $ipAddress = $request->ip();
         try {
-            $client = new \GuzzleHttp\Client();
-            $request = $client->get('https://api.ipdata.co?api-key=fe40639e2842bdfa598df2f58eb9f3820fb1380c01cf0a574e0de68e');
-            $location = json_decode($request->getBody());
+            if ($ipAddress) {
+                if (auth()->check()) {
+                    $trackerAlreadyExist = Tracker::where(['ip' => $ipAddress, 'date' => Carbon::now()->toDateString()])->first();
+                    if ($trackerAlreadyExist) {
+                        $trackerAlreadyExist->update([
+                            'user_id' => auth()->id()
+                        ]);
+                    } else {
+                        $client = new \GuzzleHttp\Client();
+                        $request = $client->get('https://api.ipdata.co?api-key=fe40639e2842bdfa598df2f58eb9f3820fb1380c01cf0a574e0de68e');
+                        $location = json_decode($request->getBody());
 
-            if (auth()->check()) {
-                $trackerAlreadyExist = Tracker::where(['ip' => $location->ip, 'date' => Carbon::now()->toDateString()])->first();
-                if ($trackerAlreadyExist) {
-                    $trackerAlreadyExist->update([
-                        'user_id' => auth()->id()
-                    ]);
+                        Tracker::create([
+                            'ip' => $ipAddress,
+                            'date' => Carbon::now()->toDateString(),
+                            'user_id' => auth()->id(),
+                            'province' => $location->region,
+                        ]);
+                    }
                 } else {
-                    Tracker::create([
-                        'ip' => $location->ip,
-                        'date' => Carbon::now()->toDateString(),
-                        'user_id' => auth()->id(),
-                        'province' => $location->region,
-                    ]);
-                }
-            } else {
-                $trackerAlreadyExistGuest = Tracker::where(['ip' => $request->ip(), 'date' => Carbon::now()->toDateString()])->first();
-                if (!$trackerAlreadyExistGuest) {
-                    Tracker::create([
-                        'ip' => $request->ip(),
-                        'date' => Carbon::now()->toDateString(),
-                        'province' => $location->region,
-                    ]);
+                    $trackerAlreadyExistGuest = Tracker::where(['ip' => $ipAddress, 'date' => Carbon::now()->toDateString()])->first();
+                    if (!$trackerAlreadyExistGuest) {
+                        $client = new \GuzzleHttp\Client();
+                        $request = $client->get('https://api.ipdata.co?api-key=fe40639e2842bdfa598df2f58eb9f3820fb1380c01cf0a574e0de68e');
+                        $location = json_decode($request->getBody());
+
+                        Tracker::create([
+                            'ip' => $ipAddress,
+                            'date' => Carbon::now()->toDateString(),
+                            'province' => $location->region,
+                        ]);
+                    }
                 }
             }
 
