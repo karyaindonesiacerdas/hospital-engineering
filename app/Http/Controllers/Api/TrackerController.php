@@ -70,9 +70,9 @@ class TrackerController extends Controller
             if (auth()->user()->role == 'admin') {
                 $trackers = \DB::table('trackers')
                     ->join('users', 'trackers.user_id', '=', 'users.id')
-                    ->select('users.province', \DB::raw('count(users.province) as total'), 'date')
-                    ->where('users.province', '!=', null)
-                    ->where('users.province', '!=', '-');
+                    ->select('users.province', \DB::raw('count(users.province) as total'), 'date');
+                // ->where('users.province', '!=', null)
+                // ->where('users.province', '!=', '-');
 
                 $trackerNull = Tracker::where('province', '=', null);
                 $trackerTotal = Tracker::query();
@@ -85,11 +85,16 @@ class TrackerController extends Controller
 
                 $trackers = $trackers->groupBy(['users.province', 'date'])->get();
 
-                $trackers['-'] = [
-                    "province" => "-",
-                    "total" => count($trackerNull->get()),
-                    'date' => $request->input('date', '-')
-                ];
+                // $trackersFiltered = $trackers;
+                // return $trackersFiltered;
+
+                // if ($trackers->)
+
+                // $trackers['-'] = [
+                //     "province" => "-",
+                //     "total" => count($trackerNull->get()),
+                //     'date' => $request->input('date', '-')
+                // ];
 
                 return response()->json([
                     'code' => 200,
