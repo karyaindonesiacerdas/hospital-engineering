@@ -66,6 +66,14 @@ class TrackerController extends Controller
 
     public function index(Request $request)
     {
+        // $users = Tracker::where('user_id', '=', null)->where('province', '=', null)->take(20)->get();
+        // foreach ($users as $user) {
+        //     $client = new \GuzzleHttp\Client();
+        //     $request = $client->get('http://api.db-ip.com/addrinfo?api_key=bc2ab711d740d7cfa6fcb0ca8822cb327e38844f&addr=' . $user->ip);
+        //     $location = json_decode($request->getBody());
+        //     $user->update(['province' => $location->stateprov]);
+        // }
+        // return 'ok';
         try {
             if (auth()->user()->role == 'admin') {
                 $trackers = \DB::table('trackers')
