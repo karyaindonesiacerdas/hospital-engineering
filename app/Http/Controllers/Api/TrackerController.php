@@ -15,7 +15,7 @@ class TrackerController extends Controller
         try {
             if ($ipAddress) {
                 if (auth()->check()) {
-                    $trackerAlreadyExist = Tracker::where(['ip' => $ipAddress, 'date' => Carbon::now()->toDateString()])->first();
+                    $trackerAlreadyExist = Tracker::where(['user_id' => auth()->id(), 'ip' => $ipAddress, 'date' => Carbon::now()->toDateString()])->first();
                     if ($trackerAlreadyExist) {
                         $trackerAlreadyExist->update([
                             'user_id' => auth()->id()
