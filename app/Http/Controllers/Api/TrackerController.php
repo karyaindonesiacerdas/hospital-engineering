@@ -78,9 +78,9 @@ class TrackerController extends Controller
             if (auth()->user()->role == 'admin') {
                 $trackers = Tracker::groupBy('province');
                 if ($request->date) {
-                    $trackers = $trackers->select('province', 'user_id', 'date', \DB::raw('count(*) as total'))->where('date', $request->date);
+                    $trackers = $trackers->select('province', 'date', \DB::raw('count(*) as total'))->where('date', $request->date);
                 } else {
-                    $trackers = $trackers->select('province', 'user_id', \DB::raw('count(*) as total'));
+                    $trackers = $trackers->select('province', 'date', \DB::raw('count(*) as total'))->where('date', Carbon::now()->toDateString());
                 }
                 $total = $trackers->pluck('total');
 
