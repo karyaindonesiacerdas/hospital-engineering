@@ -87,7 +87,8 @@ class TrackerController extends Controller
 
                 $trackers['-'] = [
                     "province" => "-",
-                    "total" => count($trackerNull->get())
+                    "total" => count($trackerNull->get()),
+                    'date' => $request->input('date', '-')
                 ];
 
                 return response()->json([
