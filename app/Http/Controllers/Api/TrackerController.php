@@ -10,68 +10,6 @@ use Stevebauman\Location\Facades\Location;
 
 class TrackerController extends Controller
 {
-    public function index()
-    {
-        try {
-            if (auth()->user()->role == 'admin') {
-                // $trackers = Tracker::with('user')->get()->groupBy('user.province')->map->count();
-                $trackers = \DB::table('trackers')
-                    ->join('users', 'trackers.user_id', '=', 'users.id')
-                    ->select('users.province', \DB::raw('count(users.province) as total'))
-                    ->where('users.province', '!=', null)
-                    ->where('users.province', '!=', '-')
-                    ->groupBy('users.province')
-                    ->get();
-                // $trackersTable = Tracker::where('province', '=', null)->get();
-                // $pushProvinceEmpty = \DB::table('trackers')
-                //     ->join('users', 'trackers.user_id', '=', 'users.id')
-                //     ->select('users.province', \DB::raw('count(users.province) as total'))
-                //     ->where('users.province', '=', null)
-                //     ->groupBy('users.province')
-                //     ->get();
-                // return $pushProvinceEmpty;
-
-                // $provinceEmpty = 0;
-                // foreach ($trackers as $key => $tracker) {
-                //     if ($tracker->province == null || $tracker->province == '-') {
-                //         $provinceEmpty++;
-                //     }
-                // }
-                // $trackerTables = Tracker::all();
-                // foreach ($trackerTables as $key => $item) {
-                //     if ($item->province == null || $item->province == '') {
-                //         $provinceEmpty++;
-                //     }
-                // }
-                // // return $provinceEmpty;
-
-                $trackers['-'] = [
-                    "province" => "-",
-                    "total" => count(Tracker::where('province', '=', null)->get())
-                ];
-
-                return response()->json([
-                    'code' => 200,
-                    'type' => 'success',
-                    'message' => 'Data successfully retrived',
-                    'data' => [
-                        'total' => count(Tracker::all()),
-                        'data' => $trackers->values()
-                    ],
-                ], 200);
-            } else {
-                return response()->json(['error' => 'Unauthorized'], 401);
-            }
-        } catch (\Throwable $th) {
-            return response()->json([
-                'code' => 400,
-                'type' => 'danger',
-                'message' => 'Failed to retrive',
-                'data' => $th->getMessage(),
-            ], 400);
-        }
-    }
-
     public function store(Request $request)
     {
         try {
@@ -110,6 +48,54 @@ class TrackerController extends Controller
                 'message' => 'Data successfully retrived',
                 'data' => 'Data saved',
             ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'code' => 400,
+                'type' => 'danger',
+                'message' => 'Failed to retrive',
+                'data' => $th->getMessage(),
+            ], 400);
+        }
+    }
+
+    public function index(Request $request)
+    {
+        try {
+            if (auth()->user()->role == 'admin') {
+                $trackers = \DB::table('trackers')
+                    ->join('users', 'trackers.user_id', '=', 'users.id')
+                    ->select('users.province', \DB::raw('count(users.province) as total'), 'date')
+                    ->where('users.province', '!=', null)
+                    ->where('users.province', '!=', '-');
+
+                $trackerNull = Tracker::where('province', '=', null);
+                $trackerTotal = Tracker::query();
+
+                if ($request->date) {
+                    $trackers = $trackers->where('date', $request->date);
+                    $trackerNull = $trackerNull->where('date', $request->date);
+                    $trackerTotal = $trackerTotal->where('date', $request->date);
+                }
+
+                $trackers = $trackers->groupBy(['users.province', 'date'])->get();
+
+                $trackers['-'] = [
+                    "province" => "-",
+                    "total" => count($trackerNull->get())
+                ];
+
+                return response()->json([
+                    'code' => 200,
+                    'type' => 'success',
+                    'message' => 'Data successfully retrived',
+                    'data' => [
+                        'total' => count($trackerTotal->get()),
+                        'data' => $trackers->values()
+                    ],
+                ], 200);
+            } else {
+                return response()->json(['error' => 'Unauthorized'], 401);
+            }
         } catch (\Throwable $th) {
             return response()->json([
                 'code' => 400,
