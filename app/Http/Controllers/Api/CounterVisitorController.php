@@ -77,4 +77,30 @@ class CounterVisitorController extends Controller
             ], 400);
         }
     }
+
+    public function adminListVisitorBoothViews(Request $request)
+    {
+        try {
+            if (auth()->user()->role == 'admin') {
+                $data = User::with(array('counters.exhibitor' => function ($query) {
+                    $query->select('id', 'company_name');
+                }))->has('counters')->select('id', 'name', 'institution_name')->paginate(5);
+                if ($data) {
+                    return response()->json([
+                        'code' => 200,
+                        'type' => 'success',
+                        'message' => 'Data successfully retrived',
+                        'data' => $data,
+                    ], 200);
+                }
+            }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'code' => 400,
+                'type' => 'danger',
+                'message' => 'Failed to retrive',
+                'data' => $th->getMessage(),
+            ], 400);
+        }
+    }
 }

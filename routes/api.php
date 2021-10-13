@@ -31,6 +31,7 @@ Route::post('/tracker', [App\Http\Controllers\Api\TrackerController::class, 'sto
 // COUNTER
 Route::get('/list-visitor-views', [App\Http\Controllers\Api\CounterVisitorController::class, 'listVisitorViews']);
 Route::get('/admin/list-visitor-views', [App\Http\Controllers\Api\CounterVisitorController::class, 'adminListVisitorViews']);
+Route::get('/admin/list-visitor-booth-views', [App\Http\Controllers\Api\CounterVisitorController::class, 'adminListVisitorBoothViews']);
 
 Route::prefix('chat')->group(function () {
     Route::get('/contact-list', [App\Http\Controllers\Api\ChatController::class, 'contactChatList']);
