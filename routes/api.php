@@ -58,6 +58,8 @@ Route::prefix('consultation')->group(function () {
     Route::put('/{consultation}', [App\Http\Controllers\Api\ConsultationController::class, 'update']);
     Route::post('/', [App\Http\Controllers\Api\ConsultationController::class, 'store']);
     Route::delete('/{consultation}', [App\Http\Controllers\Api\ConsultationController::class, 'destroy']);
+    // without login first
+    Route::post('/guest', [App\Http\Controllers\Api\ConsultationController::class, 'storeGuest']);
 });
 
 Route::prefix('user')->group(function () {

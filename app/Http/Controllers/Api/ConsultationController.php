@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Consultation;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ConsultationController extends Controller
@@ -81,6 +82,67 @@ class ConsultationController extends Controller
                     ], 400);
                 } else {
                     $consultation = auth()->user()->consultations()->create([
+                        'date' => $request->date,
+                        'time' => $request->time,
+                        'status' => 1,
+                        'exhibitor_id' => $request->exhibitor_id,
+                    ]);
+                    if ($consultation) {
+                        return response()->json([
+                            'code' => 200,
+                            'type' => 'success',
+                            'message' => 'Book succeed',
+                            'data' => $consultation,
+                        ], 200);
+                    } else {
+                        return response()->json([
+                            'code' => 400,
+                            'type' => 'danger',
+                            'message' => 'You have already registered, a maximum of one',
+                        ], 400);
+                    }
+                }
+            }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'code' => 400,
+                'type' => 'danger',
+                'message' => $th->getMessage(),
+            ], 400);
+        }
+    }
+
+    public function storeGuest(Request $request)
+    {
+        try {
+            // REGISTER OR CHECK USER FIRST
+            $dataUser = [
+                'name' => $request->name,
+                'email' => $request->email,
+                'mobile' => $request->mobile,
+            ];
+
+            $user = User::where('email', $request->email)->first();
+            if (!$user) {
+                $user = User::create($dataUser);
+            }
+
+            $consultationAlreadyExist = Consultation::where(['date' => $request->date, 'time' => $request->time, 'exhibitor_id' => $request->exhibitor_id])->first();
+            if ($consultationAlreadyExist) {
+                return response()->json([
+                    'code' => 400,
+                    'type' => 'danger',
+                    'message' => 'You have already registered, a maximum of one',
+                ], 400);
+            } else {
+                if ($user->consultations->where('exhibitor_id', $request->exhibitor_id)->first()) {
+                    return response()->json([
+                        'code' => 400,
+                        'type' => 'danger',
+                        'message' => 'You have already registered, a maximum of one',
+                    ], 400);
+                } else {
+                    $consultation = $user->consultations()->create([
                         'date' => $request->date,
                         'time' => $request->time,
                         'status' => 1,
