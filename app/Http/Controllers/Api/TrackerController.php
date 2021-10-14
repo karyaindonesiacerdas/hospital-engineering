@@ -134,4 +134,33 @@ class TrackerController extends Controller
             ], 400);
         }
     }
+
+    public function graphAccumulative(Request $request)
+    {
+        try {
+            if (auth()->user()->role == 'admin') {
+                $trackers = Tracker::groupBy('date')
+                    ->selectRaw('date, count(*) as total')
+                    ->where('user_id', '!=', null)
+                    ->distinct()
+                    ->get();
+
+                return response()->json([
+                    'code' => 200,
+                    'type' => 'success',
+                    'message' => 'Data successfully retrived',
+                    'data' => $trackers
+                ], 200);
+            } else {
+                return response()->json(['error' => 'Unauthorized'], 401);
+            }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'code' => 400,
+                'type' => 'danger',
+                'message' => 'Failed to retrive',
+                'data' => $th->getMessage(),
+            ], 400);
+        }
+    }
 }
