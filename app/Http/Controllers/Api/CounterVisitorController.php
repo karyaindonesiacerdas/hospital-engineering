@@ -20,7 +20,7 @@ class CounterVisitorController extends Controller
                     'code' => 200,
                     'type' => 'success',
                     'message' => 'Data successfully retrived',
-                    'data' => $counters->paginate(7),
+                    'data' => $counters->paginate(50),
                 ], 200);
             }
             if (auth()->user()->role == 'admin') {
@@ -32,7 +32,7 @@ class CounterVisitorController extends Controller
                     'code' => 200,
                     'type' => 'success',
                     'message' => 'Data successfully retrived',
-                    'data' => $counters->paginate(7),
+                    'data' => $counters->paginate(50),
                 ], 200);
             }
         } catch (\Throwable $th) {
