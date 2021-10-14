@@ -66,15 +66,15 @@ class TrackerController extends Controller
 
     public function graphTotal(Request $request)
     {
-        // $users = Tracker::whereNull('province')->take(30)->get();
-        // // $users = Tracker::where('province', 'California')->take(30)->get();
-        // foreach ($users as $user) {
-        //     $client = new \GuzzleHttp\Client();
-        //     $request = $client->get('http://api.db-ip.com/addrinfo?api_key=bc2ab711d740d7cfa6fcb0ca8822cb327e38844f&addr=' . $user->ip);
-        //     $location = json_decode($request->getBody());
-        //     $user->update(['province' => $location->stateprov]);
-        // }
-        // return 'ok';
+        $users = Tracker::whereNull('province')->take(30)->get();
+        // $users = Tracker::where('province', 'California')->take(30)->get();
+        foreach ($users as $user) {
+            $client = new \GuzzleHttp\Client();
+            $request = $client->get('http://api.db-ip.com/addrinfo?api_key=bc2ab711d740d7cfa6fcb0ca8822cb327e38844f&addr=' . $user->ip);
+            $location = json_decode($request->getBody());
+            $user->update(['province' => $location->stateprov]);
+        }
+        return 'ok';
         try {
             if (auth()->user()->role == 'admin') {
                 // $trackers = Tracker::groupBy('province');
@@ -139,17 +139,17 @@ class TrackerController extends Controller
     {
         try {
             if (auth()->user()->role == 'admin') {
-                // $trackers = Tracker::groupBy('date')
-                //     ->selectRaw('date, count(*) as total')
-                //     ->where('user_id', '!=', null)
-                //     ->distinct()
-                //     ->get();
-
                 $trackers = Tracker::groupBy('date')
-                    ->selectRaw('date, count(*) as total')
-                    ->where('user_id', '!=', null)
-                    ->distinct()
-                    ->get();
+                    ->selectRaw('date, count(*) as total');
+
+                if ($request->isUser) {
+                    $trackers = $trackers->where('user_id', '!=', null);
+                } else {
+                    $trackers = $trackers->where('user_id', null);
+                }
+
+                $trackers = $trackers->distinct()->get();
+
 
                 $array = array();
                 $array['00'] = 00;
