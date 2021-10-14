@@ -139,17 +139,44 @@ class TrackerController extends Controller
     {
         try {
             if (auth()->user()->role == 'admin') {
+                // $trackers = Tracker::groupBy('date')
+                //     ->selectRaw('date, count(*) as total')
+                //     ->where('user_id', '!=', null)
+                //     ->distinct()
+                //     ->get();
+
                 $trackers = Tracker::groupBy('date')
                     ->selectRaw('date, count(*) as total')
                     ->where('user_id', '!=', null)
                     ->distinct()
                     ->get();
 
+                $array = array();
+                $array['00'] = 00;
+                foreach ($trackers->pluck('total') as $key => $item) {
+                    $array[$key] = $item;
+                }
+                // $array = array("0" => 1, "1" => 1, "2" => 5, "3" => 1, "4" => 1, "7" => 1, "8" => 3, "9" => 1);
+                $keys = array_keys($array);
+                $array = array_values($array);
+
+                $newArr = array();
+
+                foreach ($array as $key => $val) {
+                    $newArr[] = array_sum(array_slice($array, 0, $key + 1));
+                }
+                $newArr = array_combine($keys, $newArr);
+
+                $newDataTracker = [];
+                foreach ($trackers as $key => $item) {
+                    array_push($newDataTracker, ['date' => $item->date, 'total' => $newArr[$key]]);
+                }
+
                 return response()->json([
                     'code' => 200,
                     'type' => 'success',
                     'message' => 'Data successfully retrived',
-                    'data' => $trackers
+                    'data' => $newDataTracker,
                 ], 200);
             } else {
                 return response()->json(['error' => 'Unauthorized'], 401);
