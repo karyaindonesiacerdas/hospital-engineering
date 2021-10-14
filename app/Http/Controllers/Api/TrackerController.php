@@ -74,7 +74,7 @@ class TrackerController extends Controller
         //     $location = json_decode($request->getBody());
         //     $user->update(['province' => $location->stateprov]);
         // }
-        return 'ok';
+        // return 'ok';
         try {
             if (auth()->user()->role == 'admin') {
                 // $trackers = Tracker::groupBy('province');
