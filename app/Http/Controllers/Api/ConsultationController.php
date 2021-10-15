@@ -120,6 +120,7 @@ class ConsultationController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'mobile' => $request->mobile,
+                'institution_name' => $request->institution_name,
             ];
 
             $user = User::where('email', $request->email)->first();
