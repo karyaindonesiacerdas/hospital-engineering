@@ -94,7 +94,7 @@ class UserController extends Controller
         try {
             $user = User::where('email', $request->email)->first();
             if ($user) {
-                $user = collect($user)->only(['id', 'name', 'email', 'mobile']);
+                $user = collect($user)->only(['id', 'name', 'email', 'mobile', 'institution_name']);
 
                 return response()->json([
                     'code' => 200,
