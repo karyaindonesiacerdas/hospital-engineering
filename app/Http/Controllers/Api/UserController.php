@@ -88,4 +88,33 @@ class UserController extends Controller
             ], 400);
         }
     }
+
+    public function detailByEmail(Request $request)
+    {
+        try {
+            $user = User::where('email', $request->email)->first();
+            if ($user) {
+                $user = collect($user)->only(['id', 'name', 'email', 'mobile']);
+
+                return response()->json([
+                    'code' => 200,
+                    'type' => 'success',
+                    'message' => 'Data retrieved successfully',
+                    'data' => $user,
+                ], 200);
+            } else {
+                return response()->json([
+                    'code' => 400,
+                    'type' => 'danger',
+                    'message' => 'User Visitor Not Registered',
+                ], 400);
+            }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'code' => 400,
+                'type' => 'danger',
+                'message' => $th->getMessage(),
+            ], 400);
+        }
+    }
 }

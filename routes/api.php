@@ -64,6 +64,7 @@ Route::prefix('consultation')->group(function () {
 
 Route::prefix('user')->group(function () {
     Route::get('/list', [App\Http\Controllers\Api\UserController::class, 'userList']);
+    Route::get('detail', [App\Http\Controllers\Api\UserController::class, 'detailByEmail']);
 });
 
 Route::prefix('exhibitor')->group(function () {
