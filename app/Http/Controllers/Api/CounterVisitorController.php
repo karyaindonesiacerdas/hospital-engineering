@@ -20,19 +20,21 @@ class CounterVisitorController extends Controller
                     'code' => 200,
                     'type' => 'success',
                     'message' => 'Data successfully retrived',
-                    'data' => $counters->paginate(50),
+                    'data' => $counters->paginate($request->input('limit', 50)),
                 ], 200);
             }
             if (auth()->user()->role == 'admin') {
                 $counters = CounterVisitor::with(array('visitor' => function ($query) {
                     // $query->where('allow_share_info', 1);
                     $query->select('id', 'name', 'institution_name', 'email', 'mobile', 'allow_share_info', 'province');
+                }))->with(array('exhibitor' => function ($query) {
+                    $query->select('id', 'company_name');
                 }));
                 return response()->json([
                     'code' => 200,
                     'type' => 'success',
                     'message' => 'Data successfully retrived',
-                    'data' => $counters->paginate(50),
+                    'data' => $counters->paginate($request->input('limit', 50)),
                 ], 200);
             }
         } catch (\Throwable $th) {
