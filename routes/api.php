@@ -29,7 +29,7 @@ Route::resource('/post', App\Http\Controllers\Api\PostController::class);
 Route::apiResource('/package', App\Http\Controllers\Api\PackageController::class);
 Route::apiResource('/rundown', App\Http\Controllers\Api\RundownController::class);
 
-Route::get('/tracker/update-location', [App\Http\Controllers\Api\TrackerController::class, 'upateLocation']);
+Route::post('/tracker/update-location', [App\Http\Controllers\Api\TrackerController::class, 'upateLocation']);
 Route::get('/tracker/graph-accumulative', [App\Http\Controllers\Api\TrackerController::class, 'graphAccumulative']);
 Route::get('/tracker/graph-total', [App\Http\Controllers\Api\TrackerController::class, 'graphTotal']);
 Route::get('/tracker/graph-province', [App\Http\Controllers\Api\TrackerController::class, 'graphProvince']);

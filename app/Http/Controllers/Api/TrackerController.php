@@ -66,7 +66,7 @@ class TrackerController extends Controller
 
     public function upateLocation(Request $request)
     {
-        $users = Tracker::whereNull('province')->take(30)->get();
+        $users = Tracker::whereNull('province')->take($request->input('limit', 5))->get();
         // $users = Tracker::where('province', 'California')->take(30)->get();
         foreach ($users as $user) {
             $client = new \GuzzleHttp\Client();
