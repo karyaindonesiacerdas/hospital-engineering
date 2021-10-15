@@ -121,6 +121,7 @@ class ConsultationController extends Controller
                 'email' => $request->email,
                 'mobile' => $request->mobile,
                 'institution_name' => $request->institution_name,
+                'role' => 'visitor',
                 'password' => bcrypt('secret12345678'),
             ];
 
