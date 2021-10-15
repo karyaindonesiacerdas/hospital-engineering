@@ -64,27 +64,23 @@ class TrackerController extends Controller
         }
     }
 
+    public function upateLocation(Request $request)
+    {
+        $users = Tracker::whereNull('province')->take(30)->get();
+        // $users = Tracker::where('province', 'California')->take(30)->get();
+        foreach ($users as $user) {
+            $client = new \GuzzleHttp\Client();
+            $request = $client->get('http://api.db-ip.com/addrinfo?api_key=bc2ab711d740d7cfa6fcb0ca8822cb327e38844f&addr=' . $user->ip);
+            $location = json_decode($request->getBody());
+            $user->update(['province' => $location->stateprov]);
+        }
+        return 'ok';
+    }
+
     public function graphTotal(Request $request)
     {
-        // $users = Tracker::whereNull('province')->take(30)->get();
-        // // $users = Tracker::where('province', 'California')->take(30)->get();
-        // foreach ($users as $user) {
-        //     $client = new \GuzzleHttp\Client();
-        //     $request = $client->get('http://api.db-ip.com/addrinfo?api_key=bc2ab711d740d7cfa6fcb0ca8822cb327e38844f&addr=' . $user->ip);
-        //     $location = json_decode($request->getBody());
-        //     $user->update(['province' => $location->stateprov]);
-        // }
-        // return 'ok';
         try {
             if (auth()->user()->role == 'admin') {
-                // $trackers = Tracker::groupBy('province');
-                // if ($request->date) {
-                //     $trackers = $trackers->select('province', 'date', \DB::raw('count(province) as total'))->where('date', $request->date);
-                // } else {
-                //     $trackers = $trackers->select('province', 'date', \DB::raw('count(province) as total'));
-                // }
-                // $total = $trackers->pluck('total');
-
                 $trackers = Tracker::groupBy('date')
                     ->selectRaw('date, count(*) as total')
                     ->get();
