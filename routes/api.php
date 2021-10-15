@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 
+Route::get('download/{filename}', function ($filename) {
+    return response()->download(public_path($filename));
+});
+
 Route::get('download/{storage}/{filename}', function ($storage, $filename) {
     return response()->download(public_path('storage/' . $storage) . '/' . $filename);
 });
