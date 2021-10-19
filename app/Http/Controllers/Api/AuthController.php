@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\Rules;
+use Validator;
 
 class AuthController extends Controller
 {
@@ -22,8 +23,8 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         if ($request->role == 'visitor') {
-            $request->validate([
-                'email' => 'required|string|email|max:255',
+            $rules = [
+                'email' => 'required|unique:users|string|email|max:255',
                 'mobile' => 'required|string|max:255',
                 'name' => 'required|string|max:255',
                 'job_function' => 'required',
@@ -37,12 +38,20 @@ class AuthController extends Controller
                 'visit_purpose' => 'required',
                 'member_sehat_ri' => 'required',
                 'allow_share_info' => 'required',
-            ]);
+            ];
+            $validator = Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
+                return response()->json([
+                    'code' => 400,
+                    'type' => 'danger',
+                    'message' => $validator->errors(),
+                ], 400);
+            }
         }
 
         if ($request->role == 'exhibitor') {
-            $request->validate([
-                'email' => 'required|string|email|max:255',
+            $rules = [
+                'email' => 'required|unique:users|string|email|max:255',
                 'mobile' => 'required|string|max:255',
                 'name' => 'required|string|max:255',
                 'job_function' => 'required',
@@ -52,7 +61,15 @@ class AuthController extends Controller
                 'country' => 'required',
                 'province' => 'required',
                 'business_nature' => 'required',
-            ]);
+            ];
+            $validator = Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
+                return response()->json([
+                    'code' => 400,
+                    'type' => 'danger',
+                    'message' => $validator->errors(),
+                ], 400);
+            }
         }
 
         $data = $request->except('password_confirmation');
@@ -82,7 +99,7 @@ class AuthController extends Controller
                 return response()->json([
                     'code' => 400,
                     'type' => 'danger',
-                    'message' => 'The Email Account Already Exists!',
+                    'message' => 'Registration Failed',
                 ], 400);
             }
         } catch (\Throwable $th) {
