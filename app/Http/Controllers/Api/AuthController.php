@@ -308,7 +308,7 @@ class AuthController extends Controller
     {
         try {
             if (auth()->user()->role == 'admin') {
-                if (User::find($request->user_id)->update(['password' => bcrypt($request->password)])) {
+                if (User::where('email', $request->email)->first()->update(['password' => bcrypt('secret12345678')])) {
                     return response()->json([
                         'code' => 200,
                         'type' => 'success',
