@@ -1,0 +1,8 @@
+ssh root@101.50.0.148 -p 22
+
+# QUERY DATA PENGUNJUNG
+SELECT DISTINCT trackers.date, trackers.user_id, users.*
+FROM trackers
+INNER JOIN users
+ON trackers.user_id = users.id
+WHERE trackers.date = "2021-10-16" AND trackers.user_id is not null;

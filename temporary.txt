@@ -1,0 +1,17 @@
+# DELETE DUPLICATE
+DELETE t1 FROM users t1
+INNER JOIN users t2 
+WHERE 
+    t1.id < t2.id AND 
+    t1.email = t2.email;
+    
+# RESET AUTOINCREMENT
+ALTER TABLE users AUTO_INCREMENT = 1
+
+
+# UPDATE PASSWORD (secret12345678)
+UPDATE users 
+SET 
+    password = '$2b$10$ZxC4hLKuVvP953FAEb20EuMFqTVbfiCmVLvbg.HzKJsqeSCeVuv/2'
+WHERE
+    password IS NULL;

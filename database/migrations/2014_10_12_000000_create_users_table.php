@@ -43,6 +43,7 @@ class CreateUsersTable extends Migration
             $table->text('company_description')->nullable();
             $table->unsignedBigInteger('package_id')->nullable();
             $table->string('business_nature')->nullable();
+            $table->boolean('published')->default(false);
 
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();

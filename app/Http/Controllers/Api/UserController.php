@@ -26,7 +26,7 @@ class UserController extends Controller
                 'code' => 200,
                 'type' => 'success',
                 'message' => 'Fetch succeed',
-                'data' => $users->get(['id', 'name', 'company_logo', 'company_name', 'business_nature', 'package_id', 'ala_carte', 'company_order']),
+                'data' => $users->get(['id', 'name', 'company_logo', 'company_name', 'business_nature', 'package_id', 'ala_carte', 'company_order', 'published']),
             ], 200);
         } catch (\Throwable $th) {
             return response()->json([
