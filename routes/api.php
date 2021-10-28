@@ -20,6 +20,7 @@ Route::prefix('auth')->group(function () {
     Route::post('me', [App\Http\Controllers\Api\AuthController::class, 'me']);
     Route::put('update', [App\Http\Controllers\Api\AuthController::class, 'update']);
     Route::put('update/status', [App\Http\Controllers\Api\AuthController::class, 'adminUpdateStatus']);
+    Route::post('reset/password', [App\Http\Controllers\Api\AuthController::class, 'adminResetPassword']);
 });
 
 Route::apiResource('/setting', App\Http\Controllers\Api\SettingController::class);
