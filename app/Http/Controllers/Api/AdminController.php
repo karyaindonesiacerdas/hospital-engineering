@@ -58,7 +58,7 @@ class AdminController extends Controller
                     $client = new \GuzzleHttp\Client();
                     $requestApi = $client->get('https://www.sehat-ri.net/api/application/v1/referral/check/code/' . $item->email, ['http_errors' => false]);
                     $result = json_decode($requestApi->getBody());
-                    return $result;
+                    return $result->code;
                     $resCode = trim(collect($result->code), '[]');
                     if ($resCode == 200) {
                         $dataReferral = collect($result->data);
