@@ -53,7 +53,7 @@ class AdminController extends Controller
         try {
             if (auth()->user()->role == 'admin') {
                 $dataReferral = null;
-                $users = User::whereNull('referral')->take($request->input('limit', 5))->get(['id', 'email', 'mobile']);
+                $users = User::whereNull('referral')->skip($request->input('skip', 0))->take($request->input('limit', 5))->get(['id', 'email', 'mobile']);
                 foreach ($users as $item) {
                     $client = new \GuzzleHttp\Client();
                     $requestApi = $client->get('https://www.sehat-ri.net/api/application/v1/referral/check/code/' . $item->email, ['http_errors' => false]);

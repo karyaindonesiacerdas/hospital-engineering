@@ -2,8 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-
-
 // ??
 Route::get('download/{filename}', function ($filename) {
     return response()->download(public_path($filename));
