@@ -2,14 +2,19 @@
 
 use Illuminate\Support\Facades\Route;
 
+
+
+// ??
 Route::get('download/{filename}', function ($filename) {
     return response()->download(public_path($filename));
 });
-
 Route::get('download/{storage}/{filename}', function ($storage, $filename) {
     return response()->download(public_path('storage/' . $storage) . '/' . $filename);
 });
 Route::get('/banner/download/storage/{filename}', [App\Http\Controllers\Api\BannerController::class, 'download']);
+
+// dipakai
+Route::get('/validation-referral/{referral?}', [App\Http\Controllers\HomeController::class, 'validationReferral']);
 
 Route::prefix('admin')->group(function () {
     Route::post('check-referral', [App\Http\Controllers\Api\AdminController::class, 'getReferral']);
