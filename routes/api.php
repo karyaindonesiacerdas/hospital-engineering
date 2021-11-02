@@ -11,6 +11,11 @@ Route::get('download/{storage}/{filename}', function ($storage, $filename) {
 });
 Route::get('/banner/download/storage/{filename}', [App\Http\Controllers\Api\BannerController::class, 'download']);
 
+Route::prefix('admin')->group(function () {
+    Route::post('check-referral', [App\Http\Controllers\Api\AdminController::class, 'getReferral']);
+    Route::post('update-referral', [App\Http\Controllers\Api\AdminController::class, 'updateReferral']);
+});
+
 Route::prefix('auth')->group(function () {
     Route::post('register', [App\Http\Controllers\Api\AuthController::class, 'register']);
     Route::post('login/email', [App\Http\Controllers\Api\AuthController::class, 'loginEmail']);

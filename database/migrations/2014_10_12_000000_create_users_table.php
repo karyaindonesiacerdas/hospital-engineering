@@ -45,6 +45,8 @@ class CreateUsersTable extends Migration
             $table->string('business_nature')->nullable();
             $table->boolean('published')->default(false);
 
+            $table->string('referral')->nullable();
+
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->rememberToken();
