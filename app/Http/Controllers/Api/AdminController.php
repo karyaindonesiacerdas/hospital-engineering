@@ -56,7 +56,7 @@ class AdminController extends Controller
                 $users = User::whereNull('referral')->skip($request->input('skip', 0))->take($request->input('limit', 5))->get(['id', 'email', 'mobile']);
                 foreach ($users as $item) {
                     $client = new \GuzzleHttp\Client();
-                    $requestApi = $client->get('https://www.sehat-ri.net/api/application/v1/referral/check/code/' . $item->email, ['http_errors' => false]);
+                    $requestApi = $client->get('https://www.sehat-ri.net/api/application/v1/referral/check/code/' . strtolower($item->email), ['http_errors' => false]);
                     $result = json_decode($requestApi->getBody());
                     if (optional($result)->code == 200) {
                         $dataReferral = collect($result->data);
