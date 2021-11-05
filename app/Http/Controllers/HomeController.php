@@ -16,7 +16,7 @@ class HomeController extends Controller
                     'code' => 200,
                     'type' => 'success',
                     'message' => 'Data found',
-                    'data' => 'Data found',
+                    'data' => $user,
                 ], 200);
             } else {
                 return response()->json([
