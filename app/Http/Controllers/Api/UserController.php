@@ -12,7 +12,7 @@ class UserController extends Controller
     public function exhibitorList(Request $request)
     {
         try {
-            $users = User::with('package')->where('role', 'exhibitor');
+            $users = User::with('package')->where('role', 'exhibitor')->whereYear('created_at', now()->year);
             if ($request->search) {
                 $users->where('name', 'like', "%" . $request->search . "%");
             }
