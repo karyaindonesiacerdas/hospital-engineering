@@ -16,7 +16,7 @@ class RundownController extends Controller
     public function index()
     {
         try {
-            $rundowns = Rundown::all();
+            $rundowns = Rundown::whereYear('created_at', now()->year)->get();
             if ($rundowns) {
                 return response()->json([
                     'code' => 200,
