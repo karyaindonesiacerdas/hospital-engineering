@@ -54,7 +54,7 @@ class CounterVisitorController extends Controller
                 $exhibitors = User::where('role', 'exhibitor')->get();
                 $data = [];
                 foreach ($exhibitors as $exhibitor) {
-                    $counter = $exhibitor->counters_exhibitor->count();
+                    $counter = $exhibitor->counters_exhibitor()->whereYear('created_at', now()->year)->count();
                     array_push($data, [
                         'id' => $exhibitor->id,
                         'company_name' => $exhibitor->company_name,
