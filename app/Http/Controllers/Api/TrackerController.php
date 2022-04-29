@@ -82,6 +82,7 @@ class TrackerController extends Controller
         try {
             if (auth()->user()->role == 'admin') {
                 $trackers = Tracker::groupBy('date')
+                    ->whereYear('created_at', now()->year)
                     ->selectRaw('date, count(*) as total')
                     ->get();
 
@@ -137,6 +138,7 @@ class TrackerController extends Controller
         try {
             if (auth()->user()->role == 'admin') {
                 $trackers = Tracker::groupBy('date')
+                    ->whereYear('created_at', now()->year)
                     ->selectRaw('date, count(*) as total');
 
                 if ($request->isUser) {
