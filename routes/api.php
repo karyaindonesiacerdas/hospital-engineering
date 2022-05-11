@@ -22,6 +22,7 @@ Route::prefix('admin')->group(function () {
 Route::prefix('auth')->group(function () {
     Route::post('register', [App\Http\Controllers\Api\AuthController::class, 'register']);
     Route::post('login/email', [App\Http\Controllers\Api\AuthController::class, 'loginEmail']);
+    Route::post('login/email/visitor', [App\Http\Controllers\Api\AuthController::class, 'loginEmailVisitor']);
     Route::post('login', [App\Http\Controllers\Api\AuthController::class, 'login']);
     Route::post('logout', [App\Http\Controllers\Api\AuthController::class, 'logout']);
     Route::post('refresh', [App\Http\Controllers\Api\AuthController::class, 'refresh']);

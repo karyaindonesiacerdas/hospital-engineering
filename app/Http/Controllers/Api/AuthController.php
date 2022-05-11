@@ -17,7 +17,7 @@ class AuthController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('jwt.verify')->except(['login', 'loginEmail', 'register', 'visitorDetail']);
+        $this->middleware('jwt.verify')->except(['login', 'loginEmail', 'register', 'visitorDetail', 'loginEmailVisitor']);
     }
 
     public function register(Request $request)
@@ -166,6 +166,39 @@ class AuthController extends Controller
                     'type' => 'danger',
                     'message' => 'You have entered an invalid username or password',
                 ], 400);
+            }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'code' => 400,
+                'type' => 'danger',
+                'message' => $th->getMessage(),
+            ], 400);
+        }
+    }
+
+    public function loginEmailVisitor()
+    {
+        try {
+            if ($user = User::where('email', request('email'))->first()) {
+                if ($user->role != 'visitor' || !auth()->login($user)) {
+                    return response()->json(['error' => 'You have entered an invalid username or password'], 401);
+                }
+                return response()->json([
+                    'code' => 200,
+                    'type' => 'success',
+                    'message' => 'Successfully logged in',
+                    'data' => [
+                        'user' => collect($user)->only(['id', 'name', 'email', 'role', 'mobile']),
+                        'token_type' => 'bearer',
+                        'token' => auth()->login($user),
+                    ],
+                ], 200);
+            } else {
+                return response()->json([
+                    'code' => 404,
+                    'type' => 'danger',
+                    'message' => 'Email Not Found!',
+                ], 404);
             }
         } catch (\Throwable $th) {
             return response()->json([
