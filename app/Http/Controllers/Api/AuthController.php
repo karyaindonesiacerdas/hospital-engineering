@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Activity;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -25,19 +26,19 @@ class AuthController extends Controller
         if ($request->role == 'visitor') {
             $rules = [
                 'email' => 'required|unique:users|string|email|max:255',
-                'mobile' => 'required|string|max:255',
+                'mobile' => 'required|numeric',
                 'name' => 'required|string|max:255',
-                'job_function' => 'required',
+                'job_function' => 'nullable',
                 'password' => ['required', 'confirmed', Rules\Password::defaults()],
-                'institution_name' => 'required',
-                'institution_type' => 'required',
-                'country' => 'required',
-                'province' => 'required',
-                'visitor_type' => 'required',
-                'product_interest' => 'required',
-                'visit_purpose' => 'required',
-                'member_sehat_ri' => 'required',
-                'allow_share_info' => 'required',
+                'institution_name' => 'nullable',
+                'institution_type' => 'nullable',
+                'country' => 'nullable',
+                'province' => 'nullable',
+                'visitor_type' => 'nullable',
+                'product_interest' => 'nullable',
+                'visit_purpose' => 'nullable',
+                'member_sehat_ri' => 'nullable',
+                'allow_share_info' => 'nullable',
             ];
             $validator = Validator::make($request->all(), $rules);
             if ($validator->fails()) {
@@ -80,6 +81,14 @@ class AuthController extends Controller
         try {
             $user = User::create($data);
             if ($user) {
+                if ($user->role == 'visitor') {
+                    $checkAlreadyExist = Activity::where(['causer_id' => $user->id, 'subject_id' => $user->id, 'subject_type' => 'reward', 'subject_name' => 'register'])->first();
+
+                    if (!$checkAlreadyExist) {
+                        Activity::create(['causer_id' => $user->id, 'subject_id' => $user->id, 'subject_type' => 'reward', 'subject_name' => 'register']);
+                    }
+                }
+
                 if (!$token = auth()->login($user)) {
                     return response()->json(['error' => 'Unauthorized'], 401);
                 } else {
@@ -285,6 +294,15 @@ class AuthController extends Controller
                 $request->file('img_profile')->storeAs('profiles', $profileFileName);
             }
             if (auth()->user()->update($requestData)) {
+                if (auth()->user()->role == 'visitor') {
+                    $checkAlreadyExist = Activity::where(['causer_id' => auth()->id(), 'subject_id' => auth()->id(), 'subject_type' => 'reward', 'subject_name' => 'update_profile'])->first();
+
+                    if (!$checkAlreadyExist) {
+                        Activity::create(['causer_id' => auth()->id(), 'subject_id' => auth()->id(), 'subject_type' => 'reward', 'subject_name' => 'update_profile']);
+                    }
+                }
+
+
                 return response()->json([
                     'code' => 200,
                     'type' => 'success',

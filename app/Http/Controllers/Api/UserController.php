@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Activity;
 use App\Models\CounterVisitor;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -42,9 +43,10 @@ class UserController extends Controller
     {
         try {
             if (auth()->user()->role == 'visitor') {
-                $checkAlreadyExist = CounterVisitor::where(['visitor_id' => auth()->id(), 'exhibitor_id' => $user->id])->first();
+                $checkAlreadyExist = Activity::where(['causer_id' => auth()->id(), 'subject_id' => $user->id, 'subject_type' => 'reward', 'subject_name' => 'booth'])->first();
+
                 if (!$checkAlreadyExist) {
-                    auth()->user()->counters()->create(['exhibitor_id' => $user->id]);
+                    Activity::create(['causer_id' => auth()->id(), 'subject_id' => $user->id, 'subject_type' => 'reward', 'subject_name' => 'booth']);
                 }
             }
 

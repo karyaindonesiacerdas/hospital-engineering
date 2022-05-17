@@ -90,3 +90,8 @@ Route::prefix('exhibitor')->group(function () {
     Route::get('/', [App\Http\Controllers\Api\UserController::class, 'exhibitorList']);
     Route::get('/{user}', [App\Http\Controllers\Api\UserController::class, 'exhibitorDetail']);
 });
+
+Route::prefix('activity')->group(function () {
+    Route::get('/', [App\Http\Controllers\Api\ActivityController::class, 'activityList']);
+    Route::post('/', [App\Http\Controllers\Api\ActivityController::class, 'activityStore']);
+});
