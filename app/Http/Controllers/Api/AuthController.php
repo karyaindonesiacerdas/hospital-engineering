@@ -329,7 +329,14 @@ class AuthController extends Controller
     {
         try {
             if (auth()->user()->role == 'admin') {
-                if (User::find($request->user_id)->update(['package_id' => $request->package_id])) {
+                $dataUpdate = [
+                    'package_id' => $request->package_id,
+                    'user_id' => $request->user_id,
+                    'position' => $request->position,
+                    'role' => $request->role,
+                ];
+                
+                if (User::find($request->user_id)->update($dataUpdate)) {
                     return response()->json([
                         'code' => 200,
                         'type' => 'success',
