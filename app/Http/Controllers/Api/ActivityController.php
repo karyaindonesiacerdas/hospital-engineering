@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Activity;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Validator;
 
 class ActivityController extends Controller
 {
@@ -45,15 +46,28 @@ class ActivityController extends Controller
     {
         try {
             if (auth()->user()->role == 'visitor') {
+                $rules = [
+                    'causer_id' => 'required|string',
+                    'subject_id' => 'required|string',
+                    'subject_type' => 'required|string',
+                    'subject_name' => 'required|string',
+                ];
+                $validator = Validator::make($request->all(), $rules);
+                if ($validator->fails()) {
+                    return response()->json([
+                        'code' => 400,
+                        'type' => 'danger',
+                        'message' => $validator->errors(),
+                    ], 400);
+                }
+
                 if (str_contains($request->subject_name, 'seminar-')) {
-                    if (empty($request->subject_name) || empty($request->subject_type) || empty($request->subject_id)) {
-                        return response()->json([
-                            'code' => 400,
-                            'type' => 'danger',
-                            'message' => 'Log Failed Recorded',
-                            'data' => $request->all(),
-                        ], 400);
-                    }
+                    return response()->json([
+                        'code' => 400,
+                        'type' => 'danger',
+                        'message' => 'Log Failed Recorded',
+                        'data' => $request->all(),
+                    ], 400);
                 }
 
                 $checkAlreadyExist = Activity::where(['causer_id' => auth()->id(), 'subject_id' => $request->subject_id, 'subject_type' => $request->subject_type, 'subject_name' => $request->subject_name])->whereDate('created_at', Carbon::today())->first();
