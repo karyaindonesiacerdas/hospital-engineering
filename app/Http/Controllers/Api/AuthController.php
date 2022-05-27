@@ -29,7 +29,8 @@ class AuthController extends Controller
                 'mobile' => 'required|numeric',
                 'name' => 'required|string|max:255',
                 'job_function' => 'nullable',
-                'password' => ['required', 'confirmed', Rules\Password::defaults()],
+                // 'password' => ['required', 'min:5', 'confirmed', Rules\Password::defaults()],
+                'password' => 'required|confirmed|min:5',
                 'institution_name' => 'nullable',
                 'institution_type' => 'nullable',
                 'country' => 'nullable',
@@ -335,7 +336,7 @@ class AuthController extends Controller
                     'position' => $request->position,
                     'role' => $request->role,
                 ];
-                
+
                 if (User::find($request->user_id)->update($dataUpdate)) {
                     return response()->json([
                         'code' => 200,
