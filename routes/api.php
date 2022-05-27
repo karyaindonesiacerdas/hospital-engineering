@@ -38,6 +38,7 @@ Route::get('user/detail/{user}', [App\Http\Controllers\Api\AuthController::class
 Route::resource('/post', App\Http\Controllers\Api\PostController::class);
 Route::apiResource('/package', App\Http\Controllers\Api\PackageController::class);
 Route::apiResource('/rundown', App\Http\Controllers\Api\RundownController::class);
+Route::get('/rundown/closing/event', [App\Http\Controllers\Api\RundownController::class, 'closingSeminarReward']);
 
 Route::post('/tracker/update-location', [App\Http\Controllers\Api\TrackerController::class, 'upateLocation']);
 Route::get('/tracker/graph-accumulative', [App\Http\Controllers\Api\TrackerController::class, 'graphAccumulative']);

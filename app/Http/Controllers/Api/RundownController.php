@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Activity;
 use App\Models\Rundown;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class RundownController extends Controller
@@ -114,6 +116,42 @@ class RundownController extends Controller
                     'type' => 'success',
                     'message' => 'Data successfully deleted',
                 ], 200);
+            }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'code' => 400,
+                'type' => 'danger',
+                'message' => $th->getMessage(),
+            ], 400);
+        }
+    }
+
+    public function closingSeminarReward()
+    {
+        try {
+            if (auth()->user()->role == 'visitor') {
+                $rundown = Rundown::whereDate('created_at', Carbon::today())->where('is_end', 1)->where('status', 3)->first();
+                if ($rundown) {
+                    $checkAlreadyExist = Activity::where(['causer_id' => auth()->id(), 'subject_id' => $rundown->id, 'subject_type' => 'reward', 'subject_name' => "webinar-$rundown->id"])->first();
+                    $rundown['isJoined'] = 0;
+                    if ($checkAlreadyExist) {
+                        $rundown['isJoined'] = 1;
+                    }
+                    return response()->json([
+                        'code' => 200,
+                        'type' => 'success',
+                        'message' => 'Data successfully fetched',
+                        'data' => $rundown,
+                    ], 200);
+                } else {
+                    return response()->json([
+                        'code' => 400,
+                        'type' => 'danger',
+                        'message' => 'Data is Empty',
+                    ], 400);
+                }
+            } else {
+                return response()->json(['error' => 'Unauthorized'], 401);
             }
         } catch (\Throwable $th) {
             return response()->json([
