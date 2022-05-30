@@ -15,7 +15,8 @@ class ActivityController extends Controller
         try {
             $activities = Activity::with(array('causer' => function ($query) {
                 $query->select('id', 'name', 'email', 'mobile');
-            }));
+            }))->where('subject_type', 'reward');
+
 
             if ($request->subject_type) {
                 $activities->where('subject_type', $request->subject_type);
@@ -23,6 +24,19 @@ class ActivityController extends Controller
 
             if (auth()->user()->role == 'visitor') {
                 $activities->where('causer_id', auth()->id());
+            } else if (auth()->user()->role == 'admin') {
+                return response()->json([
+                    'code' => 200,
+                    'type' => 'success',
+                    'message' => 'Fetch succeed',
+                    'data' => $activities->simplePaginate($request->input('limit', 50))->groupBy('causer_id'),
+                ], 200);
+            } else {
+                return response()->json([
+                    'code' => 400,
+                    'type' => 'danger',
+                    'message' => 'Unauthorized',
+                ], 400);
             }
 
             return response()->json([
@@ -47,7 +61,6 @@ class ActivityController extends Controller
         try {
             if (auth()->user()->role == 'visitor') {
                 $rules = [
-                    'causer_id' => 'required|string',
                     'subject_id' => 'required|string',
                     'subject_type' => 'required|string',
                     'subject_name' => 'required|string',
