@@ -97,6 +97,11 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany('App\Models\CounterVisitor', 'exhibitor_id');
     }
 
+    public function activities()
+    {
+        return $this->hasMany('App\Models\Activity', 'causer_id');
+    }
+
     public function tracker()
     {
         return $this->hasOne('App\Models\Tracker');

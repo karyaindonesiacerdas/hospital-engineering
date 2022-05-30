@@ -332,7 +332,6 @@ class AuthController extends Controller
             if (auth()->user()->role == 'admin') {
                 $dataUpdate = [
                     'package_id' => $request->package_id,
-                    'user_id' => $request->user_id,
                     'position' => $request->position,
                     'role' => $request->role,
                 ];

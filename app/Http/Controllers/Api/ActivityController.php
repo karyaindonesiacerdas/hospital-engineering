@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Activity;
+use App\Models\User;
+use App\Support\Collection;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Validator;
@@ -25,6 +27,19 @@ class ActivityController extends Controller
             if (auth()->user()->role == 'visitor') {
                 $activities->where('causer_id', auth()->id());
             } else if (auth()->user()->role == 'admin') {
+                $users = User::whereHas('activities')->get();
+                $data = [];
+                foreach ($users as $item) {
+                    array_push($data, [
+                        'id' => $item->id,
+                        'name' => $item->name,
+                        'email' => $item->email,
+                        'total_reward' => count($item->activities),
+                    ]);
+                }
+                $collection = (new Collection($data))->paginate($request->input('limit', 50));
+                return $collection;
+
                 return response()->json([
                     'code' => 200,
                     'type' => 'success',
