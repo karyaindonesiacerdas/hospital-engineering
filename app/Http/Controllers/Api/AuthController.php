@@ -192,6 +192,7 @@ class AuthController extends Controller
             if ($user = User::where('email', request('email'))->first()) {
                 $newPassword = \Str::random(10);
                 $user->password = bcrypt($newPassword);
+                $user->save();
 
                 $mail_details = [
                     'subject' => 'Reset Password',
