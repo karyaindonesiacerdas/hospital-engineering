@@ -29,7 +29,6 @@ class SendMailReset extends Mailable
      */
     public function build()
     {
-        $email = env('MAIL_USERNAME', "hospital.engineering.expo@gmail.com");
-        return $this->from($email)->view('reset-password', ['data' => $this->emailDetail]);
+        return $this->view('reset-password', ['data' => $this->emailDetail]);
     }
 }
