@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\SendResetPasswordJob;
 use App\Models\Activity;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
@@ -10,7 +11,6 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\Rules;
 use Validator;
 
@@ -169,6 +169,44 @@ class AuthController extends Controller
                         'token_type' => 'bearer',
                         'token' => $token,
                     ],
+                ], 200);
+            } else {
+                return response()->json([
+                    'code' => 400,
+                    'type' => 'danger',
+                    'message' => 'You have entered an invalid username or password',
+                ], 400);
+            }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'code' => 400,
+                'type' => 'danger',
+                'message' => $th->getMessage(),
+            ], 400);
+        }
+    }
+
+    public function resetEmail()
+    {
+        try {
+            if ($user = User::where('email', request('email'))->first()) {
+                $newPassword = \Str::random(10);
+                $user->password = bcrypt($newPassword);
+
+                $mail_details = [
+                    'subject' => 'Reset Password',
+                    'password' => $newPassword,
+                    'email' => $user->email,
+                    'name' => $user->name,
+                ];
+
+                SendResetPasswordJob::dispatch($mail_details);
+
+                return response()->json([
+                    'code' => 200,
+                    'type' => 'success',
+                    'message' => 'Successfully logged in',
+                    'data' => 'New password sent to your email',
                 ], 200);
             } else {
                 return response()->json([
