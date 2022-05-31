@@ -18,7 +18,7 @@ class AuthController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('jwt.verify')->except(['login', 'loginEmail', 'register', 'visitorDetail', 'loginEmailVisitor']);
+        $this->middleware('jwt.verify')->except(['login', 'loginEmail', 'register', 'visitorDetail', 'loginEmailVisitor', 'resetPassword']);
     }
 
     public function register(Request $request)
@@ -186,7 +186,7 @@ class AuthController extends Controller
         }
     }
 
-    public function resetEmail()
+    public function resetPassword()
     {
         try {
             if ($user = User::where('email', request('email'))->first()) {
