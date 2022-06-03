@@ -41,7 +41,7 @@ class CreateUsersTable extends Migration
             $table->string('company_logo')->nullable();
             $table->string('company_video_url')->nullable();
             $table->text('company_description')->nullable();
-            $table->unsignedBigInteger('package_id')->nullable();
+            $table->json('package_id')->nullable();
             $table->string('business_nature')->nullable();
             $table->boolean('published')->default(false);
             $table->smallInteger('position')->default(0);

@@ -22,6 +22,7 @@ class User extends Authenticatable implements JWTSubject
     protected $casts = [
         'email_verified_at' => 'datetime',
         'product_interest' => 'array',
+        'package_id' => 'array',
         'visit_purpose' => 'array',
         'business_nature' => 'array',
         'ala_carte' => 'array',

@@ -40,6 +40,7 @@ class AuthController extends Controller
                 'visit_purpose' => 'nullable',
                 'member_sehat_ri' => 'nullable',
                 'allow_share_info' => 'nullable',
+                'package_id' => 'required',
             ];
             $validator = Validator::make($request->all(), $rules);
             if ($validator->fails()) {
