@@ -99,7 +99,7 @@ class AuthController extends Controller
                         'type' => 'success',
                         'message' => 'Successful registration',
                         'data' => [
-                            'user' => collect($user)->only(['id', 'name', 'email', 'role', 'mobile']),
+                            'user' => collect($user)->only(['id', 'name', 'email', 'role', 'mobile', 'package_id']),
                             'token_type' => 'bearer',
                             'token' => $token,
                         ],
