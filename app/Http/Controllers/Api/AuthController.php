@@ -148,26 +148,50 @@ class AuthController extends Controller
     public function login()
     {
         try {
-            $fieldType = filter_var(request('email'), FILTER_VALIDATE_EMAIL) ? 'email' : 'mobile';
-            if (!$token = auth()->attempt(array($fieldType => request('email'), 'password' => request('password')))) {
-                return response()->json([
-                    'code' => 400,
-                    'type' => 'danger',
-                    'message' => 'You have entered an invalid username or password',
-                ], 400);
+            $userHasEmailAndPhone = User::where('email', request('email'))->first();
+            $userHasEmailAndPhone2 = User::where('mobile', request('email'))->where('email', '!=', NULL)->first();
+            if ($userHasEmailAndPhone || $userHasEmailAndPhone2) {
+                $credential = ['email' => request('email'), 'password' => request('password')];
+                if (!$token = auth()->attempt($credential)) {
+                    return response()->json([
+                        'code' => 400,
+                        'type' => 'danger',
+                        'message' => 'You have entered an invalid username or password',
+                    ], 400);
+                } else {
+                    return response()->json([
+                        'code' => 200,
+                        'type' => 'success',
+                        'message' => 'Successfully logged in',
+                        'data' => [
+                            'user' => collect(auth()->user())->only(['id', 'name', 'email', 'role', 'mobile']),
+                            'token_type' => 'bearer',
+                            'token' => $token,
+                        ],
+                    ], 200);
+                }
             } else {
-                return response()->json([
-                    'code' => 200,
-                    'type' => 'success',
-                    'message' => 'Successfully logged in',
-                    'data' => [
-                        'user' => collect(auth()->user())->only(['id', 'name', 'email', 'role', 'mobile']),
-                        'token_type' => 'bearer',
-                        'token' => $token,
-                    ],
-                ], 200);
+                $fieldType = 'mobile';
+                if (!$token = auth()->attempt(array($fieldType => request('email'), 'password' => request('password')))) {
+                    return response()->json([
+                        'code' => 400,
+                        'type' => 'danger',
+                        'message' => 'You have entered an invalid username or password',
+                    ], 400);
+                } else {
+                    return response()->json([
+                        'code' => 200,
+                        'type' => 'success',
+                        'message' => 'Successfully logged in',
+                        'data' => [
+                            'user' => collect(auth()->user())->only(['id', 'name', 'email', 'role', 'mobile']),
+                            'token_type' => 'bearer',
+                            'token' => $token,
+                        ],
+                    ], 200);
+                }
+                return $this->respondWithToken($token);
             }
-            return $this->respondWithToken($token);
         } catch (\Throwable $th) {
             return response()->json([
                 'code' => 400,
