@@ -42,6 +42,16 @@ class AuthController extends Controller
                 'allow_share_info' => 'nullable',
                 'package_id' => 'required',
             ];
+
+            if ($request->isShortForm == 1) {
+                $rules = [
+                    'mobile' => 'required|numeric',
+                ];
+                $request->password = 'password';
+                $request->password_confirmation = 'password';
+                $request->allow_share_info = 1;
+            }
+
             $validator = Validator::make($request->all(), $rules);
             if ($validator->fails()) {
                 return response()->json([
@@ -76,7 +86,9 @@ class AuthController extends Controller
         }
 
         $data = $request->except('password_confirmation');
+        $data = $request->except('isShortForm');
         $data['password'] = Hash::make($request->password);
+
         if ($request->has('allow_share_info')) {
             $data['allow_share_info'] = $request->allow_share_info == 'true' ? true : false;
         }
@@ -125,8 +137,8 @@ class AuthController extends Controller
     public function login()
     {
         try {
-            $credentials = request(['email', 'password']);
-            if (!$token = auth()->attempt($credentials)) {
+            $fieldType = filter_var(request('email'), FILTER_VALIDATE_EMAIL) ? 'email' : 'mobile';
+            if (!$token = auth()->attempt(array($fieldType => request('email'), 'password' => request('password')))) {
                 return response()->json([
                     'code' => 400,
                     'type' => 'danger',
