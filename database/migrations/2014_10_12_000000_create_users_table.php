@@ -44,7 +44,7 @@ class CreateUsersTable extends Migration
             $table->json('package_id')->nullable();
             $table->string('business_nature')->nullable();
             $table->boolean('published')->default(false);
-            $table->smallInteger('position')->default(0);
+            $table->unsignedBigInteger('position_id')->nullable();
 
             $table->string('referral')->nullable();
 

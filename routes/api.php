@@ -10,6 +10,7 @@ Route::get('download/{storage}/{filename}', function ($storage, $filename) {
     return response()->download(public_path('storage/' . $storage) . '/' . $filename);
 });
 Route::get('/banner/download/storage/{filename}', [App\Http\Controllers\Api\BannerController::class, 'download']);
+Route::get('/positions', [App\Http\Controllers\Api\PositionController::class, 'index']);
 
 // dipakai
 Route::get('/validation-referral/{referral?}', [App\Http\Controllers\HomeController::class, 'validationReferral']);
