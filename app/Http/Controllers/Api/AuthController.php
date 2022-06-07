@@ -26,7 +26,7 @@ class AuthController extends Controller
         if ($request->role == 'visitor') {
             $rules = [
                 'email' => 'required|unique:users|string|email|max:255',
-                'mobile' => 'required|numeric',
+                'mobile' => 'required|numeric|unique:users',
                 'name' => 'required|string|max:255',
                 'job_function' => 'nullable',
                 // 'password' => ['required', 'min:5', 'confirmed', Rules\Password::defaults()],
