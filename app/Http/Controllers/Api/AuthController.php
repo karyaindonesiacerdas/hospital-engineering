@@ -50,6 +50,15 @@ class AuthController extends Controller
                 $request->password = 'password';
                 $request->password_confirmation = 'password';
                 $request->allow_share_info = 1;
+
+                $checkIfMobileExists = User::where('mobile', $request->mobile)->where('email', '!=', NULL)->first();
+                if ($checkIfMobileExists) {
+                    return response()->json([
+                        'code' => 400,
+                        'type' => 'danger',
+                        'message' => $validator->errors(),
+                    ], 400);
+                }
             }
 
             $validator = Validator::make($request->all(), $rules);
