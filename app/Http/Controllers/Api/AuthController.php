@@ -93,6 +93,7 @@ class AuthController extends Controller
             $data['allow_share_info'] = $request->allow_share_info == 'true' ? true : false;
         }
         try {
+            $data = collect($data)->forget('password_confirmation')->toArray();
             $user = User::create($data);
             if ($user) {
                 if ($user->role == 'visitor') {
