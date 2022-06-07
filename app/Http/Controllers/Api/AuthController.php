@@ -51,12 +51,13 @@ class AuthController extends Controller
                 $request->password_confirmation = 'password';
                 $request->allow_share_info = 1;
 
-                $checkIfMobileExists = User::where('mobile', $request->mobile)->where('email', '!=', NULL)->first();
-                if ($checkIfMobileExists) {
+                $checkIfMobileExists1 = User::where('mobile', $request->mobile)->where('email', '!=', NULL)->first();
+                $checkIfMobileExists2 = User::where('mobile', $request->mobile)->first();
+                if ($checkIfMobileExists1 || $checkIfMobileExists2) {
                     return response()->json([
                         'code' => 400,
                         'type' => 'danger',
-                        'message' => $validator->errors(),
+                        'message' => "Phone Number Already Exists",
                     ], 400);
                 }
             }
