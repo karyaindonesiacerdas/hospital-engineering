@@ -40,9 +40,9 @@ class AuthController extends Controller
                 'visit_purpose' => 'nullable',
                 'member_sehat_ri' => 'nullable',
                 'allow_share_info' => 'nullable',
+                'isShortForm' => 'nullable',
                 'package_id' => 'required',
             ];
-
             if ($request->isShortForm == 1) {
                 $rules = [
                     'mobile' => 'required|numeric',
@@ -96,7 +96,6 @@ class AuthController extends Controller
         }
 
         $data = $request->except('password_confirmation');
-        $data = $request->except('isShortForm');
         $data['password'] = Hash::make($request->password);
 
         if ($request->has('allow_share_info')) {
