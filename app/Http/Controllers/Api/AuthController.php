@@ -371,6 +371,15 @@ class AuthController extends Controller
             if ($request->password) {
                 $requestData['password'] = bcrypt($request->password);
             }
+            if ($request->package_id) {
+                if (gettype($request->package_id) == 'string') {
+                    preg_match_all('!\d+!', $request->package_id, $matches);
+                    foreach ($matches as $val) {
+                        $new_name[] = preg_replace('/\D/', '', $val);
+                    }
+                    $requestData['package_id'] = $new_name[0];
+                }
+            }
             if ($request->hasFile('company_logo')) {
                 $companyFileName = md5($request->file('company_logo') . microtime()) . '.' . $request->file('company_logo')->extension();
                 $requestData['company_logo'] = $companyFileName;
