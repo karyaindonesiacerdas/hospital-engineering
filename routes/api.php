@@ -16,6 +16,7 @@ Route::get('/positions', [App\Http\Controllers\Api\PositionController::class, 'i
 Route::get('/validation-referral/{referral?}', [App\Http\Controllers\HomeController::class, 'validationReferral']);
 
 Route::prefix('admin')->group(function () {
+    Route::get('total-visitor-registration', [App\Http\Controllers\Api\AdminController::class, 'totalVisitorRegistration']);
     Route::post('check-referral', [App\Http\Controllers\Api\AdminController::class, 'getReferral']);
     Route::post('update-referral', [App\Http\Controllers\Api\AdminController::class, 'updateReferral']);
 });

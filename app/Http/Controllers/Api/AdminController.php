@@ -8,6 +8,33 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
+    public function totalVisitorRegistration()
+    {
+        try {
+            if (auth()->user()->role == 'admin') {
+                $totalFull = User::whereYear('created_at', now()->year)->where('role', 'visitor')->where('isShortForm', 0)->count();
+                $totalSimple = User::whereYear('created_at', now()->year)->where('role', 'visitor')->where('isShortForm', 1)->count();
+                return response()->json([
+                    'code' => 200,
+                    'type' => 'success',
+                    'message' => 'Data successfully fetched',
+                    'data' => [
+                        'total_full_registration' => $totalFull,
+                        'total_phone_registration' => $totalSimple,
+                    ],
+                ], 200);
+            } else {
+                return response()->json(['error' => 'Unauthorized'], 401);
+            }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'code' => 400,
+                'type' => 'danger',
+                'message' => $th->getMessage(),
+            ], 400);
+        }
+    }
+
     public function getReferral(Request $request)
     {
         try {
