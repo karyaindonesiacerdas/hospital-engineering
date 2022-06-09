@@ -47,8 +47,8 @@ class AuthController extends Controller
                 $rules = [
                     'mobile' => 'required|numeric',
                 ];
-                $request->password = 'password';
-                $request->password_confirmation = 'password';
+                $request->password = '12345';
+                $request->password_confirmation = '12345';
                 $request->allow_share_info = 1;
 
                 $checkIfMobileExists1 = User::where('mobile', $request->mobile)->where('email', '!=', NULL)->first();
