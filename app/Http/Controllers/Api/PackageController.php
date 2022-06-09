@@ -11,7 +11,7 @@ class PackageController extends Controller
     public function index()
     {
         try {
-            $packages = Package::all();
+            $packages = Package::orderBy('order', 'asc')->get();
             if ($packages) {
                 return response()->json([
                     'code' => 200,
