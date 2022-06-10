@@ -112,6 +112,7 @@ Route::post('participant/update-province', function (Request $request) {
             $client = new \GuzzleHttp\Client();
             $requestApi = $client->get('https://iahe.or.id/api/participant/update-province' . strtolower($item->email), ['http_errors' => false]);
             $result = json_decode($requestApi->getBody());
+            return $result;
             if (optional($result)->code == 200) {
                 $dataProvince = collect($result->data);
                 return $dataProvince;
