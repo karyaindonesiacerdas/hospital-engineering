@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 // ??
@@ -36,6 +38,7 @@ Route::prefix('auth')->group(function () {
 });
 
 Route::apiResource('/setting', App\Http\Controllers\Api\SettingController::class);
+// Route::apiResource('/survey', App\Http\Controllers\Api\SurveyController::class);
 
 Route::get('user/detail/{user}', [App\Http\Controllers\Api\AuthController::class, 'userDetail']);
 Route::resource('/post', App\Http\Controllers\Api\PostController::class);
@@ -98,4 +101,30 @@ Route::prefix('exhibitor')->group(function () {
 Route::prefix('activity')->group(function () {
     Route::get('/', [App\Http\Controllers\Api\ActivityController::class, 'activityList']);
     Route::post('/', [App\Http\Controllers\Api\ActivityController::class, 'activityStore']);
+});
+
+
+Route::post('participant/update-province', function (Request $request) {
+    try {
+        $dataProvince = null;
+        $users = User::whereNull('province')->skip($request->input('skip', 0))->take($request->input('limit', 5))->get(['id', 'email']);
+        foreach ($users as $item) {
+            $client = new \GuzzleHttp\Client();
+            $requestApi = $client->get('https://iahe.or.id/api/participant/update-province' . strtolower($item->email), ['http_errors' => false]);
+            $result = json_decode($requestApi->getBody());
+            if (optional($result)->code == 200) {
+                $dataProvince = collect($result->data);
+                return $dataProvince;
+                $province = $dataProvince['province'];
+                // $item->update(['province' => $province]);
+            }
+        }
+        return 'ok';
+    } catch (\Throwable $th) {
+        return response()->json([
+            'code' => 400,
+            'type' => 'danger',
+            'message' => $th->getMessage(),
+        ], 400);
+    }
 });
