@@ -106,18 +106,15 @@ Route::prefix('activity')->group(function () {
 
 Route::post('participant/update-province', function (Request $request) {
     try {
-        $dataProvince = null;
-        $users = User::whereNull('province')->skip($request->input('skip', 0))->take($request->input('limit', 5))->get(['id', 'email']);
+        $users = \DB::table('participants')->skip($request->input('skip', 0))->take($request->input('limit', 5))->get();
         foreach ($users as $item) {
-            $client = new \GuzzleHttp\Client();
-            $requestApi = $client->get('https://iahe.or.id/api/participant/update-province' . strtolower($item->email), ['http_errors' => false]);
-            $result = json_decode($requestApi->getBody());
-            return $result;
-            if (optional($result)->code == 200) {
-                $dataProvince = collect($result->data);
-                return $dataProvince;
-                $province = $dataProvince['province'];
-                // $item->update(['province' => $province]);
+            $user = User::where('email', $item['email'])->where('role', 'visitor')->whereNull('province')->first();
+            if ($user) {
+                $user->update([
+                    'province' => $item['province'],
+                    // 'institution_name' => $item['institution_name'],
+                    // 'mobile' => $item['mobile'],
+                ]);
             }
         }
         return 'ok';
