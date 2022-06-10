@@ -108,10 +108,10 @@ Route::post('participant/update-province', function (Request $request) {
     try {
         $users = \DB::table('participants')->skip($request->input('skip', 0))->take($request->input('limit', 5))->get();
         foreach ($users as $item) {
-            $user = User::where('email', $item['email'])->where('role', 'visitor')->whereNull('province')->first();
+            $user = User::where('email', $item->email)->where('role', 'visitor')->whereNull('province')->first();
             if ($user) {
                 $user->update([
-                    'province' => $item['province'],
+                    'province' => $item->province,
                     // 'institution_name' => $item['institution_name'],
                     // 'mobile' => $item['mobile'],
                 ]);
