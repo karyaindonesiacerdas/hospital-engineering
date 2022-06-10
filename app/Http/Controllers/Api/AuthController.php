@@ -406,12 +406,12 @@ class AuthController extends Controller
                     'role' => $request->role,
                     'exhibitor_type' => $request->exhibitor_type,
                 ];
-                if (User::find($request->user_id)->update($dataUpdate)) {
+                if ($user = User::find($request->user_id)->update($dataUpdate)) {
                     return response()->json([
                         'code' => 200,
                         'type' => 'success',
                         'message' => 'Data updated successfully',
-                        'data' => auth()->user(),
+                        'data' => User::find($request->user_id),
                     ], 200);
                 } else {
                     return response()->json([
