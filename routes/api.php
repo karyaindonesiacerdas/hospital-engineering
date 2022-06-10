@@ -107,9 +107,11 @@ Route::prefix('activity')->group(function () {
 Route::post('participant/update-province', function (Request $request) {
     try {
         $users = \DB::table('participants')->skip($request->input('skip', 0))->take($request->input('limit', 5))->get();
+        $usersUpdated = [];
         foreach ($users as $item) {
             $user = User::where('email', $item->email)->where('role', 'visitor')->whereNull('province')->first();
             if ($user) {
+                array_push($usersUpdated, $user->email);
                 $user->update([
                     'province' => $item->province,
                     // 'institution_name' => $item['institution_name'],
@@ -117,7 +119,7 @@ Route::post('participant/update-province', function (Request $request) {
                 ]);
             }
         }
-        return 'ok';
+        return $usersUpdated;
     } catch (\Throwable $th) {
         return response()->json([
             'code' => 400,
