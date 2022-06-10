@@ -109,6 +109,7 @@ Route::post('participant/update-province', function (Request $request) {
         $dataProvince = null;
         $users = User::whereNull('province')->skip($request->input('skip', 0))->take($request->input('limit', 5))->get(['id', 'email']);
         foreach ($users as $item) {
+            return $item;
             $client = new \GuzzleHttp\Client();
             $requestApi = $client->get('https://iahe.or.id/api/participant/update-province' . strtolower($item->email), ['http_errors' => false]);
             $result = json_decode($requestApi->getBody());
