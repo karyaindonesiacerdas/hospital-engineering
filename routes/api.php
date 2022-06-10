@@ -106,7 +106,7 @@ Route::prefix('activity')->group(function () {
 
 Route::post('participant/update-province', function (Request $request) {
     try {
-        $users = \DB::table('participants')->skip($request->input('skip', 0))->take($request->input('limit', 5))->get();
+        $users = \DB::table('participants_old')->skip($request->input('skip', 0))->take($request->input('limit', 5))->get();
         $usersUpdated = [];
         foreach ($users as $item) {
             $user = User::where('email', $item->email)->where('role', 'visitor')->whereNull('institution_name')->first();
