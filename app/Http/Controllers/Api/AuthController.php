@@ -401,12 +401,11 @@ class AuthController extends Controller
         try {
             if (auth()->user()->role == 'admin') {
                 $dataUpdate = [
-                    'package_id' => $request->package_id,
                     'position' => $request->position,
                     'role' => $request->role,
                     'exhibitor_type' => $request->exhibitor_type,
                 ];
-                if ($user = User::find($request->user_id)->update($dataUpdate)) {
+                if (User::find($request->user_id)->update($dataUpdate)) {
                     return response()->json([
                         'code' => 200,
                         'type' => 'success',
