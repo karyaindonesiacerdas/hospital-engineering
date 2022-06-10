@@ -114,7 +114,7 @@ Route::post('participant/update-province', function (Request $request) {
                 array_push($usersUpdated, $user->email);
                 $user->update([
                     // 'province' => $item->province,
-                    'institution_name' => $item['institution_name'],
+                    'institution_name' => $item->institution_name,
                     // 'mobile' => $item['mobile'],
                 ]);
             }
