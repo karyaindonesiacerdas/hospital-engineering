@@ -404,8 +404,8 @@ class AuthController extends Controller
                     'package_id' => $request->package_id,
                     'position' => $request->position,
                     'role' => $request->role,
+                    'exhibitor_type' => $request->exhibitor_type,
                 ];
-
                 if (User::find($request->user_id)->update($dataUpdate)) {
                     return response()->json([
                         'code' => 200,

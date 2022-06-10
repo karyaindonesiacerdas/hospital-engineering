@@ -13,16 +13,16 @@ class UserController extends Controller
     public function exhibitorList(Request $request)
     {
         try {
-            $users = User::with('package')->where('role', 'exhibitor')->whereYear('created_at', now()->year);
+            $users = User::where('role', 'exhibitor')->whereYear('created_at', now()->year);
             if ($request->search) {
                 $users->where('name', 'like', "%" . $request->search . "%");
             }
             if ($request->category) {
                 $users->whereJsonContains('business_nature', $request->category);
             }
-            if ($request->show_package == 1) {
-                $users = $users->where('package_id', '!=', null)->orderByDesc('package_id');
-            }
+            // if ($request->show_package == 1) {
+            //     $users = $users->where('package_id', '!=', null)->orderByDesc('package_id');
+            // }
             return response()->json([
                 'code' => 200,
                 'type' => 'success',
