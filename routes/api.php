@@ -111,12 +111,12 @@ Route::post('participant/update-province', function (Request $request) {
         foreach ($users as $item) {
             $user = User::where('email', $item->email)->where('role', 'visitor')->whereNull('institution_name')->first();
             if ($user) {
-                array_push($usersUpdated, $user->email);
-                $user->update([
+                $status = $user->update([
                     // 'province' => $item->province,
                     'institution_name' => $item->institution_name,
                     // 'mobile' => $item['mobile'],
                 ]);
+                array_push($usersUpdated, ['email' => $user->email, 'status' => $status]);
             }
         }
         return $usersUpdated;
