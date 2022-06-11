@@ -213,7 +213,7 @@ class AuthController extends Controller
         try {
             $user = User::where('mobile', request('mobile'))->first();
             if ($user) {
-                $user->mobile = bcrypt('12345');
+                $user->password = bcrypt('12345');
                 $user->save();
 
                 return response()->json([
