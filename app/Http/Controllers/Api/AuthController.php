@@ -18,7 +18,7 @@ class AuthController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('jwt.verify')->except(['login', 'loginEmail', 'register', 'visitorDetail', 'loginEmailVisitor', 'resetPassword']);
+        $this->middleware('jwt.verify')->except(['login', 'loginEmail', 'register', 'visitorDetail', 'loginEmailVisitor', 'resetPassword', 'resetPasswordByPhone']);
     }
 
     public function register(Request $request)
@@ -191,6 +191,36 @@ class AuthController extends Controller
                         'token_type' => 'bearer',
                         'token' => $token,
                     ],
+                ], 200);
+            } else {
+                return response()->json([
+                    'code' => 400,
+                    'type' => 'danger',
+                    'message' => 'You have entered an invalid username or password',
+                ], 400);
+            }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'code' => 400,
+                'type' => 'danger',
+                'message' => $th->getMessage(),
+            ], 400);
+        }
+    }
+
+    public function resetPasswordByPhone()
+    {
+        try {
+            $user = User::where('mobile', request('mobile'))->first();
+            if ($user) {
+                $user->mobile = bcrypt('12345');
+                $user->save();
+
+                return response()->json([
+                    'code' => 200,
+                    'type' => 'success',
+                    'message' => 'Successfully logged in',
+                    'data' => 'Password successfully reset',
                 ], 200);
             } else {
                 return response()->json([
