@@ -219,8 +219,7 @@ class AuthController extends Controller
                 return response()->json([
                     'code' => 200,
                     'type' => 'success',
-                    'message' => 'Successfully logged in',
-                    'data' => 'Password successfully reset',
+                    'message' => 'Password successfully reset',
                 ], 200);
             } else {
                 return response()->json([
