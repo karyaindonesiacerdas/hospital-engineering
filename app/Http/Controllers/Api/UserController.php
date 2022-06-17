@@ -50,16 +50,18 @@ class UserController extends Controller
                     Activity::create(['causer_id' => auth()->id(), 'subject_id' => $user->id, 'subject_type' => 'reward', 'subject_name' => 'booth']);
                 }
 
-                $hasVisitInTheLastHour = CounterVisitor::where('visitor_id', auth()->id())
-                    ->where('exhibitor_id', $user->id)
-                    ->where('created_at', '>=', Carbon::now()->subHour())
-                    ->first();
+                if ($user->role == 'exhibitor') {
+                    $hasVisitInTheLastHour = CounterVisitor::where('visitor_id', auth()->id())
+                        ->where('exhibitor_id', $user->id)
+                        ->where('created_at', '>=', Carbon::now()->subHour())
+                        ->first();
 
-                if (!$hasVisitInTheLastHour) {
-                    CounterVisitor::create([
-                        'visitor_id' => auth()->id(),
-                        'exhibitor_id' => $user->id,
-                    ]);
+                    if (!$hasVisitInTheLastHour) {
+                        CounterVisitor::create([
+                            'visitor_id' => auth()->id(),
+                            'exhibitor_id' => $user->id,
+                        ]);
+                    }
                 }
             }
 
