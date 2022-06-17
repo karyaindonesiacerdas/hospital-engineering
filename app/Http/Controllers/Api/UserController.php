@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Activity;
 use App\Models\CounterVisitor;
 use App\Models\User;
+use \Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -47,6 +48,18 @@ class UserController extends Controller
 
                 if (!$checkAlreadyExist) {
                     Activity::create(['causer_id' => auth()->id(), 'subject_id' => $user->id, 'subject_type' => 'reward', 'subject_name' => 'booth']);
+                }
+
+                $hasVisitInTheLastHour = CounterVisitor::where('visitor_id', auth()->id())
+                    ->where('exhibitor_id', $user->id)
+                    ->where('created_at', '>=', Carbon::now()->subHour())
+                    ->first();
+
+                if (!$hasVisitInTheLastHour) {
+                    CounterVisitor::create([
+                        'visitor_id' => auth()->id(),
+                        'exhibitor_id' => $user->id,
+                    ]);
                 }
             }
 
