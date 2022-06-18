@@ -15,7 +15,7 @@ class CounterVisitorController extends Controller
             if (auth()->user()->role == 'exhibitor') {
                 $counters = CounterVisitor::with(array('visitor' => function ($query) {
                     $query->select('id', 'name', 'institution_name', 'email', 'mobile', 'allow_share_info', 'province', 'referral');
-                }))->where('exhibitor_id', auth()->id());
+                }))->where('exhibitor_id', auth()->id())->orderBy('created_at', 'desc');
                 return response()->json([
                     'code' => 200,
                     'type' => 'success',
