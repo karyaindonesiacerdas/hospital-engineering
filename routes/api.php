@@ -24,6 +24,7 @@ Route::prefix('admin')->group(function () {
 });
 
 Route::prefix('auth')->group(function () {
+    Route::post('reset/password/all', [App\Http\Controllers\Api\AuthController::class, 'resetPasswordByPhoneOrEmail']);
     Route::post('reset/password/phone', [App\Http\Controllers\Api\AuthController::class, 'resetPasswordByPhone']);
     Route::post('register', [App\Http\Controllers\Api\AuthController::class, 'register']);
     Route::post('reset/email', [App\Http\Controllers\Api\AuthController::class, 'resetPassword']);

@@ -18,7 +18,7 @@ class AuthController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('jwt.verify')->except(['login', 'loginEmail', 'register', 'visitorDetail', 'loginEmailVisitor', 'resetPassword', 'resetPasswordByPhone']);
+        $this->middleware('jwt.verify')->except(['login', 'loginEmail', 'register', 'visitorDetail', 'loginEmailVisitor', 'resetPassword', 'resetPasswordByPhone', 'resetPasswordByPhoneOrEmail']);
     }
 
     public function register(Request $request)
@@ -226,6 +226,42 @@ class AuthController extends Controller
                     'code' => 400,
                     'type' => 'danger',
                     'message' => 'You have entered an invalid username or password',
+                ], 400);
+            }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'code' => 400,
+                'type' => 'danger',
+                'message' => $th->getMessage(),
+            ], 400);
+        }
+    }
+
+    public function resetPasswordByPhoneOrEmail() {
+        try {
+            if (!($user = User::where('mobile', request('mobileOrEmail'))->first())) {
+                $user = User::where('email', request('mobileOrEmail'))->first();
+            }
+            if ($user && $user->role === 'visitor' && ($token = auth()->login($user))) {
+                $user->password = bcrypt('12345');
+                $user->save();
+
+                return response()->json([
+                    'code' => 200,
+                    'type' => 'success',
+                    'message' => 'Password successfully reset',
+                    'data' => [
+                        'user' => collect($user)->only(['id', 'name', 'email', 'role', 'mobile']),
+                        'token_type' => 'bearer',
+                        'token' => $token,
+                    ],
+                ], 200);
+            } else {
+                return response()->json([
+                    'code' => 400,
+                    'type' => 'danger',
+                    'message' => 'The email or phone is not registered',
+                    'user' => $user
                 ], 400);
             }
         } catch (\Throwable $th) {
