@@ -9,34 +9,51 @@ use Illuminate\Http\Request;
 
 class CounterVisitorController extends Controller
 {
+    public function downloadVisitorViews(Request $request) {
+        
+    }
+
     public function listVisitorViews(Request $request)
     {
         try {
+            $counters = CounterVisitor::with(array('visitor' => function ($query) {
+                $query->select('id', 'name', 'institution_name', 'email', 'mobile', 'allow_share_info', 'province', 'referral');
+            }));
             if (auth()->user()->role == 'exhibitor') {
-                $counters = CounterVisitor::with(array('visitor' => function ($query) {
-                    $query->select('id', 'name', 'institution_name', 'email', 'mobile', 'allow_share_info', 'province', 'referral');
-                }))->where('exhibitor_id', auth()->id())->orderBy('created_at', 'desc');
-                return response()->json([
-                    'code' => 200,
-                    'type' => 'success',
-                    'message' => 'Data successfully retrived',
-                    'data' => $counters->paginate($request->input('limit', 50)),
-                ], 200);
+                $counters->where('exhibitor_id', auth()->id());
             }
             if (auth()->user()->role == 'admin') {
-                $counters = CounterVisitor::with(array('visitor' => function ($query) {
-                    // $query->where('allow_share_info', 1);
-                    $query->select('id', 'name', 'institution_name', 'email', 'mobile', 'allow_share_info', 'province', 'referral');
-                }))->with(array('exhibitor' => function ($query) {
+                $counters->with(array('exhibitor' => function ($query) {
                     $query->select('id', 'company_name');
                 }));
-                return response()->json([
-                    'code' => 200,
-                    'type' => 'success',
-                    'message' => 'Data successfully retrived',
-                    'data' => $counters->paginate($request->input('limit', 50)),
-                ], 200);
             }
+            $counters->join('users', 'visitor_id', '=', 'users.id');
+            if (($exhibitorId = $request->input('exhibitor_id'))) {
+                $counters->where('counter_visitors.exhibitor_id', $exhibitorId);
+            }
+            if (($filter = $request->input('filter'))) {
+                $counters->where('users.name', 'like', "%{$filter}%")
+                    ->orWhere('users.email', 'like', "%{$filter}%")
+                    ->orWhere('users.mobile', 'like', "%{$filter}%")
+                    ->orWhere('users.province', 'like', "%{$filter}%")
+                    ->orWhere('users.institution_name', 'like', "%{$filter}%");
+            }
+            if (($sortColumn = $request->input('sortColumn'))) {
+                $sortDirection = $request->input('sortDirection') ?? 'ASC';
+                if (in_array($sortColumn, ['name', 'email', 'mobile', 'province', 'institution_name', 'referral'])) {
+                    $counters->orderBy("users.{$sortColumn}", $sortDirection);
+                } else if ($sortColumn === 'created_at') {
+                    $counters->orderBy('counter_visitors.created_at', $sortDirection);
+                }
+            } else {
+                $counters->orderBy('counter_visitors.created_at', 'desc');
+            }
+            return response()->json([
+                'code' => 200,
+                'type' => 'success',
+                'message' => 'Data successfully retrieved',
+                'data' => $counters->paginate($request->input('limit', 50)),
+            ], 200);
         } catch (\Throwable $th) {
             return response()->json([
                 'code' => 400,
