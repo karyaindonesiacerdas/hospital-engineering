@@ -416,6 +416,7 @@ class AuthController extends Controller
                     foreach ($matches as $val) {
                         $new_name[] = preg_replace('/\D/', '', $val);
                     }
+                    sort($new_name[0]);
                     $requestData['package_id'] = $new_name[0];
                 }
             }
