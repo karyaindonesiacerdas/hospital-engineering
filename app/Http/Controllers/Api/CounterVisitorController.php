@@ -123,6 +123,23 @@ class CounterVisitorController extends Controller
             } else {
                 $counters->whereNotNull('surveyed_package_id');
             }
+            if (($filter = $request->input('filter'))) {
+                $counters->where(function($query) use ($filter) {
+                    $query->where('users.name', 'like', "%{$filter}%")
+                        ->orWhere('users.email', 'like', "%{$filter}%")
+                        ->orWhere('users.mobile', 'like', "%{$filter}%")
+                        ->orWhere('users.province', 'like', "%{$filter}%")
+                        ->orWhere('users.institution_name', 'like', "%{$filter}%");
+                });
+            }
+            if (($sortColumn = $request->input('sortColumn'))) {
+                $sortDirection = $request->input('sortDirection') ?? 'ASC';
+                if (in_array($sortColumn, ['name', 'email', 'mobile', 'province', 'institution_name', 'referral'])) {
+                    $counters->orderBy($sortColumn, $sortDirection);
+                } else {
+                    $counters->orderBy('created_at', $sortDirection);
+                }
+            }
             return response()->json([
                 'code' => 200,
                 'type' => 'success',
