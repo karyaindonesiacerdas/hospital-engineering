@@ -117,9 +117,11 @@ class CounterVisitorController extends Controller
     {
         try {
             if (auth()->user()->role !== 'admin') throw new \Exception('Access denied');
-            $counters = User::select('*');
+            $counters = User::where('role', 'visitor');
             if (($webinarId = $request->input('package_id'))) {
                 $counters->where('surveyed_package_id', 'LIKE', '%"' . $webinarId . '"%');
+            } else {
+                $counters->whereNotNull('surveyed_package_id');
             }
             return response()->json([
                 'code' => 200,
@@ -146,23 +148,23 @@ class CounterVisitorController extends Controller
                     'id' => -1,
                     'name' => 'at_least_one',
                     'total_attendees' => [
-                        'registered' => User::where('package_id', '!=', '[]')->count(),
-                        'surveyed' => User::whereNotNull('surveyed_package_id')->count(),
+                        'registered' => User::where('role', 'visitor')->where('package_id', '!=', '[]')->count(),
+                        'surveyed' => User::where('role', 'visitor')->whereNotNull('surveyed_package_id')->count(),
                     ]
                 ], [
                     'id' => -2,
                     'name' => 'all',
                     'total_attendees' => [
-                        'registered' => User::where('package_id', '["1","2","3","4","5","6"]')->count(),
-                        'surveyed' => User::where('surveyed_package_id', '["1","2","3","4","5","6"]')->count(),
+                        'registered' => User::where('role', 'visitor')->where('package_id', '["1","2","3","4","5","6"]')->count(),
+                        'surveyed' => User::where('role', 'visitor')->where('surveyed_package_id', '["1","2","3","4","5","6"]')->count(),
                     ]
                 ]
             ];
             $packages = Package::select('id', 'name')->get();
             foreach ($packages as $package) {
                 $package['total_attendees'] = [
-                    'registered' => User::where('package_id', 'LIKE', '%"' . $package->id . '"%')->count(),
-                    'surveyed' => User::where('surveyed_package_id', 'LIKE', '%"' . $package->id . '"%')->count(),
+                    'registered' => User::where('role', 'visitor')->where('package_id', 'LIKE', '%"' . $package->id . '"%')->count(),
+                    'surveyed' => User::where('role', 'visitor')->where('surveyed_package_id', 'LIKE', '%"' . $package->id . '"%')->count(),
                 ];
                 $data[] = $package;
             }
