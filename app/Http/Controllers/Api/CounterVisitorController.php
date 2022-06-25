@@ -4,15 +4,12 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\CounterVisitor;
+use App\Models\Package;
 use App\Models\User;
 use Illuminate\Http\Request;
 
 class CounterVisitorController extends Controller
 {
-    public function downloadVisitorViews(Request $request) {
-        
-    }
-
     public function listVisitorViews(Request $request)
     {
         try {
@@ -60,7 +57,7 @@ class CounterVisitorController extends Controller
             return response()->json([
                 'code' => 400,
                 'type' => 'danger',
-                'message' => 'Failed to retrive',
+                'message' => 'Failed to retrieve',
                 'data' => $th->getMessage(),
             ], 400);
         }
@@ -69,57 +66,117 @@ class CounterVisitorController extends Controller
     public function adminListVisitorViews(Request $request)
     {
         try {
-            if (auth()->user()->role == 'admin') {
-                $exhibitors = User::where('role', 'exhibitor')->get();
+            if (auth()->user()->role !== 'admin') throw new \Exception('Access denied');
+            if ($request->input('full') === '1') {
+                $data = [
+                    [
+                        'id' => -1,
+                        'name' => 'at_least_one',
+                        'total_visitors' => User::withCount(['counters AS counters_count' => function($query) {
+                            $query->select(\DB::raw('COUNT(DISTINCT(exhibitor_id))'));
+                        }])->having('counters_count', '>=', 1)->count(),
+                    ], [
+                        'id' => -2,
+                        'name' => 'all',
+                        'total_visitors' => User::withCount(['counters AS counters_count' => function($query) {
+                            $query->select(\DB::raw('COUNT(DISTINCT(exhibitor_id))'));
+                        }])->having('counters_count', '>=', 18)->count(),
+                    ]
+                ];
+            } else {
                 $data = [];
-                foreach ($exhibitors as $exhibitor) {
-                    $counter = $exhibitor->counters_exhibitor()->whereYear('created_at', now()->year)->count();
-                    array_push($data, [
-                        'id' => $exhibitor->id,
-                        'company_name' => $exhibitor->company_name,
-                        'total_visitors' => $counter,
-                    ]);
-                }
-                if ($data) {
-                    return response()->json([
-                        'code' => 200,
-                        'type' => 'success',
-                        'message' => 'Data successfully retrived',
-                        'data' => $data,
-                    ], 200);
-                }
+            }
+            $exhibitors = User::where('role', 'exhibitor')->get();
+            foreach ($exhibitors as $exhibitor) {
+                $counter = $exhibitor->counters_exhibitor()->whereYear('created_at', now()->year)->count();
+                array_push($data, [
+                    'id' => $exhibitor->id,
+                    'company_name' => $exhibitor->company_name,
+                    'total_visitors' => $counter,
+                ]);
+            }
+            if ($data) {
+                return response()->json([
+                    'code' => 200,
+                    'type' => 'success',
+                    'message' => 'Data successfully retrieved',
+                    'data' => $data,
+                ], 200);
             }
         } catch (\Throwable $th) {
             return response()->json([
                 'code' => 400,
                 'type' => 'danger',
-                'message' => 'Failed to retrive',
+                'message' => 'Failed to retrieve',
                 'data' => $th->getMessage(),
             ], 400);
         }
     }
 
-    public function adminListVisitorBoothViews(Request $request)
+    public function listWebinarAttendees(Request $request)
     {
         try {
-            if (auth()->user()->role == 'admin') {
-                $data = User::with(array('counters.exhibitor' => function ($query) {
-                    $query->select('id', 'company_name');
-                }))->has('counters')->select('id', 'name', 'institution_name')->paginate(5);
-                if ($data) {
-                    return response()->json([
-                        'code' => 200,
-                        'type' => 'success',
-                        'message' => 'Data successfully retrived',
-                        'data' => $data,
-                    ], 200);
-                }
+            if (auth()->user()->role !== 'admin') throw new \Exception('Access denied');
+            $counters = User::select('*');
+            if (($webinarId = $request->input('package_id'))) {
+                $counters->where('surveyed_package_id', 'LIKE', '%"' . $webinarId . '"%');
             }
+            return response()->json([
+                'code' => 200,
+                'type' => 'success',
+                'message' => 'Data successfully retrieved',
+                'data' => $counters->paginate($request->input('limit', 50)),
+            ], 200);
         } catch (\Throwable $th) {
             return response()->json([
                 'code' => 400,
                 'type' => 'danger',
-                'message' => 'Failed to retrive',
+                'message' => 'Failed to retrieve',
+                'data' => $th->getMessage(),
+            ], 400);
+        }
+    }
+
+    public function adminListWebinarAttendees(Request $request)
+    {
+        try {
+            if (auth()->user()->role !== 'admin') throw new \Exception('Access denied');
+            $data = [
+                [
+                    'id' => -1,
+                    'name' => 'at_least_one',
+                    'total_attendees' => [
+                        'registered' => User::where('package_id', '!=', '[]')->count(),
+                        'surveyed' => User::whereNotNull('surveyed_package_id')->count(),
+                    ]
+                ], [
+                    'id' => -2,
+                    'name' => 'all',
+                    'total_attendees' => [
+                        'registered' => User::where('package_id', '["1","2","3","4","5","6"]')->count(),
+                        'surveyed' => User::where('surveyed_package_id', '["1","2","3","4","5","6"]')->count(),
+                    ]
+                ]
+            ];
+            $packages = Package::select('id', 'name')->get();
+            foreach ($packages as $package) {
+                $package['total_attendees'] = [
+                    'registered' => User::where('package_id', 'LIKE', '%"' . $package->id . '"%')->count(),
+                    'surveyed' => User::where('surveyed_package_id', 'LIKE', '%"' . $package->id . '"%')->count(),
+                ];
+                $data[] = $package;
+            }
+            return response()->json([
+                'code' => 200,
+                'type' => 'success',
+                'message' => 'Data successfully retrieved',
+                'data' => $data,
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'code' => 400,
+                'type' => 'danger',
+                'message' => 'Failed to retrieve',
                 'data' => $th->getMessage(),
             ], 400);
         }
@@ -153,11 +210,11 @@ class CounterVisitorController extends Controller
             }
             $conditions = [['users.name', '!=', '']];
             if ($webinarId === 'all') {
-                $conditions[] = ['users.package_id', '=', '["1","2","3","4","5","6"]'];
+                $conditions[] = ['users.surveyed_package_id', '=', '["1","2","3","4","5","6"]'];
             } else if ($webinarId === 'one') {
-                $conditions[] = ['users.package_id', '!=', '\'[]\''];
+                $conditions[] = ['users.surveyed_package_id', '!=', '\'[]\''];
             } else {
-                $conditions[] = ['users.package_id', 'LIKE', '%"' . $webinarId . '"%'];
+                $conditions[] = ['users.surveyed_package_id', 'LIKE', '%"' . $webinarId . '"%'];
             }
             $query->whereNotNull('users.name')
                 ->where($conditions)
