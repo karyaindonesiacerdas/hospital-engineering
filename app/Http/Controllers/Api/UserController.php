@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Activity;
 use App\Models\CounterVisitor;
+use App\Models\Position;
 use App\Models\User;
 use \Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -126,6 +127,99 @@ class UserController extends Controller
                     'message' => 'User Visitor Not Registered',
                 ], 400);
             }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'code' => 400,
+                'type' => 'danger',
+                'message' => $th->getMessage(),
+            ], 400);
+        }
+    }
+
+    public function demographicData() {
+        try {
+            if (auth()->user()->role !== 'admin') throw new \Exception('Access denied');
+            $top = 9;
+
+            $data = [
+                'provinces' => [
+                    'name' => 'Visitor / Province',
+                    'labels' => [],
+                    'series' => []
+                ],
+                'positions' => [
+                    'name' => 'Visitor / Job Position',
+                    'labels' => [],
+                    'series' => [],
+                ],
+                'institution_types' => [
+                    'name' => 'Visitor / Institution Type',
+                    'labels' => [],
+                    'series' => [],
+                ],
+            ];
+
+            $provinces = User::select('province', \DB::raw('count(*) as total'))->groupBy('province')->orderBy('total', 'desc')->get();
+            $others = 0;
+            foreach ($provinces as $province) {
+                if (empty($province['total'])) continue;
+                if (!(empty($province['province']) || in_array(trim($province['province']), ['-', 'other'])) && count($data['provinces']['labels']) < $top) {
+                    $data['provinces']['labels'][] = $province['province'];
+                    $data['provinces']['series'][] = $province['total'];
+                } else {
+                    $others += $province['total'];
+                }
+            }
+            if ($others > 0) {
+                $data['provinces']['labels'][] = "Others";
+                $data['provinces']['series'][] = $others;
+            }
+
+            $positions = Position::select('id', 'name')->get();
+            $positionMappers = [];
+            foreach ($positions as $position) {
+                $positionMappers["p{$position['id']}"] = $position['name'];
+            }
+            $positions = User::select('position_id', \DB::raw('count(*) as total'))->groupBy('position_id')->orderBy('total', 'desc')->get();
+            $others = 0;
+            foreach ($positions as $position) {
+                $key = "p{$position['position_id']}";
+                if (empty($position['total'])) continue;
+                if (!(empty($position['position_id']) || !array_key_exists($key, $positionMappers)) && count($data['positions']['labels']) < $top) {
+                    $label = $positionMappers[$key];
+                    $data['positions']['labels'][] = $label;
+                    $data['positions']['series'][] = $position['total'];
+                } else {
+                    $others += $position['total'];
+                }
+            }
+            if ($others > 0) {
+                $data['positions']['labels'][] = "Others";
+                $data['positions']['series'][] = $others;
+            }
+
+            $institutions = User::select('institution_type', \DB::raw('count(*) as total'))->groupBy('institution_type')->orderBy('total', 'desc')->get();
+            $others = 0;
+            foreach ($institutions as $institution) {
+                if (empty($institution['total'])) continue;
+                if (!(empty($institution['institution_type']) || in_array(trim($institution['institution_type']), ['-', 'other', 'Other'])) && count($data['institution_types']['labels']) < $top) {
+                    $data['institution_types']['labels'][] = $institution['institution_type'];
+                    $data['institution_types']['series'][] = $institution['total'];
+                } else {
+                    $others += $institution['total'];
+                }
+            }
+            if ($others > 0) {
+                $data['institution_types']['labels'][] = "Others";
+                $data['institution_types']['series'][] = $others;
+            }
+
+            return response()->json([
+                'code' => 200,
+                'type' => 'success',
+                'message' => 'Data retrieved successfully',
+                'data' => $data,
+            ], 200);
         } catch (\Throwable $th) {
             return response()->json([
                 'code' => 400,

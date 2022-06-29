@@ -164,6 +164,7 @@ class CounterVisitorController extends Controller
                 [
                     'id' => -1,
                     'name' => 'at_least_one',
+                    'order' => 0,
                     'total_attendees' => [
                         'registered' => User::where('role', 'visitor')->where('package_id', '!=', '[]')->count(),
                         'surveyed' => User::where('role', 'visitor')->whereNotNull('surveyed_package_id')->count(),
@@ -171,13 +172,14 @@ class CounterVisitorController extends Controller
                 ], [
                     'id' => -2,
                     'name' => 'all',
+                    'order' => 0,
                     'total_attendees' => [
                         'registered' => User::where('role', 'visitor')->where('package_id', '["1","2","3","4","5","6"]')->count(),
                         'surveyed' => User::where('role', 'visitor')->where('surveyed_package_id', '["1","2","3","4","5","6"]')->count(),
                     ]
                 ]
             ];
-            $packages = Package::select('id', 'name')->get();
+            $packages = Package::select('id', 'name', 'order')->get();
             foreach ($packages as $package) {
                 $package['total_attendees'] = [
                     'registered' => User::where('role', 'visitor')->where('package_id', 'LIKE', '%"' . $package->id . '"%')->count(),
