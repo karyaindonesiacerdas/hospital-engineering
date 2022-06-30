@@ -118,8 +118,8 @@ class CounterVisitorController extends Controller
         try {
             if (auth()->user()->role !== 'admin') throw new \Exception('Access denied');
             $counters = User::where('role', 'visitor');
-            if (($webinarId = $request->input('package_id'))) {
-                $counters->where('surveyed_package_id', 'LIKE', '%"' . $webinarId . '"%');
+            if (($webinarIds = $request->input('package_id'))) {
+                $counters->where('surveyed_package_id', 'LIKE', '%"' . $webinarIds . '"%');
             } else {
                 $counters->whereNotNull('surveyed_package_id');
             }
@@ -207,8 +207,8 @@ class CounterVisitorController extends Controller
     {
         try {
             if (auth()->user()->role !== 'admin') throw new \Exception('Access denied');
-            $boothId = $request->input('booth_id') ?? 'one';
-            $webinarId = $request->input('webinar_id') ?? 'one';
+            $boothIds = $request->input('booth_ids') ?? 'one';
+            $webinarIds = $request->input('webinar_ids') ?? 'one';
             $winners = $request->input('winners');
             $data = [
                 'total' => 0,
@@ -216,31 +216,37 @@ class CounterVisitorController extends Controller
                 'list' => [],
             ];
             $query = User::select('users.id', 'users.name', 'users.mobile');
-            if ($boothId === 'all') {
+            if ($boothIds === 'all') {
                 $query->withCount(['counters AS counters_count' => function($query) {
                     $query->select(\DB::raw('COUNT(DISTINCT(exhibitor_id))'));
                 }])->having('counters_count', '>=', 18);
-            } else if ($boothId !== 'one') {
-                $query->join('counter_visitors', function($join) use ($boothId) {
-                    $join->on('counter_visitors.visitor_id', '=', 'users.id');
-                    $join->where('counter_visitors.exhibitor_id', '=', $boothId);
-                });
+            } else if ($boothIds !== 'one') {
+                $ids = explode(',', $boothIds);
+                foreach ($ids as $id) {
+                    $alias = "cv_{$id}";
+                    $query->join("counter_visitors as {$alias}", function($join) use ($alias, $id) {
+                        $join->on("{$alias}.visitor_id", '=', 'users.id');
+                        $join->where("{$alias}.exhibitor_id", $id);
+                    });
+                }
             }
             if ($winners) {
                 $query->whereNotIn('users.id', explode(',', $winners));
             }
             $conditions = [['users.name', '!=', '']];
-            if ($webinarId === 'all') {
+            if ($webinarIds === 'all') {
                 $conditions[] = ['users.surveyed_package_id', '=', '["1","2","3","4","5","6"]'];
-            } else if ($webinarId === 'one') {
+            } else if ($webinarIds === 'one') {
                 $conditions[] = ['users.surveyed_package_id', '!=', '\'[]\''];
             } else {
-                $conditions[] = ['users.surveyed_package_id', 'LIKE', '%"' . $webinarId . '"%'];
+                $ids = explode(',', $webinarIds);
+                sort($ids);
+                $conditions[] = ['users.surveyed_package_id', 'LIKE', '%"' . implode('"%"', $ids) . '"%'];
             }
             $query->whereNotNull('users.name')
                 ->where($conditions)
-                ->distinct();
-            $data['total'] = $query->count();
+                ->distinct('users.id');
+            $data['total'] = $query->count('users.id');
             if ($data['total']) {
                 $limit = $data['total'] > 50 ? 50 : $data['total'];
                 $offset = rand(0, $data['total'] - $limit);
@@ -248,9 +254,13 @@ class CounterVisitorController extends Controller
                     ->limit($limit)
                     ->offset($offset)
                     ->get();
-                $data['winner'] = $visitors[rand(0, count($visitors))];
-                foreach ($visitors as $visitor) {
-                    array_push($data['list'], $visitor->name);
+                if (count($visitors)) {
+                    $data['winner'] = $visitors[rand(0, count($visitors) - 1)];
+                    foreach ($visitors as $visitor) {
+                        array_push($data['list'], $visitor->name);
+                    }
+                } else {
+                    throw new \Exception('Not enough candidates');
                 }
             }
             return response()->json([
