@@ -140,10 +140,11 @@ class UserController extends Controller
         }
     }
 
-    public function demographicData() {
+    public function demographicData(Request $request) {
         try {
             if (auth()->user()->role !== 'admin') throw new \Exception('Access denied');
             $top = 9;
+            $filter = $request->filter;
 
             $data = [
                 'provinces' => [
@@ -163,7 +164,11 @@ class UserController extends Controller
                 ],
             ];
 
-            $provinces = User::select('province', \DB::raw('count(*) as total'))->groupBy('province')->orderBy('total', 'desc')->get();
+            $query = User::select('province', \DB::raw('count(*) as total'));
+            if ($filter && $filter !== 'all') {
+                $query->where('surveyed_package_id', 'LIKE', '%"' . $filter . '"%');
+            }
+            $provinces = $query->groupBy('province')->orderBy('total', 'desc')->get();
             $others = 0;
             foreach ($provinces as $province) {
                 if (empty($province['total'])) continue;
@@ -184,7 +189,11 @@ class UserController extends Controller
             foreach ($positions as $position) {
                 $positionMappers["p{$position['id']}"] = $position['name'];
             }
-            $positions = User::select('position_id', \DB::raw('count(*) as total'))->groupBy('position_id')->orderBy('total', 'desc')->get();
+            $query = User::select('position_id', \DB::raw('count(*) as total'));
+            if ($filter && $filter !== 'all') {
+                $query->where('surveyed_package_id', 'LIKE', '%"' . $filter . '"%');
+            }
+            $positions = $query->groupBy('position_id')->orderBy('total', 'desc')->get();
             $others = 0;
             foreach ($positions as $position) {
                 $key = "p{$position['position_id']}";
@@ -202,7 +211,11 @@ class UserController extends Controller
                 $data['positions']['series'][] = $others;
             }
 
-            $institutions = User::select('institution_type', \DB::raw('count(*) as total'))->groupBy('institution_type')->orderBy('total', 'desc')->get();
+            $query = User::select('institution_type', \DB::raw('count(*) as total'));
+            if ($filter && $filter !== 'all') {
+                $query->where('surveyed_package_id', 'LIKE', '%"' . $filter . '"%');
+            }
+            $institutions = $query->groupBy('institution_type')->orderBy('total', 'desc')->get();
             $others = 0;
             foreach ($institutions as $institution) {
                 if (empty($institution['total'])) continue;
