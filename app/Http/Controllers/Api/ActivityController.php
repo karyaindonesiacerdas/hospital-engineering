@@ -25,7 +25,10 @@ class ActivityController extends Controller
             }
 
             if (auth()->user()->role == 'visitor') {
-                $activities->where('causer_id', auth()->id());
+                $activities->where('causer_id', auth()->id())
+                    ->with(['subject' => function($query) {
+                        $query->select('id', 'company_name');
+                    }]);
             } else if (auth()->user()->role == 'admin') {
                 $users = User::whereHas('activities')->get();
                 $data = [];
