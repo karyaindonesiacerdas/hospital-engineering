@@ -44,11 +44,15 @@ class UserController extends Controller
     public function exhibitorDetail(User $user)
     {
         try {
+            $data = collect(User::with('banners')->find($user->id))->except(['created_at', 'updated_at', 'email_verified_at', 'visit_purpose', 'product_interest', 'visitor_type', 'institution_type', 'institution_name']);
+            $data['rewarded'] = false;
+
             if (auth()->user()->role == 'visitor') {
                 $checkAlreadyExist = Activity::where(['causer_id' => auth()->id(), 'subject_id' => $user->id, 'subject_type' => 'reward', 'subject_name' => 'booth'])->first();
 
                 if (!$checkAlreadyExist) {
                     Activity::create(['causer_id' => auth()->id(), 'subject_id' => $user->id, 'subject_type' => 'reward', 'subject_name' => 'booth']);
+                    $data['rewarded'] = true;
                 }
 
                 if ($user->role == 'exhibitor') {
@@ -71,7 +75,7 @@ class UserController extends Controller
                     'code' => 200,
                     'type' => 'success',
                     'message' => 'Fetch succeed',
-                    'data' => collect(User::with('banners')->find($user->id))->except(['created_at', 'updated_at', 'email_verified_at', 'visit_purpose', 'product_interest', 'visitor_type', 'institution_type', 'institution_name']),
+                    'data' => $data,
                 ], 200);
             }
         } catch (\Throwable $th) {
