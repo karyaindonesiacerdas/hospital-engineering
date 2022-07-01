@@ -108,6 +108,10 @@ Route::prefix('activity')->group(function () {
     Route::post('/', [App\Http\Controllers\Api\ActivityController::class, 'activityStore']);
 });
 
+Route::prefix('user-rewards')->group(function () {
+    Route::get('/', [App\Http\Controllers\Api\UserRewardController::class, 'index']);
+});
+
 
 Route::post('participant/update-province', function (Request $request) {
     try {
