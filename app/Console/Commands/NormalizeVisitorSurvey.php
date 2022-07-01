@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Activity;
 use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
@@ -46,12 +47,13 @@ class NormalizeVisitorSurvey extends Command
         return 0;
     }
 
-    private function handleById($id) {
+    private function handleById($id)
+    {
         echo "=== Running batch ${id} ===\n";
         $file = fopen(storage_path("app/survey/${id}.csv"), 'r');
         fgetcsv($file);
         $i = 1;
-        while(($row = fgetcsv($file))) {
+        while (($row = fgetcsv($file))) {
             $mobile = preg_replace("/[^0-9]/", "", $row[2]);
             if ($mobile) {
                 $mobile = substr($mobile, 2);
@@ -64,11 +66,17 @@ class NormalizeVisitorSurvey extends Command
                         $user->surveyed_package_id = $surveyed;
                         $user->save();
                     }
+                    try {
+                        Activity::create(['causer_id' => $user->id, 'subject_id' => $id, 'subject_type' => 'reward', 'subject_name' => 'webinar']);
+                    } catch (\Throwable $th) {
+                    }
                 } else {
                     echo "> {$id} - {$i} - {$row[2]} - Not Found\n";
                 }
             }
-            if ($i % 50 === 0) echo "> {$id} - {$i}\n";
+            if ($i % 50 === 0) {
+                echo "> {$id} - {$i}\n";
+            }
             $i++;
         }
         echo "=== Closing batch ${id} ===\n";
