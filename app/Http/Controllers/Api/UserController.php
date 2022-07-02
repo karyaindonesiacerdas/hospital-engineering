@@ -200,6 +200,9 @@ class UserController extends Controller
                     $data['provinces']['series'][1]['data'][$i] = $province['total'];
                 }
             }
+            if ($filter === 'all') {
+                unset($data['provinces']['series'][1]);
+            }
 
             $positions = Position::select('id', 'name')->get();
             $positionMappers = [];
