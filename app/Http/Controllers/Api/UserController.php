@@ -143,9 +143,9 @@ class UserController extends Controller
     public function demographicData(Request $request)
     {
         try {
-            if (auth()->user()->role !== 'admin') {
-                throw new \Exception('Access denied');
-            }
+            // if (auth()->user()->role !== 'admin') {
+            //     throw new \Exception('Access denied');
+            // }
             $top = 9;
             $filter = $request->filter;
             $mode = $request->mode;
