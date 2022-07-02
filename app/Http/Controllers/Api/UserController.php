@@ -148,6 +148,8 @@ class UserController extends Controller
             }
             $top = 9;
             $filter = $request->filter;
+            $mode = $request->mode;
+            $filteredField = $mode === 'registered' ? 'package_id' : 'surveyed_package_id';
 
             $data = [
                 'provinces' => [
@@ -211,7 +213,7 @@ class UserController extends Controller
             }
             $query = User::select('position_id', \DB::raw('count(*) as total'));
             if ($filter && $filter !== 'all') {
-                $query->where('surveyed_package_id', 'LIKE', '%"' . $filter . '"%');
+                $query->where($filteredField, 'LIKE', '%"' . $filter . '"%');
             }
             $positions = $query->groupBy('position_id')->orderBy('total', 'desc')->get();
             $others = 0;
@@ -235,7 +237,7 @@ class UserController extends Controller
 
             $query = User::select('institution_type', \DB::raw('count(*) as total'));
             if ($filter && $filter !== 'all') {
-                $query->where('surveyed_package_id', 'LIKE', '%"' . $filter . '"%');
+                $query->where($filteredField, 'LIKE', '%"' . $filter . '"%');
             }
             $institutions = $query->groupBy('institution_type')->orderBy('total', 'desc')->get();
             $others = 0;
