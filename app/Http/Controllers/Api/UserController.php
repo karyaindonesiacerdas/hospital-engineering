@@ -140,9 +140,12 @@ class UserController extends Controller
         }
     }
 
-    public function demographicData(Request $request) {
+    public function demographicData(Request $request)
+    {
         try {
-            if (auth()->user()->role !== 'admin') throw new \Exception('Access denied');
+            if (auth()->user()->role !== 'admin') {
+                throw new \Exception('Access denied');
+            }
             $top = 9;
             $filter = $request->filter;
 
@@ -150,7 +153,10 @@ class UserController extends Controller
                 'provinces' => [
                     'name' => 'Visitor / Province',
                     'labels' => [],
-                    'series' => []
+                    'series' => [
+                        ['data' => [], 'name' => 'registered'],
+                        ['data' => [], 'name' => 'actual'],
+                    ]
                 ],
                 'positions' => [
                     'name' => 'Visitor / Job Position',
@@ -164,24 +170,35 @@ class UserController extends Controller
                 ],
             ];
 
-            $query = User::select('province', \DB::raw('count(*) as total'));
+            $rquery = User::select('province', \DB::raw('count(*) as total'));
+            $squery = User::select('province', \DB::raw('count(*) as total'));
             if ($filter && $filter !== 'all') {
-                $query->where('surveyed_package_id', 'LIKE', '%"' . $filter . '"%');
+                $rquery->where('package_id', 'LIKE', '%"' . $filter . '"%');
+                $squery->where('surveyed_package_id', 'LIKE', '%"' . $filter . '"%');
             }
-            $provinces = $query->groupBy('province')->orderBy('total', 'desc')->get();
-            $others = 0;
-            foreach ($provinces as $province) {
-                if (empty($province['total'])) continue;
-                if (!(empty($province['province']) || in_array(trim($province['province']), ['-', 'other'])) && count($data['provinces']['labels']) < $top) {
-                    $data['provinces']['labels'][] = $province['province'];
-                    $data['provinces']['series'][] = $province['total'];
-                } else {
-                    $others += $province['total'];
+            $rprovinces = $rquery->groupBy('province')->orderBy('total', 'desc')->get();
+            $sprovinces = $squery->groupBy('province')->orderBy('total', 'desc')->get();
+            $mapper = [];
+            foreach ($rprovinces as $province) {
+                if (!(empty($province['province']) || in_array(trim($province['province']), ['-', 'other']))) {
+                    $i = count($data['provinces']['labels']);
+                    $mapper[$province['province']] = $i;
+                    $data['provinces']['labels'][$i] = $province['province'];
+                    $data['provinces']['series'][0]['data'][$i] = $province['total'];
+                    $data['provinces']['series'][1]['data'][$i] = 0;
                 }
             }
-            if ($others > 0) {
-                $data['provinces']['labels'][] = "Others";
-                $data['provinces']['series'][] = $others;
+            foreach ($sprovinces as $province) {
+                if (!(empty($province['province']) || in_array(trim($province['province']), ['-', 'other']))) {
+                    if (array_key_exists($province['province'], $mapper)) {
+                        $i = $mapper[$province['province']];
+                    } else {
+                        $i = count($data['provinces']['labels']);
+                        $data['provinces']['labels'][$i] = $province['province'];
+                        $data['provinces']['series'][0]['data'][$i] = 0;
+                    }
+                    $data['provinces']['series'][1]['data'][$i] = $province['total'];
+                }
             }
 
             $positions = Position::select('id', 'name')->get();
@@ -197,7 +214,9 @@ class UserController extends Controller
             $others = 0;
             foreach ($positions as $position) {
                 $key = "p{$position['position_id']}";
-                if (empty($position['total'])) continue;
+                if (empty($position['total'])) {
+                    continue;
+                }
                 if (!(empty($position['position_id']) || !array_key_exists($key, $positionMappers)) && count($data['positions']['labels']) < $top) {
                     $label = $positionMappers[$key];
                     $data['positions']['labels'][] = $label;
@@ -218,7 +237,9 @@ class UserController extends Controller
             $institutions = $query->groupBy('institution_type')->orderBy('total', 'desc')->get();
             $others = 0;
             foreach ($institutions as $institution) {
-                if (empty($institution['total'])) continue;
+                if (empty($institution['total'])) {
+                    continue;
+                }
                 if (!(empty($institution['institution_type']) || in_array(trim($institution['institution_type']), ['-', 'other', 'Other'])) && count($data['institution_types']['labels']) < $top) {
                     $data['institution_types']['labels'][] = $institution['institution_type'];
                     $data['institution_types']['series'][] = $institution['total'];
