@@ -90,6 +90,7 @@ Route::prefix('consultation')->group(function () {
 
 Route::prefix('user')->group(function () {
     Route::get('/list', [App\Http\Controllers\Api\UserController::class, 'userList']);
+    Route::get('/list-visitor', [App\Http\Controllers\Api\UserController::class, 'listVisitor']);
     Route::get('detail', [App\Http\Controllers\Api\UserController::class, 'detailByEmail']);
     Route::get('/demographic', [App\Http\Controllers\Api\UserController::class, 'demographicData']);
 });
