@@ -145,6 +145,9 @@ class UserController extends Controller
         try {
             if (auth()->user()->role !== 'admin') throw new \Exception('Access denied');
             $counters = User::where('role', 'visitor');
+            if (($webinarId = $request->input('package_id')) && $webinarId !== 'all') {
+                $counters->where('package_id', 'LIKE', '%"' . $webinarId . '"%');
+            }
             if (($filter = $request->input('filter'))) {
                 $counters->where(function($query) use ($filter) {
                     $query->where('users.name', 'like', "%{$filter}%")
